@@ -1,0 +1,142 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Cuando estés listo',
+      title: 'Hablemos en serio.',
+      leadLine1: 'Ve GoChat en acción sobre tus canales, con tus datos, en 30 minutos.',
+      leadLine2: 'Tú trae las preguntas — nosotros, los playbooks.',
+      cta: 'Solicitar demo',
+      demoHref: 'https://gochat.ar/book-a-demo?form_mode=full',
+      bubble1: '¡Hola! 👋 Necesito precios para nuestra tienda Shopify.',
+      bubble2: '¡Hola! Con gusto te ayudo. ¿Aproximadamente cuántos contactos mensuales tienes?',
+      bubble3: '~15.000.',
+      bubble4Pre: 'te queda. ¿Te agendo una demo?',
+      bubble4Plan: 'Professional',
+    }
+  : {
+      eyebrow: 'Ready when you are',
+      title: "Let's size up.",
+      leadLine1: 'See GoChat in action on your channels, with your data, in 30 minutes.',
+      leadLine2: "Bring questions — we'll bring playbooks.",
+      cta: 'Book a demo',
+      demoHref: 'https://gochat.ar/book-a-demo?form_mode=full',
+      bubble1: 'Hi! 👋 I need pricing for our Shopify store.',
+      bubble2: 'Hello — happy to help! Roughly how many monthly contacts?',
+      bubble3: '~15,000.',
+      bubble4Pre: 'fits. Want me to book a demo?',
+      bubble4Plan: 'Professional',
+    };
+---
+
+<section class="cta sec bg-ink" id="demo">
+  <div class="wrap cta-grid">
+    <div class="cta-copy">
+      <span class="eyebrow cta-eyebrow">{copy.eyebrow}</span>
+      <h2 class="cta-title">{copy.title}</h2>
+      <p class="cta-lead">
+        {copy.leadLine1}
+        {copy.leadLine2}
+      </p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href={copy.demoHref}>
+          {copy.cta}
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn cta-ghost btn-lg" href="mailto:hello@gochat.ar">hello@gochat.ar</a>
+      </div>
+    </div>
+
+    <aside class="cta-card">
+      <div class="cta-bubbles">
+        <span class="bubble">{copy.bubble1}</span>
+        <span class="bubble sent">{copy.bubble2}</span>
+        <span class="bubble">{copy.bubble3}</span>
+        <span class="bubble green"><strong>{copy.bubble4Plan}</strong> {copy.bubble4Pre}</span>
+      </div>
+      <div class="cta-marks">
+        <div class="mark-tile"><img src="/media/iso_27001_02-1024x704-1-150x150.png" alt="ISO 27001"/></div>
+        <div class="mark-tile"><img src="/media/SOC-2-Type-II-Badge-748x1024-1-219x300.webp" alt="SOC 2 Type II"/></div>
+        <div class="mark-tile wide"><img src="/media/meta-business-partner-300x102.png" alt="Meta Business Partner"/></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .cta { color: #fff; }
+  .cta-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+  }
+  .cta-eyebrow { color: var(--gc-primary-soft); }
+  .cta-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(48px, 7vw, 96px);
+    letter-spacing: var(--tr-tight);
+    line-height: var(--lh-tight);
+    margin-top: 16px;
+    text-wrap: balance;
+    color: #fff;
+  }
+  .cta-lead { color: rgba(255,255,255,0.7); margin-top: 18px; max-width: 46ch; font-size: 18px; }
+  .cta-actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .cta-ghost {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .cta-ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); }
+
+  .cta-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--r-xl);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .cta-bubbles { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .cta-bubbles .bubble.sent { align-self: flex-end; }
+  .cta-bubbles .bubble.green { align-self: flex-end; }
+  .cta-marks {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.4fr;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .mark-tile {
+    background: rgba(255,255,255,0.92);
+    border-radius: var(--r-md);
+    padding: 12px;
+    display: grid;
+    place-items: center;
+    min-height: 64px;
+  }
+  .mark-tile img { max-height: 44px; max-width: 100%; width: auto; object-fit: contain; }
+
+  @media (max-width: 880px) {
+    .cta-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .cta-title { font-size: clamp(40px, 12vw, 64px); }
+    .cta-lead { font-size: 16px; }
+    .cta-actions { flex-direction: column; align-items: stretch; }
+    .cta-actions .btn { justify-content: center; }
+    .cta-card { padding: 22px; }
+    .cta-marks { grid-template-columns: 1fr; }
+    .mark-tile { min-height: 56px; }
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+import SolutionPage from '../components/SolutionPage.astro';
+
+const valueProps = [
+  {
+    title: 'Engages every shopper',
+    blurb: 'Answers price, financing and trade-in questions the second someone lands on your site — no waiting, no forms.',
+  },
+  {
+    title: 'Test-drive scheduling',
+    blurb: 'Books appointments directly into the dealership calendar with full buyer context in hand.',
+  },
+  {
+    title: 'Inventory matchmaker',
+    blurb: 'Recommends the right model from your live stock based on what each buyer actually needs.',
+  },
+  {
+    title: 'Service & follow-up',
+    blurb: 'Keeps customers engaged after the sale — service reminders, recalls, and reorders inside one chat.',
+  },
+];
+---
+
+<SolutionPage
+  slug="automotive"
+  title="GoChat for Automotive — A digital twin that sells like your best salesperson"
+  headlineBefore="A digital twin that works like your best"
+  highlight="salesperson"
+  headlineAfter=""
+  lead="Engage shoppers, answer questions, recover carts, and personalise each journey — all in real-time, without adding pressure to your team."
+  contextEyebrow="Why GoChat for automotive"
+  contextTitle="Your website looks impressive. It just doesn't sell."
+  contextBody="Most automotive sites are beautiful brochures. GoChat turns them into an active sales floor — a digital twin of your best salesperson, ready to talk inventory, financing and test drives 24/7."
+  valueProps={valueProps}
+  video="/media/gochat-automotive.webm"
+  contextImage="/media/automotive.png"
+  contextImageAlt="AI agent guiding a car buyer through dealership inventory"
+/>

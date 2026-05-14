@@ -1,0 +1,461 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      seePricing: 'Ver precios',
+      titlePart1: 'El',
+      titleHighlight: 'Chatbot de IA',
+      titlePart2: 'para cualquier negocio',
+      lead: 'Construye flujos de automatización en minutos sobre 12+ canales sociales. Aumenta tus ingresos, reduce los costos operativos y enamora a tus clientes.',
+      cta: 'Solicitar demo',
+      trust1: 'Constructor sin código y de bajo código',
+      trust2: 'Prueba gratis de 14 días',
+      trust3: 'Sin tarjeta de crédito',
+      anyChannel: 'CUALQUIER CANAL',
+      anyModel: 'CUALQUIER MODELO',
+      previewAria: 'Vista previa de conversación en vivo',
+      mbpAlt: 'Meta Business Partner',
+      chatName: 'Entrante · WhatsApp',
+      chatSub: 'Agente de IA respondiendo',
+      online: 'En línea',
+      msg1: '¡Hola! 👋 Necesito agendar un service para mi Camry.',
+      msg1Meta: 'Bea · 10:42',
+      msg2: '¡Hola Bea! Con gusto te ayudo. ¿Qué día te queda mejor?',
+      msg2Meta: 'GoChat · gpt-4o',
+      msg3: 'Jueves a la mañana, si es posible.',
+      msg3Meta: 'Bea · 10:43',
+      msg4Strong: 'Turno de 09:30 confirmado.',
+      msg4Tools: 'CRM ✓ · SMS ✓ · Calendario ✓',
+      msg4Meta: 'Acción · 3 herramientas activadas',
+      typingAria: 'Escribiendo',
+      footStat1: '+1.284 hoy',
+      footStat2: '99,97% de uptime',
+      pricingHref: '/es/#pricing',
+      demoHref: '/es/#demo',
+    }
+  : {
+      seePricing: 'See pricing',
+      titlePart1: 'The',
+      titleHighlight: 'AI Chatbot',
+      titlePart2: 'for any business',
+      lead: 'Build automation flows in minutes over 12+ social channels. Increase your revenue, reduce operation costs & delight your customers.',
+      cta: 'Book a demo',
+      trust1: 'No-code & low-code builder',
+      trust2: '14-day free trial',
+      trust3: 'No credit card required',
+      anyChannel: 'ANY CHANNEL',
+      anyModel: 'ANY MODEL',
+      previewAria: 'Live conversation preview',
+      mbpAlt: 'Meta Business Partner',
+      chatName: 'Inbound · WhatsApp',
+      chatSub: 'AI agent responding',
+      online: 'Online',
+      msg1: 'Hi! 👋 I need to schedule a service for my Camry.',
+      msg1Meta: 'Bea · 10:42',
+      msg2: 'Hi Bea! Happy to help. Which day works best for you?',
+      msg2Meta: 'GoChat · gpt-4o',
+      msg3: 'Thursday morning, if possible.',
+      msg3Meta: 'Bea · 10:43',
+      msg4Strong: '09:30 slot confirmed.',
+      msg4Tools: 'CRM ✓ · SMS ✓ · Calendar ✓',
+      msg4Meta: 'Action · 3 tools fired',
+      typingAria: 'Typing',
+      footStat1: '+1,284 today',
+      footStat2: '99.97% uptime',
+      pricingHref: '/#pricing',
+      demoHref: '/#demo',
+    };
+
+const SI = (slug: string) => `https://cdn.jsdelivr.net/npm/simple-icons@v14/icons/${slug}.svg`;
+
+const channels = [
+  { name: 'WhatsApp',  img: '/media/whatsapp-channel.png',                     brand: '#25D366', square: true },
+  { name: 'Instagram', img: '/media/instagram-channel.png',                    brand: '#DD2A7B', square: true },
+  { name: 'Webchat',   img: '/media/webchat-channel.png',                      brand: '#596AD5', square: true },
+  { name: 'TikTok',    img: '/media/tiktok-scaled-e1763115488777-294x300.png', brand: '#0C0D14', square: true },
+];
+const models = [
+  { name: 'ChatGPT',  img: '/media/chatgpt-icon.png',       brand: '#10A37F', square: true },
+  { name: 'Gemini',   img: SI('googlegemini'),              brand: '#4285F4', remote: true },
+  { name: 'DeepSeek', img: '/media/DeepSeek_logo_icon.png', brand: '#4D6BFE', square: true },
+  { name: 'Meta',     img: SI('meta'),                      brand: '#0866FF', remote: true },
+];
+---
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-card">
+      <img src="/media/meta-business-partner.png" alt={copy.mbpAlt} class="hero-mbp"/>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <a class="see-pricing" href={copy.pricingHref}>{copy.seePricing} <span aria-hidden="true">→</span></a>
+
+          <h1 class="hero-title">
+            {copy.titlePart1} <span class="hl-pill">{copy.titleHighlight}</span> {copy.titlePart2}
+          </h1>
+
+          <p class="hero-lead">{copy.lead}</p>
+
+          <a class="btn btn-primary btn-lg hero-cta" href={copy.demoHref}>{copy.cta}</a>
+
+          <ul class="hero-trust">
+            <li><span class="check" aria-hidden="true">✓</span> {copy.trust1}</li>
+            <li><span class="check" aria-hidden="true">✓</span> {copy.trust2}</li>
+            <li><span class="check" aria-hidden="true">✓</span> {copy.trust3}</li>
+          </ul>
+
+          <div class="any-pill any-pill--channel">
+            <span class="any-label">{copy.anyChannel}</span>
+            <ul class="any-icons">
+              {channels.map((c) => (
+                <li title={c.name} style={`--brand:${c.brand}`}>
+                  <img src={c.img} alt={c.name}/>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="any-pill any-pill--model">
+            <span class="any-label">{copy.anyModel}</span>
+            <ul class="any-icons">
+              {models.map((m) => (
+                <li title={m.name} style={`--brand:${m.brand}; --mask:url(${m.img})`}>
+                  {m.remote ? (
+                    <span class="ico-mask" aria-label={m.name}></span>
+                  ) : (
+                    <img src={m.img} alt={m.name}/>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <aside class="hero-stage" aria-label={copy.previewAria}>
+          <div class="chat-frame">
+            <header class="chat-bar">
+              <div class="chat-id">
+                <img src="/media/whatsapp-channel.png" alt="" width="22" height="22"/>
+                <div>
+                  <div class="chat-name">{copy.chatName}</div>
+                  <div class="chat-sub">
+                    <span class="status-dot"></span>
+                    {copy.chatSub}
+                  </div>
+                </div>
+              </div>
+              <span class="pill pill-green"><span class="dot"></span>{copy.online}</span>
+            </header>
+
+            <div class="chat-body">
+              <div class="msg recv" style="animation-delay:.1s">
+                <span class="bubble">{copy.msg1}</span>
+                <span class="meta">{copy.msg1Meta}</span>
+              </div>
+              <div class="msg sent" style="animation-delay:.5s">
+                <span class="bubble sent">{copy.msg2}</span>
+                <span class="meta">{copy.msg2Meta}</span>
+              </div>
+              <div class="msg recv" style="animation-delay:1.1s">
+                <span class="bubble">{copy.msg3}</span>
+                <span class="meta">{copy.msg3Meta}</span>
+              </div>
+              <div class="msg sent" style="animation-delay:1.7s">
+                <span class="bubble green">
+                  <strong>{copy.msg4Strong}</strong><br/>
+                  <span class="meta-line">{copy.msg4Tools}</span>
+                </span>
+                <span class="meta">{copy.msg4Meta}</span>
+              </div>
+              <div class="msg recv typing" style="animation-delay:2.3s">
+                <span class="bubble typing-bubble" aria-label={copy.typingAria}>
+                  <span></span><span></span><span></span>
+                </span>
+              </div>
+            </div>
+
+            <footer class="chat-foot">
+              <span class="pill pill-green"><span class="dot"></span>{copy.footStat1}</span>
+              <span class="pill pill-neutral"><span class="dot"></span>{copy.footStat2}</span>
+            </footer>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(20px, 3vw, 40px);
+    padding-bottom: clamp(40px, 6vw, 80px);
+    background: linear-gradient(180deg, var(--gc-primary-mist), var(--gc-primary-haze) 60%, #fff);
+  }
+
+  .hero-card {
+    position: relative;
+    border-radius: var(--r-2xl);
+    padding: clamp(28px, 4vw, 64px) clamp(24px, 4vw, 56px);
+    overflow: hidden;
+    z-index: 0;
+    isolation: isolate;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    z-index: -2;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(
+      transparent,
+      transparent,
+      transparent,
+      var(--gc-primary)
+    );
+    animation: rotar-borde 7s linear infinite;
+  }
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 2px;
+    background: linear-gradient(180deg, var(--gc-primary-mist), var(--gc-primary-haze) 60%, #fff);
+    border-radius: calc(var(--r-2xl) - 2px);
+  }
+  @keyframes rotar-borde {
+    to { transform: rotate(1turn); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-card::before { animation: none; }
+  }
+  .hero-mbp {
+    position: absolute;
+    top: clamp(20px, 2vw, 28px);
+    right: clamp(20px, 3vw, 32px);
+    height: clamp(22px, 2vw, 30px);
+    width: auto;
+    object-fit: contain;
+    z-index: 3;
+    opacity: 0.85;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+
+  /* "See pricing →" pill */
+  .see-pricing {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(89, 106, 213, 0.18);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gc-primary-deep);
+    width: fit-content;
+    transition: background var(--dur-fast) var(--ease-out-expo);
+  }
+  .see-pricing:hover { background: #fff; }
+
+  .hero-title {
+    margin-top: 22px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(32px, 4.8vw, 56px);
+    line-height: 1.08;
+    letter-spacing: var(--tr-tight);
+    color: var(--fg-1);
+    text-wrap: balance;
+  }
+  .hl-pill {
+    display: inline-block;
+    padding: 0.04em 0.32em 0.06em;
+    background: var(--gc-primary-soft);
+    color: var(--gc-primary-deep);
+    border-radius: 14px;
+    margin: 0 0.06em;
+  }
+
+  .hero-lead {
+    margin-top: 20px;
+    font-size: clamp(16px, 1.3vw, 18px);
+    color: var(--fg-2);
+    line-height: 1.45;
+    max-width: 56ch;
+  }
+
+  .hero-cta {
+    margin-top: 24px;
+    width: 100%;
+    max-width: 460px;
+    justify-content: center;
+    padding-block: 16px;
+    font-size: 15px;
+  }
+
+  .hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 22px;
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--fg-2);
+  }
+  .hero-trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+  .hero-trust .check {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px;
+    background: var(--gc-accent-green-soft);
+    color: var(--gc-accent-green-deep);
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  /* ANY CHANNEL / ANY MODEL pill bars */
+  .any-pill {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border-default);
+    border-radius: 14px;
+    width: fit-content;
+    max-width: 100%;
+  }
+  .any-label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--fg-3);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .any-icons { display: inline-flex; gap: 8px; align-items: center; }
+  .any-icons li {
+    display: grid; place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: transparent;
+  }
+  .any-icons li img {
+    width: 26px; height: 26px;
+    object-fit: contain;
+    display: block;
+    border-radius: 6px;
+  }
+  .any-icons li .ico-mask {
+    display: block;
+    width: 22px; height: 22px;
+    background-color: var(--brand);
+    -webkit-mask: var(--mask) no-repeat center / contain;
+            mask: var(--mask) no-repeat center / contain;
+  }
+
+  /* Right stage — chat frame */
+  .hero-stage {
+    position: relative;
+    isolation: isolate;
+    /* Reserve space so the Meta badge in the top-right of the hero card
+       doesn't visually collide with the chat-frame top */
+    padding-top: clamp(12px, 2vw, 24px);
+  }
+  .chat-frame {
+    background: #fff;
+    border-radius: var(--r-2xl);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-md);
+    padding: 18px;
+  }
+  .chat-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .chat-id { display: flex; gap: 10px; align-items: center; }
+  .chat-id img { border-radius: 4px; }
+  .chat-name { font-weight: 700; font-size: 14px; }
+  .chat-sub { font-size: 12px; color: var(--fg-3); display: inline-flex; align-items: center; gap: 6px; }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 999px;
+    background: var(--gc-accent-green);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+
+  .chat-body {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 18px 4px 6px;
+  }
+  .msg {
+    display: flex; flex-direction: column; gap: 4px;
+    opacity: 0;
+    animation: float-up 0.6s forwards var(--ease-out-expo);
+  }
+  .msg.recv { align-items: flex-start; }
+  .msg.sent { align-items: flex-end; }
+  .meta { font-size: 11px; color: var(--fg-3); font-weight: 500; }
+  .meta-line { font-size: 11.5px; opacity: 0.9; }
+
+  .typing-bubble { display: inline-flex; gap: 5px; padding: 12px 14px; }
+  .typing-bubble span {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--fg-3);
+    animation: typing 1.3s infinite ease-in-out;
+  }
+  .typing-bubble span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-bubble span:nth-child(3) { animation-delay: 0.3s; }
+
+  .chat-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 4px 4px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 12px;
+  }
+
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-mbp { top: 16px; right: 16px; height: 28px; }
+    .hero-cta { max-width: none; }
+  }
+  @media (max-width: 640px) {
+    .hero-title { font-size: clamp(34px, 10vw, 48px); }
+    .hl-pill { padding: 0.02em 0.24em 0.04em; border-radius: 10px; }
+    .hero-lead { font-size: 15px; }
+    .chat-frame { padding: 14px; }
+    .chat-bar, .chat-foot { flex-wrap: wrap; gap: 8px; }
+    .pill { padding: 4px 10px; font-size: 11px; }
+    .bubble { font-size: 13.5px; max-width: 95%; }
+    .any-pill { gap: 12px; padding: 8px 12px; }
+    .any-icons li { width: 28px; height: 28px; }
+    .any-icons li img { width: 24px; height: 24px; }
+  }
+</style>

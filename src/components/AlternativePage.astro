@@ -1,0 +1,762 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import BookDemo from './BookDemo.astro';
+import type { Lang } from '../lib/i18n';
+
+interface Feature {
+  label: string;
+  go: boolean | string;
+  rival: boolean | string;
+}
+interface Section {
+  title: string;
+  rows: Feature[];
+}
+interface Highlight {
+  icon: string;        // inline SVG
+  title: string;
+  body: string;
+}
+
+interface Props {
+  lang?: Lang;
+  competitor: string;
+  competitorTagline: string;
+  pageTitle: string;
+  pageDescription: string;
+  headlineBefore: string;
+  highlight: string;
+  headlineAfter: string;
+  lead: string;
+  highlights: Highlight[];
+  sections: Section[];
+  switchTitle: string;
+  switchSteps: { title: string; body: string }[];
+  faqs: { q: string; a: string }[];
+}
+
+const {
+  lang = 'en',
+  competitor,
+  competitorTagline,
+  pageTitle,
+  pageDescription,
+  headlineBefore,
+  highlight,
+  headlineAfter,
+  lead,
+  highlights,
+  sections,
+  switchTitle,
+  switchSteps,
+  faqs,
+} = Astro.props;
+
+const isES = lang === 'es';
+
+const t = isES
+  ? {
+      alternativeTo: 'Alternativa a',
+      bookDemo: 'Solicitar demo',
+      seePricing: 'Ver precios',
+      trust1: 'Prueba gratis de 14 días',
+      trust2: 'Sin tarjeta de crédito',
+      trust3: 'Asistencia de migración incluida',
+      comparingAlt: 'Comparando GoChat con',
+      whyTeamsSwitch: 'Por qué los equipos migran',
+      altTitlePre: 'te trajo hasta aquí.',
+      altTitleAccent: 'GoChat te lleva más lejos.',
+      featureByFeature: 'Comparación detallada',
+      vs: 'GoChat vs',
+      altLead: 'Cada casilla marcada aquí está incluida en tu plan de GoChat — sin add-ons ni sorpresas.',
+      featureLabel: 'Funcionalidad',
+      migration: 'Migración',
+      faqsEyebrow: 'FAQs',
+      switchingFrom: 'Cómo migrar desde',
+      pricingHref: '/es/#pricing',
+      demoHref: '/es/#demo',
+    }
+  : {
+      alternativeTo: 'Alternative to',
+      bookDemo: 'Book a demo',
+      seePricing: 'See pricing',
+      trust1: '14-day free trial',
+      trust2: 'No credit card required',
+      trust3: 'Migration assistance included',
+      comparingAlt: 'Comparing GoChat with',
+      whyTeamsSwitch: 'Why teams switch',
+      altTitlePre: 'got you here.',
+      altTitleAccent: 'GoChat takes you further.',
+      featureByFeature: 'Feature-by-feature',
+      vs: 'GoChat vs',
+      altLead: 'Every box ticked here is included in your GoChat plan — no add-ons, no surprise upgrades.',
+      featureLabel: 'Feature',
+      migration: 'Migration',
+      faqsEyebrow: 'FAQs',
+      switchingFrom: 'Switching from',
+      pricingHref: '/#pricing',
+      demoHref: '/#demo',
+    };
+
+function cell(v: boolean | string) {
+  if (v === true)  return { cls: 'is-yes',  text: '✓' };
+  if (v === false) return { cls: 'is-no',   text: '—' };
+  return { cls: 'is-text', text: v };
+}
+---
+
+<Layout title={pageTitle} description={pageDescription} lang={lang}>
+  <Nav lang={lang} />
+  <main>
+    <!-- HERO -->
+    <section class="alt-hero">
+      <div class="wrap alt-hero-grid">
+        <div class="alt-copy">
+          <span class="alt-eyebrow">
+            <span class="alt-eyebrow-dot" aria-hidden="true"></span>
+            {t.alternativeTo} {competitor}
+          </span>
+
+          <h1 class="alt-title">
+            {headlineBefore}
+            <span class="hl-pill">{highlight}</span>
+            {headlineAfter}
+          </h1>
+
+          <p class="alt-lead">{lead}</p>
+
+          <div class="alt-ctas">
+            <a class="btn btn-primary btn-lg" href={t.demoHref}>{t.bookDemo}</a>
+            <a class="btn btn-secondary btn-lg" href={t.pricingHref}>{t.seePricing} →</a>
+          </div>
+
+          <ul class="alt-trust">
+            <li><span class="check" aria-hidden="true">✓</span> {t.trust1}</li>
+            <li><span class="check" aria-hidden="true">✓</span> {t.trust2}</li>
+            <li><span class="check" aria-hidden="true">✓</span> {t.trust3}</li>
+          </ul>
+        </div>
+
+        <aside class="alt-stage" aria-hidden="true">
+          <img
+            class="alt-art"
+            src="/media/comparative.png"
+            alt={`${t.comparingAlt} ${competitor}`}
+            loading="eager"
+          />
+          <div class="alt-art-glow" aria-hidden="true"></div>
+
+          <div class="alt-vs">
+            <div class="alt-vs-side alt-vs-go">
+              <img src="/media/cropped-gochat_logo-270x270.png" alt="GoChat"/>
+              <span>GoChat</span>
+            </div>
+            <span class="alt-vs-pill">vs</span>
+            <div class="alt-vs-side alt-vs-rival">
+              <span class="alt-vs-rival-mark">{competitor.charAt(0)}</span>
+              <span>{competitor}</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHTS — three card grid -->
+    <section class="alt-highlights sec bg-paper">
+      <div class="wrap alt-h-head">
+        <span class="eyebrow">{t.whyTeamsSwitch}</span>
+        <h2 class="h2 alt-h-title">
+          {competitor} {t.altTitlePre} <span class="accent">{t.altTitleAccent}</span>
+        </h2>
+        <p class="lead alt-h-lead">{competitorTagline}</p>
+      </div>
+
+      <div class="wrap alt-h-grid">
+        {highlights.map((h) => (
+          <article class="alt-h-card">
+            <span class="alt-h-icon" set:html={h.icon} />
+            <h3 class="alt-h-card-title">{h.title}</h3>
+            <p class="alt-h-card-body">{h.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="alt-cmp sec bg-cool">
+      <div class="wrap alt-cmp-head">
+        <span class="eyebrow">{t.featureByFeature}</span>
+        <h2 class="h2 alt-cmp-title">{t.vs} {competitor}</h2>
+        <p class="lead alt-cmp-lead">{t.altLead}</p>
+      </div>
+
+      <div class="wrap">
+        <div class="alt-frame">
+          <div class="alt-cols">
+            <div class="alt-col alt-col--label">{t.featureLabel}</div>
+            <div class="alt-col alt-col--go">
+              <img src="/media/cropped-gochat_logo-270x270.png" alt="GoChat"/>
+              <span>GoChat</span>
+            </div>
+            <div class="alt-col alt-col--rival">
+              <span class="alt-col-mark">{competitor.charAt(0)}</span>
+              <span>{competitor}</span>
+            </div>
+          </div>
+
+          {sections.map((s, i) => (
+            <div class="alt-sec">
+              <div class="alt-sec-head">
+                <span class="alt-sec-num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="alt-sec-title">{s.title}</span>
+              </div>
+              <div class="alt-rows">
+                {s.rows.map((r) => {
+                  const g = cell(r.go);
+                  const v = cell(r.rival);
+                  return (
+                    <div class="alt-row">
+                      <div class="td td-feature">{r.label}</div>
+                      <div class={`td td-go ${g.cls}`}>{g.text}</div>
+                      <div class={`td td-rival ${v.cls}`}>{v.text}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TO SWITCH -->
+    <section class="alt-switch sec bg-paper">
+      <div class="wrap alt-switch-head">
+        <span class="eyebrow">{t.migration}</span>
+        <h2 class="h2 alt-switch-title">{switchTitle}</h2>
+      </div>
+
+      <div class="wrap alt-switch-grid">
+        {switchSteps.map((s, i) => (
+          <article class="alt-step">
+            <span class="alt-step-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="alt-step-title">{s.title}</h3>
+            <p class="alt-step-body">{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="alt-faq sec bg-cool">
+      <div class="wrap alt-faq-head">
+        <span class="eyebrow">{t.faqsEyebrow}</span>
+        <h2 class="h2">{t.switchingFrom} {competitor}</h2>
+      </div>
+      <div class="wrap alt-faq-list">
+        {faqs.map((f, i) => (
+          <details class="alt-faq-item" open={i === 0}>
+            <summary>
+              <span class="alt-faq-q">{f.q}</span>
+              <span class="alt-faq-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <p class="alt-faq-a">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <BookDemo lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>
+
+<style>
+  /* HERO ===================================================== */
+  .alt-hero {
+    background: linear-gradient(180deg, var(--gc-primary-mist), var(--gc-primary-haze) 70%, #fff);
+    padding-block: clamp(48px, 6vw, 96px) clamp(56px, 7vw, 112px);
+    overflow: hidden;
+  }
+  .alt-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .alt-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(89, 106, 213, 0.22);
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gc-primary-deep);
+    width: fit-content;
+  }
+  .alt-eyebrow-dot {
+    width: 7px; height: 7px;
+    border-radius: 999px;
+    background: var(--gc-primary);
+    box-shadow: 0 0 0 4px rgba(89, 106, 213, 0.16);
+  }
+
+  .alt-title {
+    margin-top: 22px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(38px, 5.6vw, 60px);
+    line-height: 1.06;
+    letter-spacing: var(--tr-tight);
+    color: var(--fg-1);
+    text-wrap: balance;
+  }
+  .hl-pill {
+    display: inline-block;
+    padding: 0.04em 0.32em 0.06em;
+    background: var(--gc-primary-soft);
+    color: var(--gc-primary-deep);
+    border-radius: 14px;
+    margin: 0 0.04em;
+  }
+
+  .alt-lead {
+    margin-top: 20px;
+    font-size: clamp(16px, 1.3vw, 19px);
+    color: var(--fg-2);
+    line-height: 1.5;
+    max-width: 56ch;
+  }
+
+  .alt-ctas {
+    margin-top: 28px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .alt-trust {
+    display: flex; flex-wrap: wrap; gap: 12px 20px;
+    margin-top: 22px;
+    font-size: 13px;
+    color: var(--fg-2);
+  }
+  .alt-trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+  .alt-trust .check {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px;
+    background: var(--gc-accent-green-soft);
+    color: var(--gc-accent-green-deep);
+    border-radius: 999px;
+    font-size: 10px; font-weight: 800;
+  }
+
+  /* Right column — illustration + vs badge */
+  .alt-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 360px;
+  }
+  .alt-art {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+    display: block;
+    mix-blend-mode: multiply;
+  }
+  .alt-art-glow {
+    position: absolute;
+    inset: 8% 8% 8% 8%;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, rgba(89, 106, 213, 0.28), transparent 65%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+
+  .alt-vs {
+    position: absolute;
+    z-index: 3;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: 999px;
+    box-shadow: var(--shadow-md);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg-1);
+  }
+  .alt-vs-side {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 4px 4px;
+    border-radius: 999px;
+    background: var(--gc-paper-cool);
+  }
+  .alt-vs-side img {
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    object-fit: cover;
+  }
+  .alt-vs-rival-mark {
+    display: inline-grid; place-items: center;
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    background: var(--gc-n-200);
+    color: var(--fg-2);
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .alt-vs-pill {
+    padding: 3px 8px;
+    background: var(--gc-primary);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* HIGHLIGHTS =============================================== */
+  .alt-h-head {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .alt-h-title { font-size: clamp(30px, 3.6vw, 44px); max-width: 24ch; }
+  .alt-h-lead { text-align: center; max-width: 64ch; }
+
+  .alt-h-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .alt-h-card {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+  }
+  .alt-h-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+  .alt-h-icon {
+    display: inline-grid; place-items: center;
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary-deep);
+  }
+  .alt-h-icon :global(svg) { width: 22px; height: 22px; }
+  .alt-h-card-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+  }
+  .alt-h-card-body {
+    color: var(--fg-2);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  /* COMPARISON =============================================== */
+  .alt-cmp-head {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+  .alt-cmp-title { font-size: clamp(28px, 3.4vw, 40px); }
+  .alt-cmp-lead { text-align: center; max-width: 56ch; }
+
+  .alt-frame {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .alt-cols {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    background: var(--gc-paper-cool);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .alt-col {
+    padding: 24px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--fg-1);
+    border-left: 1px solid var(--border-subtle);
+  }
+  .alt-col:first-child { border-left: 0; }
+  .alt-col--label {
+    justify-content: flex-start;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    color: var(--fg-3);
+    font-weight: 700;
+  }
+  .alt-col--go {
+    background: linear-gradient(180deg, var(--gc-primary-soft) 0%, var(--gc-primary-mist) 100%);
+    color: var(--gc-primary-deep);
+  }
+  .alt-col--go img {
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+  .alt-col-mark {
+    display: inline-grid; place-items: center;
+    width: 26px; height: 26px;
+    background: var(--gc-n-200);
+    color: var(--fg-2);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .alt-sec + .alt-sec { border-top: 1px solid var(--border-subtle); }
+
+  .alt-sec-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .alt-sec-num {
+    display: inline-grid; place-items: center;
+    min-width: 28px; height: 22px;
+    padding: 0 8px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary-deep);
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .alt-sec-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+  }
+
+  .alt-rows { display: flex; flex-direction: column; }
+  .alt-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    transition: background var(--dur-fast) var(--ease-out-expo);
+  }
+  .alt-row + .alt-row { border-top: 1px solid var(--border-subtle); }
+  .alt-row:hover { background: var(--gc-paper); }
+
+  .td {
+    padding: 14px 22px;
+    font-size: 14px;
+    color: var(--fg-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid var(--border-subtle);
+    min-height: 56px;
+    line-height: 1.4;
+  }
+  .td:first-child { border-left: 0; }
+  .td-feature {
+    justify-content: flex-start;
+    text-align: left;
+    color: var(--fg-1);
+    font-weight: 500;
+  }
+  .td-go {
+    background: rgba(214, 222, 247, 0.30);
+    color: var(--gc-primary-deep);
+    font-weight: 700;
+  }
+  .td-rival { color: var(--fg-3); }
+
+  .is-yes { font-size: 18px; line-height: 1; }
+  .td-go.is-yes { color: var(--gc-accent-green-deep); }
+  .td-rival.is-yes { color: var(--gc-accent-green-deep); }
+  .is-no { color: var(--gc-n-300); font-weight: 500; }
+  .is-text { font-size: 13.5px; text-align: center; }
+
+  /* SWITCH ==================================================== */
+  .alt-switch-head {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: clamp(36px, 4vw, 56px);
+  }
+  .alt-switch-title { font-size: clamp(28px, 3.2vw, 40px); max-width: 24ch; }
+
+  .alt-switch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .alt-step {
+    background: var(--gc-primary-haze);
+    border: 1px solid var(--gc-primary-soft);
+    border-radius: var(--r-xl);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .alt-step::before {
+    content: '';
+    position: absolute;
+    inset: auto -30% -50% auto;
+    width: 200px; height: 200px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(89, 106, 213, 0.16), transparent 60%);
+    pointer-events: none;
+  }
+  .alt-step-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--gc-primary);
+    letter-spacing: var(--tr-tight);
+    line-height: 1;
+  }
+  .alt-step-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+  }
+  .alt-step-body {
+    color: var(--fg-2);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  /* FAQ ======================================================= */
+  .alt-faq-head {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: clamp(36px, 4vw, 56px);
+  }
+  .alt-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 880px;
+    margin-inline: auto;
+  }
+  .alt-faq-item {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-xs);
+    overflow: hidden;
+  }
+  .alt-faq-item summary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    cursor: pointer;
+    list-style: none;
+    transition: background var(--dur-fast) var(--ease-out-expo);
+  }
+  .alt-faq-item summary::-webkit-details-marker { display: none; }
+  .alt-faq-item summary:hover { background: var(--gc-paper); }
+  .alt-faq-q {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+  }
+  .alt-faq-icon {
+    display: inline-grid; place-items: center;
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary-deep);
+    transition: transform var(--dur-med) var(--ease-out-expo);
+  }
+  .alt-faq-icon svg { width: 14px; height: 14px; }
+  .alt-faq-item[open] .alt-faq-icon { transform: rotate(180deg); }
+  .alt-faq-a {
+    padding: 0 22px 22px;
+    color: var(--fg-2);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  /* RESPONSIVE =============================================== */
+  @media (max-width: 980px) {
+    .alt-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .alt-art { max-width: 360px; }
+    .alt-stage { min-height: 0; padding-bottom: 28px; }
+    .alt-h-grid, .alt-switch-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .alt-h-grid, .alt-switch-grid { grid-template-columns: 1fr; }
+    .alt-title { font-size: clamp(32px, 9vw, 44px); }
+    .alt-ctas .btn { flex: 1; }
+    .alt-cols, .alt-row { grid-template-columns: 1.4fr 0.8fr 0.8fr; }
+    .alt-col { padding: 16px 10px; font-size: 13px; }
+    .alt-col--label { font-size: 10px; }
+    .alt-col--go img, .alt-col-mark { width: 22px; height: 22px; }
+    .td { padding: 12px 10px; font-size: 12.5px; min-height: 52px; }
+    .td-feature { font-size: 13px; }
+    .alt-sec-head { padding: 12px 14px; }
+    .alt-sec-title { font-size: 13px; }
+  }
+</style>

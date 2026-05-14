@@ -1,0 +1,240 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Canales · Salientes y Entrantes',
+      title: 'Conecta con tu audiencia donde se encuentre.',
+      lead: 'Salientes para alcanzar a cualquier cliente. Entrantes para responder 24/7 con IA. Una bandeja, una sola fuente de verdad.',
+    }
+  : {
+      eyebrow: 'Channels · Outbound & Inbound',
+      title: 'Engage with your audience where they are.',
+      lead: 'Outbound to reach any customer. Inbound to respond 24/7 with AI. One inbox, one source of truth.',
+    };
+
+const platforms = isES
+  ? [
+      {
+        name: 'WhatsApp',
+        icon: '/media/whatsapp-channel.png',
+        color: '#25D366',
+        tagline: 'Business API',
+        pitch: 'Plantillas, envíos masivos, secuencias y ruteo multi-número — todo nativamente oficial.',
+        metric: '95% de apertura',
+      },
+      {
+        name: 'Instagram',
+        icon: '/media/instagram-channel.png',
+        color: '#DD2A7B',
+        tagline: 'DM + Comentarios',
+        pitch: 'Respuesta automática a comentarios, calificación de leads y venta directa desde una historia.',
+        metric: 'De historia a venta en 60s',
+      },
+      {
+        name: 'Webchat',
+        icon: '/media/webchat-channel.png',
+        color: '#596AD5',
+        tagline: 'Tu sitio web',
+        pitch: 'Un widget con la identidad de tu marca — personalizable al píxel, rápido como un rayo.',
+        metric: 'Primera respuesta en <50ms',
+      },
+      {
+        name: 'TikTok',
+        icon: '/media/tiktok-scaled-e1763115488777-294x300.png',
+        color: '#0C0D14',
+        tagline: 'Respuesta automática DM',
+        pitch: 'Captura la intención desde los comentarios y deriva a humanos solo cuando importa.',
+        metric: 'Alcance 24/7',
+        fill: true,
+      },
+    ]
+  : [
+      {
+        name: 'WhatsApp',
+        icon: '/media/whatsapp-channel.png',
+        color: '#25D366',
+        tagline: 'Business API',
+        pitch: 'Templates, broadcasts, sequences and multi-number routing — natively official.',
+        metric: '95% open rate',
+      },
+      {
+        name: 'Instagram',
+        icon: '/media/instagram-channel.png',
+        color: '#DD2A7B',
+        tagline: 'DM + Comments',
+        pitch: 'Auto-reply to comments, qualify leads, ship products straight from a story.',
+        metric: 'Story-to-sale in 60s',
+      },
+      {
+        name: 'Webchat',
+        icon: '/media/webchat-channel.png',
+        color: '#596AD5',
+        tagline: 'Your site',
+        pitch: 'A widget that feels like your brand — pixel-customisable, lightning quick.',
+        metric: '<50ms first reply',
+      },
+      {
+        name: 'TikTok',
+        icon: '/media/tiktok-scaled-e1763115488777-294x300.png',
+        color: '#0C0D14',
+        tagline: 'DM auto-reply',
+        pitch: 'Capture intent from comments, route to humans only when it matters.',
+        metric: '24/7 outreach',
+        fill: true,
+      },
+    ];
+---
+
+<section class="engage sec bg-paper has-blobs dot-grid">
+  <span class="blob blob-violet-mist blob-xl blob-anim-a parallax" style="top: -200px; left: 30%;" aria-hidden="true"></span>
+  <div class="wrap engage-head">
+    <div>
+      <span class="eyebrow">{copy.eyebrow}</span>
+      <h2 class="h2 engage-title">
+        {copy.title}
+      </h2>
+    </div>
+    <p class="lead engage-lead">{copy.lead}</p>
+  </div>
+
+  <div class="wrap engage-grid reveal-stagger">
+    {platforms.map((p, i) => (
+      <article class="plat" style={`--accent:${p.color}`}>
+        <header class="plat-head">
+          <div class={`plat-icon${p.fill ? ' is-fill' : ''}`}><img src={p.icon} alt={p.name}/></div>
+          <div class="plat-text">
+            <h3 class="plat-name">{p.name}</h3>
+            <span class="plat-tag">{p.tagline}</span>
+          </div>
+          <span class="plat-num">0{i+1}</span>
+        </header>
+        <p class="plat-pitch">{p.pitch}</p>
+        <footer class="plat-foot">
+          <span class="plat-metric">{p.metric}</span>
+          <span class="plat-arrow" aria-hidden="true">→</span>
+        </footer>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .engage { position: relative; }
+  .engage-head {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 48px;
+    align-items: end;
+    margin-bottom: clamp(40px, 5vw, 56px);
+  }
+  .engage .engage-grid { position: relative; z-index: 2; }
+  .engage-title { max-width: 20ch; }
+  .engage-lead { justify-self: end; max-width: 38ch; }
+
+  .engage-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .plat {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 260px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow var(--dur-med) var(--ease-out-expo), border-color var(--dur-med) var(--ease-out-expo);
+    box-shadow: var(--shadow-xs);
+  }
+  .plat:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+  }
+  .plat::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-slow) var(--ease-out-expo);
+  }
+  .plat:hover::after { transform: scaleX(1); }
+
+  .plat-head { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; }
+  .plat-icon {
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    background: var(--gc-primary-mist);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  .plat-icon img { width: 26px; height: 26px; object-fit: contain; display: block; }
+  .plat-icon.is-fill { padding: 0; background: transparent; border-color: transparent; }
+  .plat-icon.is-fill img { width: 100%; height: 100%; object-fit: cover; }
+  .plat-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+  }
+  .plat-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-3);
+    font-weight: 600;
+  }
+  .plat-num { font-size: 12px; color: var(--fg-3); font-weight: 600; }
+
+  .plat-pitch { color: var(--fg-2); font-size: 14.5px; line-height: 1.5; }
+  .plat-foot {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .plat-metric {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .plat-arrow {
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    background: var(--gc-primary-mist);
+    color: var(--fg-2);
+    display: grid; place-items: center;
+    font-size: 13px;
+    transition: background var(--dur-med) var(--ease-out-expo), color var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+  }
+  .plat:hover .plat-arrow { background: var(--accent); color: #fff; transform: translateX(3px); }
+
+  @media (max-width: 980px) {
+    .engage-head { grid-template-columns: 1fr; }
+    .engage-lead { justify-self: start; }
+    .engage-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .engage-grid { grid-template-columns: 1fr; }
+    .engage-title { font-size: clamp(28px, 8vw, 40px); }
+    .plat { padding: 20px; min-height: 0; }
+    .plat-pitch { font-size: 14px; }
+  }
+</style>

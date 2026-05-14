@@ -1,0 +1,286 @@
+---
+import { localizedHref, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Soluciones',
+      titleLine1: 'Pensado para tu negocio —',
+      titleAccent: 'sin importar la industria.',
+      vertical: 'Vertical',
+      explore: 'Ver el playbook',
+    }
+  : {
+      eyebrow: 'Solutions',
+      titleLine1: 'Built for your business —',
+      titleAccent: 'no matter the industry.',
+      vertical: 'Vertical',
+      explore: 'Explore the playbook',
+    };
+
+const items = isES
+  ? [
+      {
+        tag: '01',
+        name: 'E-commerce',
+        img: '/media/ecommerce.png',
+        blurb: 'Recupera carritos, califica intención, envía ofertas — un checkout conversacional que cierra ventas.',
+        bullets: ['Flujos de recuperación de carrito', 'Shopify + Tienda Nube', 'Carruseles de productos en el chat'],
+        href: localizedHref('/ecommerce', lang),
+      },
+      {
+        tag: '02',
+        name: 'Automotive',
+        img: '/media/automotive-car.png',
+        blurb: 'Reservas de service, agenda de test-drive, consultas de repuestos — gestionado de noche, todas las noches.',
+        bullets: ['Ruteo lead-a-concesionaria', 'Sincronización con HubSpot + Salesforce', 'Recordatorios de postventa'],
+        href: localizedHref('/automotive', lang),
+      },
+      {
+        tag: '03',
+        name: 'Real estate',
+        img: '/media/real-estate-e1763391592382.png',
+        blurb: 'Captura compradores e inquilinos calificados, agenda visitas y no pierdas más leads calientes.',
+        bullets: ['Matchmaking de propiedades', 'Formularios de WhatsApp', 'Derivación a agentes'],
+        href: localizedHref('/real-estate', lang),
+      },
+    ]
+  : [
+      {
+        tag: '01',
+        name: 'E-commerce',
+        img: '/media/ecommerce.png',
+        blurb: 'Recover carts, qualify intent, push offers — a conversational checkout that actually closes.',
+        bullets: ['Cart-recovery flows', 'Shopify + Tienda Nube', 'Product carousels in chat'],
+        href: '/ecommerce',
+      },
+      {
+        tag: '02',
+        name: 'Automotive',
+        img: '/media/automotive-car.png',
+        blurb: 'Service bookings, test-drive scheduling, parts inquiries — handled overnight, every night.',
+        bullets: ['Lead-to-dealer routing', 'HubSpot + Salesforce sync', 'After-sales reminders'],
+        href: '/automotive',
+      },
+      {
+        tag: '03',
+        name: 'Real estate',
+        img: '/media/real-estate-e1763391592382.png',
+        blurb: 'Capture qualified buyers and renters, schedule visits, never miss a hot lead again.',
+        bullets: ['Listing matchmaking', 'WhatsApp form-fills', 'Agent handoff'],
+        href: '/real-estate',
+      },
+    ];
+---
+
+<section class="industries sec bg-paper has-blobs" id="solutions">
+  <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: 8%; left: -180px;" aria-hidden="true"></span>
+  <span class="blob blob-green-deep blob-md blob-anim-b" style="bottom: 5%; right: -120px;" aria-hidden="true"></span>
+  <div class="wrap industries-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 industries-title">
+      {copy.titleLine1}<br/>
+      <span class="ind-accent">{copy.titleAccent}</span>
+    </h2>
+  </div>
+
+  <div class="wrap industries-grid reveal-stagger">
+    {items.map((it, i) => (
+      <article class="indi">
+        <div class="indi-img">
+          <img src={it.img} alt={it.name} loading={i === 0 ? 'eager' : 'lazy'} decoding="async"/>
+          <span class="indi-tag">{it.tag} · {copy.vertical}</span>
+        </div>
+        <div class="indi-body">
+          <header class="indi-h">
+            <h3 class="indi-name">{it.name}</h3>
+            <span class="indi-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </span>
+          </header>
+          <p class="indi-blurb">{it.blurb}</p>
+          <ul class="indi-bullets">
+            {it.bullets.map((b) => (
+              <li><span class="tick" aria-hidden="true">✓</span>{b}</li>
+            ))}
+          </ul>
+          <a class="indi-link" href={it.href}>
+            <span>{copy.explore}</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .industries-head {
+    display: flex; flex-direction: column; gap: 16px;
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .industries-title { max-width: 22ch; font-size: clamp(32px, 4vw, 56px); }
+  .ind-accent { color: var(--gc-primary); }
+
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .indi {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-2xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-xs);
+    transition:
+      box-shadow var(--dur-med) var(--ease-out-expo),
+      transform var(--dur-med) var(--ease-out-expo),
+      border-color var(--dur-med) var(--ease-out-expo);
+    transform-style: preserve-3d;
+  }
+  .indi:hover {
+    box-shadow: var(--shadow-md);
+    transform: perspective(900px) rotateX(1.5deg) rotateY(-2deg) translateY(-4px);
+    border-color: var(--gc-primary-soft);
+  }
+
+  .indi-img {
+    position: relative;
+    overflow: hidden;
+    background: var(--gc-primary-mist);
+    display: block;
+    /* Padding trick — guarantees a 5:3 box even when aspect-ratio fails */
+    height: 0;
+    padding-bottom: 60%;
+  }
+  .indi-img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s var(--ease-out-expo);
+  }
+  .indi:hover .indi-img img { transform: scale(1.04); }
+
+  .indi-tag {
+    position: absolute; top: 14px; left: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    color: var(--fg-2);
+    padding: 6px 12px;
+    border-radius: var(--r-full);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .indi-body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+  }
+  .indi-h {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .indi-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: var(--tr-tight);
+    color: var(--fg-1);
+    line-height: 1.05;
+  }
+  .indi-arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 36px; height: 36px;
+    border-radius: var(--r-full);
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary);
+    flex-shrink: 0;
+    transition: background var(--dur-med) var(--ease-out-expo), color var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+  }
+  .indi-arrow svg { width: 16px; height: 16px; }
+  .indi:hover .indi-arrow {
+    background: var(--gc-primary);
+    color: #fff;
+    transform: translate(2px, -2px);
+  }
+
+  .indi-blurb {
+    color: var(--fg-2);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 36ch;
+  }
+
+  .indi-bullets {
+    display: flex; flex-direction: column;
+    gap: 10px;
+    padding-block: 4px 6px;
+    border-top: 1px dashed var(--border-default);
+    padding-top: 18px;
+    margin-top: 4px;
+  }
+  .indi-bullets li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 13.5px;
+    color: var(--fg-2);
+    font-weight: 500;
+  }
+  .indi-bullets .tick {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px;
+    background: var(--gc-accent-green-soft);
+    color: var(--gc-accent-green-deep);
+    border-radius: var(--r-full);
+    font-size: 10px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .indi-link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gc-primary);
+    padding-top: 8px;
+    letter-spacing: 0.01em;
+  }
+  .indi-link svg { transition: transform var(--dur-med) var(--ease-out-expo); }
+  .indi-link:hover svg { transform: translateX(4px); }
+
+  @media (max-width: 980px) {
+    .industries-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .indi-body { padding: 22px; }
+    .indi-name { font-size: 24px; }
+    .indi-blurb { font-size: 14px; }
+    .industries-title { font-size: clamp(28px, 7.5vw, 40px); }
+  }
+</style>

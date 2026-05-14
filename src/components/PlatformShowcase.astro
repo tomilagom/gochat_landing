@@ -1,0 +1,468 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Producto · UI real',
+      titlePart1: 'Una plataforma,',
+      titleAccent: 'todo en un solo lugar.',
+      lead: 'Así se ve realmente — sin mockups. El producto que tu equipo usa todos los días, capturado al 1:1.',
+      tabsAria: 'Funcionalidades del producto',
+      previous: 'Anterior',
+      next: 'Siguiente',
+    }
+  : {
+      eyebrow: 'Product · real UI',
+      titlePart1: 'One platform,',
+      titleAccent: 'all in one place.',
+      lead: 'This is what it really looks like — no mockups. The product your team actually uses, captured at 1:1.',
+      tabsAria: 'Product features',
+      previous: 'Previous',
+      next: 'Next',
+    };
+
+const slides = isES
+  ? [
+      {
+        id: 'builder',
+        label: 'Constructor de flujos',
+        title: 'Constructor de flujos drag &amp; drop',
+        blurb: 'Diseña conversaciones visualmente — ramificación, repetición, espera — sin escribir una línea de código.',
+        bullets: ['Lienzo visual', 'Sub-flujos + bloques reutilizables', 'Variables y condiciones'],
+        img: '/media/GoChat-drag-and-drop.png',
+      },
+      {
+        id: 'analytics',
+        label: 'Analítica en vivo',
+        title: 'Analítica en tiempo real',
+        blurb: 'Conversiones, abandonos, canales y agentes — medidos en el momento exacto en que ocurren.',
+        bullets: ['Reportes de embudo', 'KPIs por canal', 'Exportación a data warehouse'],
+        img: '/media/GoChat-analytics.png',
+      },
+      {
+        id: 'broadcasts',
+        label: 'Envíos masivos',
+        title: 'Envíos masivos a escala',
+        blurb: 'Programa campañas de WhatsApp a miles de contactos. Plantillas, segmentación y reintentos.',
+        bullets: ['Plantillas de WA aprobadas por Meta', 'Segmentos de audiencia', 'Confirmación de entrega y lectura'],
+        img: '/media/GoChat-2025-01-29_08_35.png',
+      },
+      {
+        id: 'inbox',
+        label: 'Bot ↔ humano',
+        title: 'Bot y humano en una sola bandeja',
+        blurb: 'Agentes y bots comparten la misma vista de conversación. Derivación en un clic, con todo el contexto.',
+        bullets: ['Ruteo inteligente', 'Notas internas', 'Móvil + web para agentes'],
+        img: '/media/GoChat-agents-chat.png',
+      },
+      {
+        id: 'integrations',
+        label: 'Integraciones',
+        title: '40+ integraciones nativas',
+        blurb: 'CRMs, pagos, calendarios, hojas de cálculo, telefonía — conectados en minutos con nuestros conectores o API.',
+        bullets: ['API REST + webhooks', 'Zapier / Make sin código', 'Customer.io · HubSpot · Shopify'],
+        img: '/media/GoChat-integrations.png',
+      },
+    ]
+  : [
+      {
+        id: 'builder',
+        label: 'Flow builder',
+        title: 'Drag &amp; drop flow builder',
+        blurb: 'Compose conversations visually — branch, loop, await — without writing a line of code.',
+        bullets: ['Visual canvas', 'Sub-flows + reusable blocks', 'Variables &amp; conditions'],
+        img: '/media/GoChat-drag-and-drop.png',
+      },
+      {
+        id: 'analytics',
+        label: 'Live analytics',
+        title: 'Real-time analytics',
+        blurb: 'Conversions, drop-offs, channels, agents — measured the moment they happen.',
+        bullets: ['Funnel reporting', 'Per-channel KPIs', 'Export to data warehouse'],
+        img: '/media/GoChat-analytics.png',
+      },
+      {
+        id: 'broadcasts',
+        label: 'Broadcasts',
+        title: 'Broadcasts at scale',
+        blurb: 'Schedule WhatsApp campaigns to thousands of contacts. Templates, segmentation, retries.',
+        bullets: ['WA templates approved by Meta', 'Audience segments', 'Delivery + read receipts'],
+        img: '/media/GoChat-2025-01-29_08_35.png',
+      },
+      {
+        id: 'inbox',
+        label: 'Bot ↔ human',
+        title: 'Bot &amp; human in one inbox',
+        blurb: 'Agents and bots share the same threaded view. Hand off in a click, with full context.',
+        bullets: ['Smart routing', 'Internal notes', 'Mobile + web for agents'],
+        img: '/media/GoChat-agents-chat.png',
+      },
+      {
+        id: 'integrations',
+        label: 'Integrations',
+        title: '40+ native integrations',
+        blurb: 'CRMs, payments, calendars, sheets, telephony — wired in minutes via our connectors or API.',
+        bullets: ['REST API + webhooks', 'No-code Zapier / Make', 'Customer.io · HubSpot · Shopify'],
+        img: '/media/GoChat-integrations.png',
+      },
+    ];
+---
+
+<section class="ps sec bg-paper has-blobs">
+  <span class="blob blob-green blob-md blob-anim-b parallax" style="top: 10%; right: -160px; opacity: 0.4;" aria-hidden="true"></span>
+  <span class="blob blob-violet blob-lg blob-anim-a" style="bottom: -180px; left: -100px;" aria-hidden="true"></span>
+  <div class="wrap ps-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 ps-title">
+      {copy.titlePart1} <span class="ind-accent">{copy.titleAccent}</span>
+    </h2>
+    <p class="lead ps-lead">{copy.lead}</p>
+  </div>
+
+  <div class="wrap ps-wrap">
+    <!-- Tabs -->
+    <div class="ps-tabs" role="tablist" aria-label={copy.tabsAria}>
+      {slides.map((s, i) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`slide-${s.id}`}
+          class={`ps-tab${i === 0 ? ' is-on' : ''}`}
+          data-idx={i}
+        >
+          <span class="ps-tab-num">0{i+1}</span>
+          <span class="ps-tab-label">{s.label}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Carousel -->
+    <div class="ps-stage">
+      <div class="ps-track" data-track>
+        {slides.map((s, i) => (
+          <article
+            id={`slide-${s.id}`}
+            role="tabpanel"
+            class={`ps-slide${i === 0 ? ' is-on' : ''}`}
+            data-idx={i}
+            aria-hidden={i === 0 ? 'false' : 'true'}
+          >
+            <div class="ps-shot">
+              <span class="ps-chrome" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="ps-url">app.gochat.ar / {s.label.toLowerCase()}</span>
+              </span>
+              <img src={s.img} alt={s.label} loading={i === 0 ? 'eager' : 'lazy'}/>
+            </div>
+            <div class="ps-cap">
+              <h3 class="ps-cap-title" set:html={s.title}/>
+              <p class="ps-cap-blurb" set:html={s.blurb}/>
+              <ul class="ps-cap-bullets">
+                {s.bullets.map((b) => (
+                  <li><span class="tick">✓</span><span set:html={b}/></li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="ps-foot">
+        <div class="ps-dots" aria-hidden="true">
+          {slides.map((_s, i) => (
+            <span class={`ps-dot${i === 0 ? ' is-on' : ''}`} data-idx={i}></span>
+          ))}
+        </div>
+        <div class="ps-nav">
+          <button type="button" class="ps-arrow" data-dir="-1" aria-label={copy.previous}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="ps-arrow" data-dir="1" aria-label={copy.next}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('.ps') as HTMLElement | null;
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.ps-tab'));
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.ps-slide'));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('.ps-dot'));
+    const arrows = Array.from(root.querySelectorAll<HTMLButtonElement>('.ps-arrow'));
+    let idx = 0;
+    let timer: number | null = null;
+    const ROTATE_MS = 5500;
+
+    function show(next: number) {
+      idx = (next + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        const on = i === idx;
+        s.classList.toggle('is-on', on);
+        s.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+      tabs.forEach((t, i) => {
+        const on = i === idx;
+        t.classList.toggle('is-on', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+    }
+
+    function start() {
+      stop();
+      timer = window.setInterval(() => show(idx + 1), ROTATE_MS);
+    }
+    function stop() {
+      if (timer !== null) { window.clearInterval(timer); timer = null; }
+    }
+
+    tabs.forEach((t) => t.addEventListener('click', () => { show(Number(t.dataset.idx)); start(); }));
+    dots.forEach((d) => d.addEventListener('click', () => { show(Number(d.dataset.idx)); start(); }));
+    arrows.forEach((a) => a.addEventListener('click', () => { show(idx + Number(a.dataset.dir)); start(); }));
+
+    // Auto-rotate only when visible; pause on hover/focus
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) start(); else stop();
+      }
+    }, { threshold: 0.25 });
+    io.observe(root);
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+  }
+</script>
+
+<style>
+  .ps-head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: clamp(36px, 4vw, 56px);
+    max-width: 760px;
+  }
+  .ps-title { font-size: clamp(32px, 4vw, 56px); }
+  .ind-accent { color: var(--gc-primary); }
+
+  /* Tabs */
+  .ps-wrap {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-2xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .ps-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-bottom: 1px solid var(--border-default);
+    background: var(--gc-paper-cool);
+  }
+  .ps-tab {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    text-align: left;
+    border-right: 1px solid var(--border-subtle);
+    position: relative;
+    transition: background var(--dur-fast) var(--ease-out-expo), color var(--dur-fast) var(--ease-out-expo);
+    cursor: pointer;
+  }
+  .ps-tab:last-child { border-right: 0; }
+  .ps-tab:hover { background: rgba(89, 106, 213, 0.06); }
+  .ps-tab.is-on { background: #fff; }
+  .ps-tab.is-on::after {
+    content: '';
+    position: absolute;
+    left: 18px; right: 18px;
+    bottom: -1px;
+    height: 2px;
+    background: var(--gc-primary);
+    border-radius: 2px;
+  }
+  .ps-tab-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--fg-3);
+    letter-spacing: 0.08em;
+    font-family: var(--font-sans);
+  }
+  .ps-tab.is-on .ps-tab-num { color: var(--gc-primary); }
+  .ps-tab-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--fg-2);
+    letter-spacing: var(--tr-snug);
+    line-height: 1.15;
+  }
+  .ps-tab.is-on .ps-tab-label { color: var(--fg-1); }
+
+  /* Stage */
+  .ps-stage {
+    padding: clamp(20px, 2.5vw, 32px);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .ps-track {
+    position: relative;
+    display: grid;
+    /* All slides share the same cell; we toggle opacity for cross-fade */
+  }
+  .ps-slide {
+    grid-area: 1 / 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr);
+    gap: clamp(20px, 3vw, 40px);
+    align-items: center;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity var(--dur-slow) var(--ease-out-expo), transform var(--dur-slow) var(--ease-out-expo);
+  }
+  .ps-slide.is-on {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Screenshot frame with browser chrome */
+  .ps-shot {
+    position: relative;
+    background: var(--gc-n-950);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow: 0 24px 60px -24px rgba(15, 23, 42, 0.30), 0 4px 12px -4px rgba(15, 23, 42, 0.10);
+  }
+  .ps-chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #1f1f2a;
+    color: rgba(255,255,255,0.6);
+  }
+  .ps-chrome .dot {
+    width: 10px; height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.25);
+  }
+  .ps-chrome .dot:nth-child(1) { background: #FF5F57; }
+  .ps-chrome .dot:nth-child(2) { background: #FEBC2E; }
+  .ps-chrome .dot:nth-child(3) { background: #28C840; }
+  .ps-url {
+    margin-left: 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.55);
+  }
+  .ps-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* Caption */
+  .ps-cap { display: flex; flex-direction: column; gap: 16px; padding: 8px 8px 8px 0; }
+  .ps-cap-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(24px, 2.4vw, 34px);
+    letter-spacing: var(--tr-tight);
+    line-height: 1.15;
+    color: var(--fg-1);
+  }
+  .ps-cap-blurb { color: var(--fg-2); font-size: 16px; line-height: 1.55; }
+  .ps-cap-bullets { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .ps-cap-bullets li {
+    display: flex; align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--fg-2);
+    font-weight: 500;
+  }
+  .ps-cap-bullets .tick {
+    display: inline-grid; place-items: center;
+    width: 20px; height: 20px;
+    background: var(--gc-accent-green-soft);
+    color: var(--gc-accent-green-deep);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  /* Foot: dots + arrows */
+  .ps-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+  }
+  .ps-dots { display: inline-flex; gap: 6px; align-items: center; }
+  .ps-dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--gc-n-300);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out-expo), width var(--dur-med) var(--ease-out-expo);
+  }
+  .ps-dot.is-on { width: 22px; background: var(--gc-primary); }
+  .ps-nav { display: inline-flex; gap: 8px; }
+  .ps-arrow {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--border-default);
+    color: var(--fg-1);
+    display: inline-grid; place-items: center;
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out-expo), color var(--dur-fast) var(--ease-out-expo), border-color var(--dur-fast) var(--ease-out-expo);
+  }
+  .ps-arrow svg { width: 18px; height: 18px; }
+  .ps-arrow:hover { background: var(--gc-primary); color: #fff; border-color: var(--gc-primary); }
+
+  @media (max-width: 1024px) {
+    .ps-tabs {
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .ps-tabs::-webkit-scrollbar { display: none; }
+    .ps-slide { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .ps-tabs { display: flex; grid-template-columns: none; }
+    .ps-tab { padding: 14px 16px; min-width: 130px; flex-shrink: 0; }
+    .ps-tab-label { font-size: 13.5px; }
+    .ps-title { font-size: clamp(28px, 8vw, 40px); }
+    .ps-stage { padding: 16px; }
+    .ps-cap-title { font-size: 22px; }
+    .ps-cap-blurb { font-size: 14.5px; }
+    .ps-shot img { aspect-ratio: 4 / 3; }
+    .ps-url { display: none; }
+  }
+</style>

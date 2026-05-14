@@ -1,0 +1,305 @@
+---
+import { localizedHref, switchLangHref, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+
+const isES = lang === 'es';
+const homeHref = isES ? '/es/' : '/';
+const pricingHref = isES ? '/es/#pricing' : '/#pricing';
+const demoHref = isES ? '/es/#demo' : '/#demo';
+
+const solutions = isES
+  ? [
+      { label: 'Automotive', href: localizedHref('/automotive', lang), icon: '🚗', blurb: 'IA que vende autos 24/7.' },
+      { label: 'Real Estate', href: localizedHref('/real-estate', lang), icon: '🏡', blurb: 'Concierge digital para inmobiliarias.' },
+      { label: 'E-commerce',  href: localizedHref('/ecommerce', lang), icon: '🛒', blurb: 'Recupera carritos y vende más.' },
+    ]
+  : [
+      { label: 'Automotive', href: '/automotive', icon: '🚗', blurb: 'AI agents that sell cars 24/7.' },
+      { label: 'Real Estate', href: '/real-estate', icon: '🏡', blurb: 'A digital concierge for property teams.' },
+      { label: 'E-commerce',  href: '/ecommerce',  icon: '🛒', blurb: 'Recover carts, qualify shoppers, push offers.' },
+    ];
+
+const baseMenu = isES
+  ? [
+      { label: 'Inicio', href: homeHref },
+      { label: 'Precios', href: pricingHref },
+      { label: 'Docs', href: 'https://docs.gochat.ar' },
+      { label: 'Solicitar demo', href: demoHref },
+    ]
+  : [
+      { label: 'Home', href: homeHref },
+      { label: 'Pricing', href: pricingHref },
+      { label: 'Docs', href: 'https://docs.gochat.ar' },
+      { label: 'Book a demo', href: demoHref },
+    ];
+
+const solutionsLabel = isES ? 'Soluciones' : 'Solutions';
+const loginLabel = isES ? 'Iniciar sesión' : 'Login';
+
+const currentPath = Astro.url.pathname;
+const enSwitchHref = switchLangHref(currentPath, 'en');
+const esSwitchHref = switchLangHref(currentPath, 'es');
+---
+
+<header class="nav" id="top">
+  <div class="wrap nav-inner">
+    <a href={homeHref} class="brand" aria-label="GoChat">
+      <img src="/media/gochat_logo-1-300x134.png" alt="GoChat"/>
+    </a>
+
+    <nav class="nav-center" aria-label="Primary">
+      {baseMenu.map((m) => (
+        <a class="nav-link" href={m.href}>{m.label}</a>
+      ))}
+
+      <div class="nav-drop" data-drop>
+        <button class="nav-link nav-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+          {solutionsLabel}
+          <svg class="nav-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <div class="nav-menu" role="menu">
+          <div class="nav-menu-inner">
+            {solutions.map((s) => (
+              <a class="nav-item" href={s.href} role="menuitem">
+                <span class="nav-item-icon" aria-hidden="true">{s.icon}</span>
+                <span class="nav-item-text">
+                  <span class="nav-item-label">{s.label}</span>
+                  <span class="nav-item-blurb">{s.blurb}</span>
+                </span>
+                <span class="nav-item-arrow" aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Language">
+        <a class={`lang-btn${!isES ? ' is-on' : ''}`} href={enSwitchHref} hreflang="en">EN</a>
+        <a class={`lang-btn${isES ? ' is-on' : ''}`} href={esSwitchHref} hreflang="es">ES</a>
+      </div>
+      <a class="nav-login" href="https://gochat.hyppo.io">{loginLabel}</a>
+    </div>
+
+    <button class="burger" aria-label="Menu" type="button">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  // Keyboard + click toggle for the Solutions dropdown
+  const root = document.querySelector<HTMLElement>('[data-drop]');
+  if (root) {
+    const trigger = root.querySelector<HTMLButtonElement>('.nav-trigger');
+    function open() {
+      root!.classList.add('is-open');
+      trigger?.setAttribute('aria-expanded', 'true');
+    }
+    function close() {
+      root!.classList.remove('is-open');
+      trigger?.setAttribute('aria-expanded', 'false');
+    }
+    trigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (root!.classList.contains('is-open')) close(); else open();
+    });
+    document.addEventListener('click', (e) => {
+      if (!root!.contains(e.target as Node)) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  }
+</script>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding-block: 14px;
+  }
+
+  .brand { display: inline-flex; align-items: center; padding: 4px 0; }
+  .brand img { height: 56px !important; width: auto; display: block; }
+
+  .nav-center {
+    display: inline-flex;
+    align-items: center;
+    gap: 32px;
+    justify-self: center;
+  }
+  .nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fg-1);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color var(--dur-fast) var(--ease-out-expo);
+    position: relative;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+  }
+  .nav-link:hover { color: var(--gc-primary); }
+  .nav-caret { opacity: 0.6; transition: transform var(--dur-fast) var(--ease-out-expo); }
+
+  /* Dropdown */
+  .nav-drop { position: relative; }
+  .nav-menu {
+    position: absolute;
+    top: calc(100% + 22px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: clamp(320px, 32vw, 380px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+  }
+  .nav-menu-inner {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-md);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .nav-menu::before {
+    content: '';
+    position: absolute;
+    inset: -22px 0 auto 0;
+    height: 22px;
+  }
+
+  .nav-drop:hover .nav-menu,
+  .nav-drop.is-open .nav-menu,
+  .nav-drop:focus-within .nav-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-drop:hover .nav-caret,
+  .nav-drop.is-open .nav-caret,
+  .nav-drop:focus-within .nav-caret { transform: rotate(180deg); }
+  .nav-drop:hover .nav-trigger,
+  .nav-drop.is-open .nav-trigger { color: var(--gc-primary); }
+
+  .nav-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: var(--r-lg);
+    transition: background var(--dur-fast) var(--ease-out-expo);
+    color: var(--fg-1);
+  }
+  .nav-item:hover { background: var(--gc-primary-mist); }
+  .nav-item-icon {
+    display: inline-grid; place-items: center;
+    width: 36px; height: 36px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary-deep);
+    border-radius: 10px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .nav-item-text { display: flex; flex-direction: column; gap: 2px; }
+  .nav-item-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+  }
+  .nav-item-blurb {
+    font-size: 12.5px;
+    color: var(--fg-3);
+    line-height: 1.3;
+  }
+  .nav-item-arrow {
+    font-size: 16px;
+    color: var(--gc-primary);
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .nav-item:hover .nav-item-arrow { opacity: 1; transform: translateX(2px); }
+
+  /* Right side */
+  .nav-right { display: inline-flex; align-items: center; gap: 14px; }
+
+  .lang {
+    display: inline-flex;
+    border: 1px solid var(--border-default);
+    border-radius: 999px;
+    padding: 3px;
+    background: #fff;
+  }
+  .lang-btn {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--fg-3);
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    transition: background var(--dur-fast) var(--ease-out-expo), color var(--dur-fast) var(--ease-out-expo);
+  }
+  .lang-btn:hover { color: var(--fg-1); }
+  .lang-btn.is-on { background: var(--gc-primary); color: #fff; }
+
+  .nav-login {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg-1);
+    padding: 9px 22px;
+    border: 1px solid var(--border-default);
+    border-radius: 999px;
+    background: #fff;
+    transition: background var(--dur-fast) var(--ease-out-expo), border-color var(--dur-fast) var(--ease-out-expo);
+  }
+  .nav-login:hover {
+    background: var(--gc-primary-mist);
+    border-color: var(--gc-primary);
+    color: var(--gc-primary-deep);
+  }
+
+  .burger { display: none; }
+
+  @media (max-width: 980px) {
+    .nav-center, .nav-right .lang, .nav-login { display: none; }
+    .brand img { height: 44px !important; }
+    .burger {
+      display: inline-grid;
+      width: 40px; height: 40px;
+      place-items: center;
+      border: 1px solid var(--border-default);
+      border-radius: 999px;
+      background: #fff;
+    }
+    .burger span { display: block; width: 16px; height: 1.5px; background: var(--fg-1); margin: 2px 0; }
+  }
+</style>

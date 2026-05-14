@@ -1,0 +1,236 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'FAQs',
+      title: 'Preguntas frecuentes',
+      leadPart1: '¿No encuentras lo que buscas?',
+      leadLink: 'Contáctanos aquí',
+      demoHref: '/es/#demo',
+    }
+  : {
+      eyebrow: 'FAQs',
+      title: 'Frequently asked questions',
+      leadPart1: 'Can’t find the answer you are looking for?',
+      leadLink: 'Reach out here',
+      demoHref: '/#demo',
+    };
+
+const faqs = isES
+  ? [
+      {
+        q: '¿Cómo empiezo?',
+        a: 'Solicita una demo o inicia una prueba gratis de 14 días — sin tarjeta de crédito. Estarás en el constructor en minutos.',
+      },
+      {
+        q: '¿Puedo conectar mi WhatsApp con un código QR?',
+        a: 'Sí, para pruebas y cuentas pequeñas. Para confiabilidad de producción recomendamos la API de WhatsApp Business — onboarding en minutos.',
+      },
+      {
+        q: '¿Puedo comprar add-ons para los planes?',
+        a: 'Sí. Añade números de WhatsApp, miembros de cuenta y usuarios extra a la carta. Se facturan mensualmente junto con tu plan.',
+      },
+      {
+        q: '¿Puedo conectar mi cuenta de WhatsApp Business?',
+        a: 'Sí. GoChat es Meta Business Partner — puedes conectar tu cuenta verificada de WhatsApp Business directamente desde la configuración.',
+      },
+      {
+        q: '¿Qué es un usuario y cómo cuenta para la facturación?',
+        a: 'Un usuario es un contacto único que interactuó con tu bot en el período de facturación. Los visitantes anónimos del webchat solo cuentan cuando interactúan.',
+      },
+      {
+        q: '¿Hay un plan anual?',
+        a: 'Sí. La facturación anual ahorra alrededor de un 10% frente a la mensual. Los planes Custom siempre incluyen compromiso anual.',
+      },
+      {
+        q: '¿Cómo pago la suscripción?',
+        a: 'Tarjetas de crédito principales vía Stripe, más transferencia bancaria para planes Enterprise y Custom.',
+      },
+      {
+        q: '¿Qué pasa cuando termina mi prueba gratis?',
+        a: 'Tu workspace queda en modo solo lectura por 30 días. Actualiza el plan cuando quieras para mantener los flujos activos y el historial intacto.',
+      },
+      {
+        q: '¿Qué es GoChat?',
+        a: 'GoChat es el Chatbot de IA para cualquier negocio — una plataforma drag-and-drop para construir flujos de automatización en 12+ canales, con agentes de IA por encima.',
+      },
+      {
+        q: '¿Puedo cancelar mi suscripción cuando quiera?',
+        a: 'Sí — cancela cuando quieras desde la configuración. Conservamos tus datos durante 30 días por si cambias de opinión.',
+      },
+    ]
+  : [
+      {
+        q: 'How do I get started?',
+        a: 'Book a demo or start a 14-day free trial — no credit card required. You’ll be in the builder in minutes.',
+      },
+      {
+        q: 'Can I connect my WhatsApp with a QR Code?',
+        a: 'You can, for trials and small accounts. For production-grade reliability we recommend the WhatsApp Business API — onboarded in minutes.',
+      },
+      {
+        q: 'Can I purchase add-ons for the plans?',
+        a: 'Yes. Add WhatsApp numbers, account members, and extra users à la carte. They’re billed monthly alongside your plan.',
+      },
+      {
+        q: 'Can I connect my WhatsApp Business account?',
+        a: 'Yes. GoChat is a Meta Business Partner — you can connect your verified WhatsApp Business account directly from settings.',
+      },
+      {
+        q: 'What is a user and how they count for the billing?',
+        a: 'A user is a unique contact that has interacted with your bot in the billing period. Anonymous webchat visitors count only once they engage.',
+      },
+      {
+        q: 'Is there an annual plan?',
+        a: 'Yes. Annual billing saves about 10% versus monthly. Custom plans always include annual commitments.',
+      },
+      {
+        q: 'How to pay for a subscription?',
+        a: 'Major credit cards via Stripe, plus wire transfer for Enterprise + Custom plans.',
+      },
+      {
+        q: 'What happens after my free trial ends?',
+        a: 'Your workspace stays read-only for 30 days. Upgrade anytime to keep flows running and contact history intact.',
+      },
+      {
+        q: 'What is GoChat?',
+        a: 'GoChat is the AI Chatbot for any business — a drag-and-drop platform to build automation flows across 12+ channels, with AI agents on top.',
+      },
+      {
+        q: 'Can I cancel my subscription at any time?',
+        a: 'Yes — cancel anytime from settings. We’ll keep your data on hold for 30 days in case you change your mind.',
+      },
+    ];
+
+const half = Math.ceil(faqs.length / 2);
+const colA = faqs.slice(0, half);
+const colB = faqs.slice(half);
+---
+
+<section class="faqs sec bg-paper has-blobs" id="faqs">
+  <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: 20%; left: -180px;" aria-hidden="true"></span>
+  <span class="blob blob-green-deep blob-md blob-anim-b" style="bottom: -120px; right: -180px;" aria-hidden="true"></span>
+  <span class="blob blob-violet blob-xl blob-anim-a" style="bottom: -280px; left: 30%;" aria-hidden="true"></span>
+  <div class="wrap faqs-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 faqs-title">{copy.title}</h2>
+    <p class="faqs-lead">
+      {copy.leadPart1}
+      <a class="link" href={copy.demoHref}>{copy.leadLink}</a>.
+    </p>
+  </div>
+
+  <div class="wrap faqs-grid">
+    <div class="faqs-col">
+      {colA.map((f, i) => (
+        <details class="faq" {...(i === 0 ? { open: true } : {})}>
+          <summary>
+            <span class="faq-q">{f.q}</span>
+            <span class="faq-toggle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg>
+            </span>
+          </summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+    </div>
+    <div class="faqs-col">
+      {colB.map((f) => (
+        <details class="faq">
+          <summary>
+            <span class="faq-q">{f.q}</span>
+            <span class="faq-toggle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg>
+            </span>
+          </summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .faqs-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    margin-bottom: clamp(40px, 5vw, 56px);
+  }
+  .faqs-title {
+    font-size: clamp(32px, 4vw, 52px);
+    max-width: 18ch;
+  }
+  .faqs-lead { color: var(--fg-2); font-size: 16px; }
+  .link { color: var(--gc-primary); font-weight: 600; }
+  .link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .faqs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .faqs-col { display: flex; flex-direction: column; gap: 10px; }
+
+  .faq {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    padding: 20px 22px;
+    transition: border-color var(--dur-fast) var(--ease-out-expo);
+  }
+  .faq[open] { background: #fff; border-color: var(--gc-primary-soft); }
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-q {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+    line-height: 1.3;
+  }
+  .faq-toggle {
+    display: inline-grid; place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 999px;
+    color: var(--fg-2);
+    transition: transform var(--dur-med) var(--ease-out-expo), background var(--dur-fast) var(--ease-out-expo), color var(--dur-fast) var(--ease-out-expo);
+    flex-shrink: 0;
+  }
+  .faq-toggle svg { width: 16px; height: 16px; }
+  .faq[open] .faq-toggle { transform: rotate(45deg); background: var(--gc-primary); color: #fff; }
+  .faq[open] .faq-q { color: var(--gc-primary-deep); }
+  .faq-a {
+    margin-top: 14px;
+    color: var(--fg-2);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 880px) {
+    .faqs-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .faqs-title { font-size: clamp(26px, 8vw, 36px); }
+    .faq-q { font-size: 15px; }
+    .faq-a { font-size: 14px; }
+  }
+</style>

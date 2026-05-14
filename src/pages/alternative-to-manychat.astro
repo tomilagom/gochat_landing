@@ -1,0 +1,134 @@
+---
+import AlternativePage from '../components/AlternativePage.astro';
+
+const ICONS = {
+  growth: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l6-6 4 4 8-8"/><path d="M15 8h6v6"/></svg>',
+  ai:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="M9 11h.01M15 11h.01M9 15c.8.7 1.8 1.2 3 1.2s2.2-.5 3-1.2"/><path d="M12 2v4M8 3l1.5 2M16 3l-1.5 2"/></svg>',
+  team:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3 3-2-2"/></svg>',
+};
+
+const highlights = [
+  {
+    icon: ICONS.growth,
+    title: 'Growth team included, not sold separately',
+    body: 'Manychat sells the tool. GoChat Custom adds a Hyppo growth pod that builds flows, runs experiments and reports on outcomes weekly — no extra agency fees.',
+  },
+  {
+    icon: ICONS.ai,
+    title: 'Bring your own AI model',
+    body: 'Wire up ChatGPT, Gemini or DeepSeek and switch between them per agent. Manychat keeps you on its OpenAI add-on and meters tokens against your plan.',
+  },
+  {
+    icon: ICONS.team,
+    title: 'Built for LATAM go-to-market',
+    body: 'Native Spanish UI, locally-issued invoices, and a team that knows WhatsApp Business policy in AR/MX/CO/BR. Manychat is a US-first product translated after the fact.',
+  },
+];
+
+const sections = [
+  {
+    title: 'Plans & pricing',
+    rows: [
+      { label: 'Pricing scales with contacts',                go: false, rival: true  },
+      { label: 'Unlimited conversations on every plan',       go: true,  rival: false },
+      { label: 'Transparent flat-rate pricing',               go: true,  rival: 'Tiered by contacts' },
+      { label: 'White-glove migration included',              go: true,  rival: false },
+    ],
+  },
+  {
+    title: 'AI & agents',
+    rows: [
+      { label: 'Bring your own model (ChatGPT, Gemini, DeepSeek)', go: true,  rival: 'OpenAI only' },
+      { label: 'Autonomous AI agents (multi-step + tools)',        go: true,  rival: false },
+      { label: 'MCP server support',                               go: true,  rival: false },
+      { label: 'AI functions & custom tools',                      go: true,  rival: false },
+      { label: 'Intention detection',                              go: true,  rival: true  },
+    ],
+  },
+  {
+    title: 'Channels',
+    rows: [
+      { label: 'WhatsApp Business API (direct BSP)',          go: true,  rival: true  },
+      { label: 'Instagram + Messenger',                       go: true,  rival: true  },
+      { label: 'TikTok',                                       go: true,  rival: false },
+      { label: 'Webchat widget',                              go: true,  rival: true  },
+      { label: 'Telegram',                                    go: true,  rival: true  },
+      { label: 'SMS',                                          go: true,  rival: true  },
+    ],
+  },
+  {
+    title: 'Builder & operations',
+    rows: [
+      { label: 'Drag-and-drop flow builder',                  go: true,  rival: true  },
+      { label: 'Unlimited flows',                              go: true,  rival: false },
+      { label: 'Conditional triggers & sequences',             go: true,  rival: true  },
+      { label: 'Live-chat handoff with internal notes',        go: true,  rival: true  },
+      { label: 'Comment keywords (IG/FB)',                     go: true,  rival: true  },
+      { label: 'Webhooks + open API',                          go: true,  rival: true  },
+    ],
+  },
+  {
+    title: 'Growth services',
+    rows: [
+      { label: 'Weekly optimisation meetings',                go: true,  rival: false },
+      { label: 'Customer Data Platform (Customer.io)',         go: true,  rival: false },
+      { label: 'Push & in-app notifications',                  go: true,  rival: false },
+      { label: 'Hyppo growth experts on your account',         go: true,  rival: false },
+    ],
+  },
+];
+
+const switchSteps = [
+  {
+    title: 'Audit your Manychat workspace',
+    body: 'We map every active flow, automation, and keyword trigger to GoChat blocks — including the audience segments you depend on.',
+  },
+  {
+    title: 'Rebuild flows, faster',
+    body: 'Our team recreates your flows in GoChat with proper AI agents replacing rigid keyword trees. Most accounts go live in 2-3 weeks.',
+  },
+  {
+    title: 'Migrate WhatsApp + Instagram',
+    body: 'We coordinate the BSP swap on WhatsApp and re-connect Instagram/Messenger, with zero downtime on your published numbers.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Is GoChat actually cheaper than Manychat?',
+    a: 'For high-volume accounts, yes — flat pricing means you don\'t pay more as your contact list grows. For smaller accounts, the value is in everything bundled: AI, a growth team, and a CDP that Manychat doesn\'t ship at all.',
+  },
+  {
+    q: 'Can I keep my WhatsApp number when I switch?',
+    a: 'Yes. GoChat is a direct WhatsApp BSP, so we coordinate the migration of your existing number with Meta — no need to publish a new one to your customers.',
+  },
+  {
+    q: 'Do you support Manychat\'s comment-to-DM trigger on Instagram?',
+    a: 'Yes. Comment keywords on Instagram and Facebook are first-class in GoChat — and you can route them straight into an AI agent instead of a static flow.',
+  },
+  {
+    q: 'How long does migration take?',
+    a: 'Most teams are fully live on GoChat within 2-3 weeks. Enterprise migrations with custom CRM integrations typically run 4-6 weeks. Hyppo growth experts run the migration end to end.',
+  },
+  {
+    q: 'Can I use my own AI model?',
+    a: 'Absolutely. Plug your own OpenAI, Anthropic, Google Gemini or DeepSeek keys and assign different models to different agents. Manychat only supports OpenAI through their paid add-on.',
+  },
+];
+---
+
+<AlternativePage
+  competitor="Manychat"
+  competitorTagline="Manychat is great for hobby creators on Instagram. But when you outgrow keyword trees and need real AI agents, omnichannel coverage and a growth team that actually runs flows for you — GoChat is the upgrade."
+  pageTitle="GoChat — The Manychat alternative for serious teams"
+  pageDescription="Looking for a Manychat alternative? Compare GoChat side-by-side — bring your own AI model, unlimited contacts, omnichannel WhatsApp, and a growth team included."
+  headlineBefore="The"
+  highlight="Manychat alternative"
+  headlineAfter="serious teams switch to"
+  lead="If you've outgrown keyword flows, OpenAI add-ons and per-contact pricing, GoChat is the upgrade — with real AI agents, a Hyppo growth pod and flat pricing built around outcomes."
+  highlights={highlights}
+  sections={sections}
+  switchTitle="Move off Manychat in three weeks"
+  switchSteps={switchSteps}
+  faqs={faqs}
+/>

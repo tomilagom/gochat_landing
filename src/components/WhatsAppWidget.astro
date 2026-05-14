@@ -1,0 +1,384 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  phone?: string;
+  lang?: Lang;
+}
+const { phone = '5491163542275', lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      close: 'Cerrar',
+      hi: '¡Hola! 👋',
+      help: '¿Cómo podemos ayudarte hoy?',
+      open: 'Abrir chat de WhatsApp',
+      chatAria: 'Chat de WhatsApp',
+      team: 'Equipo de producto',
+      replies: 'Suele responder al instante',
+      closeChat: 'Cerrar chat',
+      send: 'Enviar mensaje',
+      alert: 'Escribe un mensaje primero.',
+    }
+  : {
+      close: 'Close',
+      hi: 'Hi! 👋',
+      help: 'How can we help you today?',
+      open: 'Open WhatsApp chat',
+      chatAria: 'WhatsApp chat',
+      team: 'Product team',
+      replies: 'Typically replies instantly',
+      closeChat: 'Close chat',
+      send: 'Send message',
+      alert: 'Please write a message first.',
+    };
+---
+
+<div id="wa-w-starter" data-wa-starter>
+  <span id="wa-w-starter-close" aria-label={copy.close}>&times;</span>
+  <h5 id="wa-txt-starter-hi">{copy.hi}</h5>
+  <p id="wa-txt-starter-help">{copy.help}</p>
+</div>
+
+<a id="wa-w-launcher" href="#" aria-label={copy.open} role="button">
+  <svg width="32" height="32" viewBox="0 0 448 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.9 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+  </svg>
+</a>
+
+<aside id="wa-w-chat-box" aria-label={copy.chatAria}>
+  <div class="wa-w-header">
+    <div class="wa-w-header-title">
+      <h4 id="wa-txt-header-team">{copy.team}</h4>
+      <span id="wa-txt-header-replies">{copy.replies}</span>
+    </div>
+    <button class="wa-w-close-btn" id="wa-w-close-btn" aria-label={copy.closeChat}>&times;</button>
+  </div>
+  <div class="wa-w-messages-area">
+    <div class="wa-w-message"><span id="wa-txt-msg-hi">{copy.hi}</span><span class="wa-w-timestamp">09:49</span></div>
+    <div class="wa-w-message"><span id="wa-txt-msg-help">{copy.help}</span><span class="wa-w-timestamp">09:49</span></div>
+  </div>
+  <div class="wa-w-footer">
+    <div class="wa-w-input-group">
+      <span class="wa-w-emoji-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm5-12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-7 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 18c2.757 0 5.243-1.59 6.364-4H5.636C6.757 16.41 9.243 18 12 18z"></path></svg>
+      </span>
+      <input id="wa-w-input-field" type="text" autocomplete="off"/>
+    </div>
+    <button id="wa-w-send-btn" aria-label={copy.send}>
+      <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+    </button>
+  </div>
+</aside>
+
+<div id="wa-w-alert-box" role="status">{copy.alert}</div>
+
+<style>
+  #wa-w-launcher, #wa-w-chat-box, #wa-w-starter,
+  #wa-w-launcher *, #wa-w-chat-box *, #wa-w-starter * {
+    box-sizing: border-box;
+  }
+
+  #wa-w-launcher {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+    background-color: #25d366;
+    color: #fff;
+    z-index: 9999;
+    transition: transform var(--dur-fast, 120ms) var(--ease-out-expo, ease), box-shadow var(--dur-fast, 120ms) var(--ease-out-expo, ease);
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35), 0 2px 6px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  #wa-w-launcher:hover {
+    transform: scale(1.06);
+    box-shadow: 0 10px 28px rgba(37, 211, 102, 0.45), 0 2px 8px rgba(0, 0, 0, 0.18);
+  }
+
+  #wa-w-starter {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    background: #fff;
+    padding: 14px 18px;
+    padding-right: 32px;
+    border-radius: 16px 16px 2px 16px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16), 0 1px 2px rgba(15, 23, 42, 0.08);
+    z-index: 9998;
+    font-family: var(--font-sans, -apple-system, sans-serif);
+    font-size: 14px;
+    line-height: 1.4;
+    color: #111b21;
+    opacity: 0;
+    transform-origin: bottom right;
+    animation: wa-w-bubble-appear 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation-delay: 6s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 220px;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  #wa-w-starter-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #9ca3af;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.2s, background 0.2s;
+    border-radius: 50%;
+    pointer-events: auto;
+  }
+  #wa-w-starter-close:hover { color: #4b5563; background-color: rgba(0,0,0,0.05); }
+  #wa-w-starter.fade-out { opacity: 0; transform: translateY(10px) scale(0.94); pointer-events: none; animation: none; }
+  #wa-w-starter h5 { margin: 0; font-weight: 700; font-size: 15px; color: #111b21; line-height: 1.2; }
+  #wa-w-starter p  { margin: 0; color: #54656f; font-size: 13px; line-height: 1.4; }
+  @keyframes wa-w-bubble-appear {
+    0%   { opacity: 0; transform: scale(0.6) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  #wa-w-chat-box {
+    position: fixed;
+    bottom: -460px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+    width: 360px;
+    border-radius: 14px;
+    background-color: #e5ddd5;
+    z-index: 99999;
+    transition: bottom 0.42s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.24), 0 4px 12px rgba(15, 23, 42, 0.10);
+    overflow: hidden;
+    background-image: url('/media/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    opacity: 0;
+    visibility: hidden;
+    font-family: var(--font-sans, -apple-system, sans-serif);
+  }
+  #wa-w-chat-box.active { bottom: 96px; opacity: 1; visibility: visible; }
+
+  .wa-w-header {
+    padding: 14px 18px;
+    background-color: #008069;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .wa-w-header-title h4 { margin: 0; font-size: 16px; font-weight: 700; color: #fff; }
+  .wa-w-header-title span { font-size: 12px; opacity: 0.92; color: #fff; }
+  .wa-w-close-btn {
+    width: 28px; height: 28px;
+    background-color: #fff;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+    display: flex; align-items: center; justify-content: center;
+    color: #333;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform var(--dur-fast, 120ms) ease, box-shadow var(--dur-fast, 120ms) ease;
+  }
+  .wa-w-close-btn:hover { transform: scale(1.08); box-shadow: 0 4px 8px rgba(0,0,0,0.28); }
+
+  .wa-w-messages-area {
+    flex: 1;
+    padding: 18px 14px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .wa-w-message {
+    background: #fff;
+    padding: 8px 12px;
+    border-radius: 0 12px 12px 12px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.4;
+    align-self: flex-start;
+    color: #111b21;
+  }
+  .wa-w-timestamp {
+    font-size: 10px; color: #999;
+    float: right; margin-left: 10px; margin-top: 4px;
+  }
+
+  .wa-w-footer {
+    background-color: #f0f2f5;
+    padding: 10px;
+    display: flex; align-items: center; gap: 10px;
+    min-height: 60px;
+    z-index: 2;
+  }
+  .wa-w-input-group {
+    flex: 1;
+    background: #fff;
+    border-radius: 24px;
+    padding: 8px 14px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+  }
+  .wa-w-emoji-icon { color: #8696a0; display: inline-flex; align-items: center; }
+  #wa-w-input-field {
+    flex: 1;
+    border: 0;
+    outline: none;
+    font-size: 14px;
+    color: #111b21;
+    background: transparent;
+    padding: 0; margin: 0;
+  }
+  #wa-w-input-field::placeholder { color: #8696a0; }
+
+  #wa-w-send-btn {
+    background: #008069;
+    color: #fff;
+    border: 0;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background var(--dur-fast, 120ms) ease, transform var(--dur-fast, 120ms) ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.18);
+    flex-shrink: 0;
+  }
+  #wa-w-send-btn:hover { background: #006e5a; }
+  #wa-w-send-btn:active { transform: scale(0.96); }
+
+  #wa-w-alert-box {
+    position: fixed;
+    bottom: 104px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1f2937;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 24px;
+    font-size: 13px;
+    z-index: 999999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    font-family: var(--font-sans, sans-serif);
+    width: max-content;
+  }
+  #wa-w-alert-box.show { opacity: 1; visibility: visible; }
+
+  @media (max-width: 480px) {
+    #wa-w-chat-box { width: 92vw; right: 4vw; bottom: -100vh; height: 64vh; }
+    #wa-w-chat-box.active { bottom: 90px; }
+    #wa-w-starter { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #wa-w-starter { animation: none; opacity: 1; }
+  }
+</style>
+
+<script is:inline define:vars={{ phone, lang }}>
+  (function () {
+    function ready(fn) {
+      if (document.readyState !== 'loading') fn();
+      else document.addEventListener('DOMContentLoaded', fn);
+    }
+    ready(function () {
+      var isSpanish = lang === 'es';
+
+      var t = {
+        hi:          isSpanish ? '¡Hola! 👋'                          : 'Hi! 👋',
+        help:        isSpanish ? '¿Cómo podemos ayudarte hoy?'         : 'How can we help you today?',
+        team:        isSpanish ? 'Equipo de producto'                  : 'Product team',
+        replies:     isSpanish ? 'Suele responder al instante'         : 'Typically replies instantly',
+        placeholder: isSpanish ? 'Escribe un mensaje'                  : 'Type a message',
+        alert:       isSpanish ? 'Escribe un mensaje primero.'         : 'Please write a message first.',
+        prefill:     isSpanish ? 'Quiero más información'              : 'I want more information',
+        wa_prefix:   isSpanish ? 'Vengo de gochat.ar: '                : 'Coming from gochat.ar: '
+      };
+
+      function setText(id, value) { var el = document.getElementById(id); if (el) el.innerText = value; }
+      setText('wa-txt-starter-hi',     t.hi);
+      setText('wa-txt-starter-help',   t.help);
+      setText('wa-txt-header-team',    t.team);
+      setText('wa-txt-header-replies', t.replies);
+      setText('wa-txt-msg-hi',         t.hi);
+      setText('wa-txt-msg-help',       t.help);
+
+      var alertBox = document.getElementById('wa-w-alert-box');
+      if (alertBox) alertBox.innerText = t.alert;
+
+      var input = document.getElementById('wa-w-input-field');
+      if (input) {
+        input.placeholder = t.placeholder;
+        input.value = t.prefill;
+      }
+
+      var launcher = document.getElementById('wa-w-launcher');
+      var chatBox  = document.getElementById('wa-w-chat-box');
+      var closeBtn = document.getElementById('wa-w-close-btn');
+      var sendBtn  = document.getElementById('wa-w-send-btn');
+      var starter  = document.getElementById('wa-w-starter');
+      var starterClose = document.getElementById('wa-w-starter-close');
+      var alertTimer;
+
+      function openChat()  { chatBox && chatBox.classList.add('active'); if (starter) starter.classList.add('fade-out'); }
+      function closeChat() { chatBox && chatBox.classList.remove('active'); }
+      function toggleChat(){ if (chatBox && chatBox.classList.contains('active')) closeChat(); else openChat(); }
+
+      function showAlert() {
+        if (!alertBox) return;
+        alertBox.classList.add('show');
+        if (alertTimer) clearTimeout(alertTimer);
+        alertTimer = setTimeout(function () { alertBox.classList.remove('show'); }, 2800);
+      }
+
+      function sendMessage() {
+        var msg = (input && input.value || '').trim();
+        if (!msg) { showAlert(); return; }
+        var url = 'https://api.whatsapp.com/send?phone=' + phone + '&text=' + encodeURIComponent(t.wa_prefix + msg);
+        window.open(url, '_blank', 'noopener');
+        if (input) input.value = '';
+      }
+
+      if (launcher) launcher.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleChat();
+      });
+      if (closeBtn) closeBtn.addEventListener('click', function (e) { e.stopPropagation(); closeChat(); });
+      if (starterClose) starterClose.addEventListener('click', function (e) { e.stopPropagation(); starter.classList.add('fade-out'); });
+      if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+      if (input) input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!chatBox || !chatBox.classList.contains('active')) return;
+        if (chatBox.contains(e.target)) return;
+        if (launcher && launcher.contains(e.target)) return;
+        closeChat();
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,588 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import type { Lang } from '../lib/i18n';
+
+interface ValueProp {
+  title: string;
+  blurb?: string;
+}
+
+interface Props {
+  slug: 'automotive' | 'real-estate' | 'ecommerce';
+  lang?: Lang;
+  title: string;          // Page <title>
+  highlight: string;      // Word wrapped in violet pill inside hero headline
+  headlineBefore: string; // text before the highlight
+  headlineAfter: string;  // text after the highlight
+  lead: string;
+  contextEyebrow?: string;
+  contextTitle: string;
+  contextBody?: string;
+  valueProps?: ValueProp[];
+  video: string;          // /media path to .webm
+  poster?: string;        // optional poster image
+  contextImage?: string;  // optional static asset for the context block (overrides the video)
+  contextImageAlt?: string;
+}
+
+const {
+  slug,
+  lang = 'en',
+  title,
+  highlight,
+  headlineBefore,
+  headlineAfter,
+  lead,
+  contextEyebrow,
+  contextTitle,
+  contextBody,
+  valueProps,
+  video,
+  poster,
+  contextImage,
+  contextImageAlt,
+} = Astro.props;
+
+const isES = lang === 'es';
+
+const t = isES
+  ? {
+      seePricing: 'Ver precios',
+      bookDemo: 'Solicitar demo',
+      trust1: 'Constructor sin código y de bajo código',
+      trust2: 'Prueba gratis de 14 días',
+      trust3: 'Sin tarjeta de crédito',
+      anyChannel: 'CUALQUIER CANAL',
+      anyModel: 'CUALQUIER MODELO',
+      videoAria: 'Demo en vivo del agente',
+      capsEyebrow: 'Todo lo que necesitas',
+      capsTitle: 'Construimos tu agente de IA contigo y para ti.',
+      pricingHref: '/es/#pricing',
+      demoHref: '/es/#demo',
+    }
+  : {
+      seePricing: 'See pricing',
+      bookDemo: 'Book a demo',
+      trust1: 'No-code & low-code builder',
+      trust2: '14-day free trial',
+      trust3: 'No credit card required',
+      anyChannel: 'ANY CHANNEL',
+      anyModel: 'ANY MODEL',
+      videoAria: 'Live agent demo',
+      capsEyebrow: 'Everything you need',
+      capsTitle: 'We build your AI agent with you, for you.',
+      pricingHref: '/#pricing',
+      demoHref: '/#demo',
+    };
+
+const SI = (s: string) => `https://cdn.jsdelivr.net/npm/simple-icons@v14/icons/${s}.svg`;
+
+const channels = [
+  { name: 'WhatsApp',  img: '/media/whatsapp-channel.png',                     brand: '#25D366' },
+  { name: 'Instagram', img: '/media/instagram-channel.png',                    brand: '#DD2A7B' },
+  { name: 'Webchat',   img: '/media/webchat-channel.png',                      brand: '#596AD5' },
+  { name: 'TikTok',    img: '/media/tiktok-scaled-e1763115488777-294x300.png', brand: '#0C0D14' },
+];
+const models = [
+  { name: 'ChatGPT',  img: '/media/chatgpt-icon.png',       brand: '#10A37F' },
+  { name: 'Gemini',   img: SI('googlegemini'),              brand: '#4285F4', remote: true },
+  { name: 'DeepSeek', img: '/media/DeepSeek_logo_icon.png', brand: '#4D6BFE' },
+];
+
+const ICONS = {
+  ai: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="M9 11h.01M15 11h.01M9 15c.8.7 1.8 1.2 3 1.2s2.2-.5 3-1.2"/><path d="M12 2v4M8 3l1.5 2M16 3l-1.5 2"/></svg>',
+  omni: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 18 0v6a3 3 0 0 1-3 3h-3v-7h6"/><path d="M3 12v6a3 3 0 0 0 3 3h3v-7H3"/></svg>',
+  flow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4M6.5 10v4M14 17.5h4M17.5 10v4"/></svg>',
+  lead: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+  human: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3 3-2-2"/></svg>',
+  effect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l6-6 4 4 8-8"/><path d="M15 8h6v6"/></svg>',
+};
+
+const features = isES
+  ? [
+      {
+        icon: ICONS.ai,
+        title: 'Chatbots con IA',
+        blurb: 'Agentes inteligentes que responden FAQs e interactúan con los visitantes 24/7.',
+      },
+      {
+        icon: ICONS.omni,
+        title: 'Engagement omnicanal',
+        blurb: 'Conecta con tus clientes en las plataformas que prefieran — Messenger, Instagram, WhatsApp y más.',
+      },
+      {
+        icon: ICONS.flow,
+        title: 'Constructor de flujos drag-and-drop',
+        blurb: 'Diseña flujos conversacionales visualmente — sin necesidad de código.',
+      },
+      {
+        icon: ICONS.lead,
+        title: 'Generación de leads',
+        blurb: 'Captura emails y teléfonos automáticamente, hace crecer tu lista de contactos y reactiva leads.',
+      },
+      {
+        icon: ICONS.human,
+        title: 'Derivación a humano',
+        blurb: 'Derivación fluida a agentes humanos cuando importa, asegurando una experiencia impecable.',
+      },
+      {
+        icon: ICONS.effect,
+        title: 'Más efectivo que un sitio web',
+        blurb: 'Las ventas conversacionales convierten 3× más que un sitio estático.',
+      },
+    ]
+  : [
+      {
+        icon: ICONS.ai,
+        title: 'AI-Powered Chatbots',
+        blurb: 'Intelligent agents that answer FAQs and engage visitors around the clock, 24/7.',
+      },
+      {
+        icon: ICONS.omni,
+        title: 'Omnichannel Engagement',
+        blurb: 'Connect with customers on their preferred platforms — Messenger, Instagram, WhatsApp and more.',
+      },
+      {
+        icon: ICONS.flow,
+        title: 'Drag-and-Drop Flow Builder',
+        blurb: 'Design conversational flows visually — no coding needed.',
+      },
+      {
+        icon: ICONS.lead,
+        title: 'Lead Generation',
+        blurb: 'Capture email and phone automatically, growing your contact list and re-engaging leads.',
+      },
+      {
+        icon: ICONS.human,
+        title: 'Human Takeover',
+        blurb: 'Seamless handoff to human agents when it matters, ensuring a smooth customer experience.',
+      },
+      {
+        icon: ICONS.effect,
+        title: 'More effective than a website',
+        blurb: 'Conversational sales have 3× more conversion than a static website.',
+      },
+    ];
+
+const description = lead;
+---
+
+<Layout title={title} description={description} lang={lang}>
+  <Nav lang={lang} />
+  <main>
+    <!-- Hero -->
+    <section class="sp-hero" data-slug={slug}>
+      <div class="wrap sp-hero-grid">
+        <div class="sp-copy">
+          <a class="see-pricing" href={t.pricingHref}>{t.seePricing} <span aria-hidden="true">→</span></a>
+
+          <h1 class="sp-title">
+            {headlineBefore} <span class="hl-pill">{highlight}</span>{headlineAfter ? ` ${headlineAfter}` : ''}
+          </h1>
+
+          <p class="sp-lead">{lead}</p>
+
+          <a class="btn btn-primary btn-lg sp-cta" href={t.demoHref}>{t.bookDemo}</a>
+
+          <ul class="sp-trust">
+            <li><span class="check" aria-hidden="true">✓</span> {t.trust1}</li>
+            <li><span class="check" aria-hidden="true">✓</span> {t.trust2}</li>
+            <li><span class="check" aria-hidden="true">✓</span> {t.trust3}</li>
+          </ul>
+
+          <div class="any-pill">
+            <span class="any-label">{t.anyChannel}</span>
+            <ul class="any-icons">
+              {channels.map((c) => (
+                <li title={c.name}><img src={c.img} alt={c.name}/></li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="any-pill">
+            <span class="any-label">{t.anyModel}</span>
+            <ul class="any-icons">
+              {models.map((m) => (
+                <li title={m.name} style={`--brand:${m.brand}; --mask:url(${m.img})`}>
+                  {m.remote ? (
+                    <span class="ico-mask" aria-label={m.name}></span>
+                  ) : (
+                    <img src={m.img} alt={m.name}/>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <aside class="sp-stage" aria-label={t.videoAria}>
+          <video
+            class="sp-video"
+            src={video}
+            poster={poster}
+            autoplay muted loop playsinline
+            preload="metadata"
+          ></video>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Context block -->
+    <section class="sp-ctx sec">
+      <div class="wrap sp-ctx-card">
+        <div class={`sp-ctx-grid${contextImage || video ? ' has-media' : ''}`}>
+          <div class="sp-ctx-text">
+            {contextEyebrow && <span class="eyebrow">{contextEyebrow}</span>}
+            <h2 class="sp-ctx-title">{contextTitle}</h2>
+            {contextBody && <p class="sp-ctx-body">{contextBody}</p>}
+            {valueProps && valueProps.length > 0 && (
+              <ul class="sp-ctx-list">
+                {valueProps.map((v) => (
+                  <li>
+                    <span class="sp-ctx-check" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4 4 10-10"/></svg>
+                    </span>
+                    <div>
+                      <h3 class="sp-ctx-li-title">{v.title}</h3>
+                      {v.blurb && <p class="sp-ctx-li-blurb">{v.blurb}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {(contextImage || video) && (
+            <div class="sp-ctx-art">
+              {contextImage ? (
+                <img class="sp-ctx-media" src={contextImage} alt={contextImageAlt ?? ''} loading="lazy"/>
+              ) : (
+                <video
+                  class="sp-ctx-media"
+                  src={video}
+                  autoplay muted loop playsinline
+                  preload="metadata"
+                ></video>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Capabilities -->
+    <section class="sp-caps sec bg-paper">
+      <div class="wrap sp-caps-head">
+        <span class="eyebrow">{t.capsEyebrow}</span>
+        <h2 class="h2 sp-caps-title">{t.capsTitle}</h2>
+      </div>
+
+      <div class="wrap sp-caps-grid">
+        {features.map((f) => (
+          <article class="sp-cap">
+            <span class="sp-cap-icon" set:html={f.icon}/>
+            <h3 class="sp-cap-title">{f.title}</h3>
+            <p class="sp-cap-blurb">{f.blurb}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>
+
+<style>
+  /* HERO */
+  .sp-hero {
+    background: linear-gradient(180deg, var(--gc-primary-mist), var(--gc-primary-haze) 65%, #fff);
+    padding-block: clamp(40px, 5vw, 80px) clamp(48px, 6vw, 96px);
+    overflow: hidden;
+  }
+  .sp-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .sp-copy { display: flex; flex-direction: column; gap: 0; }
+
+  .see-pricing {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(89, 106, 213, 0.18);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gc-primary-deep);
+    width: fit-content;
+    transition: background var(--dur-fast) var(--ease-out-expo);
+  }
+  .see-pricing:hover { background: #fff; }
+
+  .sp-title {
+    margin-top: 22px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 5.4vw, 56px);
+    line-height: 1.08;
+    letter-spacing: var(--tr-tight);
+    color: var(--fg-1);
+    text-wrap: balance;
+  }
+  .hl-pill {
+    display: inline-block;
+    padding: 0.04em 0.32em 0.06em;
+    background: var(--gc-primary-soft);
+    color: var(--gc-primary-deep);
+    border-radius: 14px;
+    margin: 0 0.04em;
+  }
+
+  .sp-lead {
+    margin-top: 20px;
+    font-size: clamp(16px, 1.3vw, 18px);
+    color: var(--fg-2);
+    line-height: 1.45;
+    max-width: 52ch;
+  }
+
+  .sp-cta {
+    margin-top: 24px;
+    width: 100%;
+    max-width: 460px;
+    justify-content: center;
+    padding-block: 16px;
+    font-size: 15px;
+  }
+
+  .sp-trust {
+    display: flex; flex-wrap: wrap; gap: 16px 22px;
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--fg-2);
+  }
+  .sp-trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+  .sp-trust .check {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px;
+    background: var(--gc-accent-green-soft);
+    color: var(--gc-accent-green-deep);
+    border-radius: 999px;
+    font-size: 10px; font-weight: 800;
+  }
+
+  .any-pill {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border-default);
+    border-radius: 14px;
+    width: fit-content;
+    max-width: 100%;
+  }
+  .any-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; color: var(--fg-3);
+    text-transform: uppercase; flex-shrink: 0;
+  }
+  .any-icons { display: inline-flex; gap: 8px; align-items: center; }
+  .any-icons li {
+    display: grid; place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 8px; overflow: hidden;
+  }
+  .any-icons li img {
+    width: 26px; height: 26px;
+    object-fit: contain;
+    display: block;
+    border-radius: 6px;
+  }
+  .any-icons li .ico-mask {
+    display: block;
+    width: 22px; height: 22px;
+    background-color: var(--brand);
+    -webkit-mask: var(--mask) no-repeat center / contain;
+            mask: var(--mask) no-repeat center / contain;
+  }
+
+  /* Video (already framed as a phone in the asset) */
+  .sp-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sp-video {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    display: block;
+    background: transparent;
+    border-radius: clamp(32px, 3.4vw, 48px);
+    overflow: hidden;
+  }
+
+  /* CONTEXT block */
+  .sp-ctx { background: #fff; padding-block: clamp(40px, 5vw, 80px); }
+  .sp-ctx-card {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-2xl);
+    padding: clamp(28px, 4vw, 56px);
+  }
+  .sp-ctx-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 3vw, 48px);
+    align-items: center;
+  }
+  .sp-ctx-grid.has-media {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+  .sp-ctx-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .sp-ctx-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(24px, 2.8vw, 36px);
+    line-height: 1.2;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+  .sp-ctx-body {
+    color: var(--fg-2);
+    max-width: 52ch;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .sp-ctx-list {
+    display: grid;
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .sp-ctx-list li {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .sp-ctx-check {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary-deep);
+    margin-top: 2px;
+  }
+  .sp-ctx-check :global(svg) { width: 14px; height: 14px; }
+  .sp-ctx-li-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+    line-height: 1.35;
+  }
+  .sp-ctx-li-blurb {
+    color: var(--fg-2);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+  .sp-ctx-art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sp-ctx-media {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    aspect-ratio: auto;
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-md);
+    display: block;
+    background: transparent;
+    object-fit: cover;
+  }
+
+  /* CAPABILITIES */
+  .sp-caps-head {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .sp-caps-title { font-size: clamp(30px, 3.6vw, 48px); max-width: 22ch; }
+
+  .sp-caps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .sp-cap {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+  }
+  .sp-cap:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+  .sp-cap-icon {
+    display: inline-grid; place-items: center;
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary-deep);
+  }
+  .sp-cap-icon :global(svg) { width: 22px; height: 22px; }
+  .sp-cap-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+  }
+  .sp-cap-blurb {
+    color: var(--fg-2);
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 32ch;
+  }
+
+  @media (max-width: 980px) {
+    .sp-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .sp-video { max-width: 360px; }
+    .sp-caps-grid { grid-template-columns: 1fr 1fr; }
+    .sp-ctx-grid.has-media { grid-template-columns: 1fr; }
+    .sp-ctx-art { order: -1; }
+    .sp-ctx-media { max-width: 380px; }
+  }
+  @media (max-width: 600px) {
+    .sp-caps-grid { grid-template-columns: 1fr; }
+    .sp-title { font-size: clamp(30px, 9vw, 44px); }
+    .sp-cta { max-width: none; }
+  }
+</style>

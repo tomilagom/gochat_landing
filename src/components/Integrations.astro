@@ -1,0 +1,491 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Integraciones · 40+',
+      titlePart1: 'Conecta GoChat con tus',
+      titleAccent: 'plataformas favoritas',
+      titlePart2: '.',
+      lead: 'Conectores nativos para las herramientas que tu equipo ya usa. ¿Falta alguna que necesitas? Avísanos — la desarrollamos.',
+      aiTag: '01 · Hub de IA',
+      aiTitle: 'Trae tu propio modelo.',
+      aiBlurb: 'Cambia entre OpenAI, Anthropic, Google, DeepSeek y Meta — por agente, por tarea.',
+      chanTag: '02 · Omnicanal',
+      chanTitle: 'Una bandeja, todos los canales.',
+      chanBlurb: 'Desde WhatsApp Business API hasta Instagram, TikTok y el widget de tu propio sitio.',
+      comTag: '03 · Comercio',
+      comTitle: 'Checkout conversacional.',
+      comBlurb: 'Carritos, productos y pagos — sincronizados en ambas direcciones.',
+      toolsTag: '04 · Productividad y operaciones',
+      toolsTitle: 'Todo lo demás, conectado.',
+      more: 'más',
+      certsTag: 'Certificados y confiables',
+      isoSub: 'Seguridad de la información',
+      socSub: 'Auditado anualmente',
+      metaSub: 'BSP oficial de WhatsApp',
+    }
+  : {
+      eyebrow: 'Integrations · 40+',
+      titlePart1: 'Plug GoChat into your',
+      titleAccent: 'favorite',
+      titlePart2: 'platforms.',
+      lead: "Native connectors for the tools your team already uses. Missing one you need? Tell us — we'll ship it.",
+      aiTag: '01 · AI Hub',
+      aiTitle: 'Bring your own model.',
+      aiBlurb: 'Switch between OpenAI, Anthropic, Google, DeepSeek and Meta — per agent, per task.',
+      chanTag: '02 · Omnichannel',
+      chanTitle: 'One inbox, every channel.',
+      chanBlurb: 'From WhatsApp Business API to Instagram, TikTok and your own site widget.',
+      comTag: '03 · Commerce',
+      comTitle: 'Conversational checkout.',
+      comBlurb: 'Carts, products and payments — synced both ways.',
+      toolsTag: '04 · Productivity & ops',
+      toolsTitle: 'Everything else, wired in.',
+      more: 'more',
+      certsTag: 'Certified & trusted',
+      isoSub: 'Information Security',
+      socSub: 'Audited annually',
+      metaSub: 'Official WhatsApp BSP',
+    };
+
+const SI = (slug: string) => `https://cdn.jsdelivr.net/npm/simple-icons@v14/icons/${slug}.svg`;
+
+const ai = [
+  { name: 'ChatGPT',   img: '/media/chatgpt-icon.png',      brand: '#10A37F' },
+  { name: 'Gemini',    img: SI('googlegemini'),             brand: '#4285F4', remote: true },
+  { name: 'DeepSeek',  img: '/media/DeepSeek_logo_icon.png',brand: '#4D6BFE' },
+  { name: 'Claude',    img: SI('claude'),                   brand: '#D97757', remote: true },
+  { name: 'Meta',      img: SI('meta'),                     brand: '#0866FF', remote: true },
+  { name: 'ElevenLabs',img: SI('elevenlabs'),               brand: '#000000', remote: true },
+];
+
+const channels = [
+  { name: 'WhatsApp',  img: '/media/whatsapp-channel.png',  brand: '#25D366' },
+  { name: 'Instagram', img: '/media/instagram-channel.png', brand: '#DD2A7B' },
+  { name: 'Webchat',   img: '/media/webchat-channel.png',   brand: '#596AD5' },
+  { name: 'TikTok',    img: SI('tiktok'),                   brand: '#0C0D14', remote: true },
+  { name: 'Messenger', img: SI('messenger'),                brand: '#0084FF', remote: true },
+  { name: 'Telegram',  img: SI('telegram'),                 brand: '#229ED9', remote: true },
+];
+
+const commerce = [
+  { name: 'Shopify',     img: SI('shopify'),     brand: '#95BF47' },
+  { name: 'WooCommerce', img: SI('woocommerce'), brand: '#96588A' },
+  { name: 'Stripe',      img: SI('stripe'),      brand: '#635BFF' },
+  { name: 'PayPal',      img: SI('paypal'),      brand: '#003087' },
+];
+
+const tools = [
+  { name: 'Zapier',         img: SI('zapier'),         brand: '#FF4F00' },
+  { name: 'Make',           img: SI('make'),           brand: '#6D00CC' },
+  { name: 'Slack',          img: SI('slack'),          brand: '#4A154B' },
+  { name: 'Gmail',          img: SI('gmail'),          brand: '#EA4335' },
+  { name: 'SendGrid',       img: SI('sendgrid'),       brand: '#1A82E2' },
+  { name: 'Mailchimp',      img: SI('mailchimp'),      brand: '#FFE01B' },
+  { name: 'Calendly',       img: SI('calendly'),       brand: '#006BFF' },
+  { name: 'Cal.com',        img: SI('caldotcom'),      brand: '#0C0D14' },
+  { name: 'Google Sheets',  img: SI('googlesheets'),   brand: '#34A853' },
+  { name: 'Google Business',img: SI('googlemybusiness'),brand: '#4285F4' },
+  { name: 'HubSpot',        img: SI('hubspot'),        brand: '#FF7A59' },
+  { name: 'Customer.io',    img: SI('customerio'),     brand: '#5C2D91' },
+  { name: 'Twilio',         img: SI('twilio'),         brand: '#F22F46' },
+  { name: 'Hyros',          wordmark: 'Hyros',         brand: '#1A4D3F' },
+];
+---
+
+<section class="integ sec bg-paper has-blobs">
+  <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: 15%; right: -200px;" aria-hidden="true"></span>
+  <span class="blob blob-green blob-md blob-anim-b" style="bottom: 10%; left: -160px; opacity: 0.32;" aria-hidden="true"></span>
+  <div class="wrap integ-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 integ-title">
+      {copy.titlePart1} <span class="ind-accent">{copy.titleAccent}</span> {copy.titlePart2}
+    </h2>
+    <p class="lead integ-lead">{copy.lead}</p>
+  </div>
+
+  <!-- Bento: 3 feature cards -->
+  <div class="wrap bento">
+    <article class="cat cat--ai">
+      <header class="cat-head">
+        <span class="cat-tag">{copy.aiTag}</span>
+        <h3 class="cat-name">{copy.aiTitle}</h3>
+        <p class="cat-blurb">{copy.aiBlurb}</p>
+      </header>
+      <ul class="cat-logos">
+        {ai.map((it) => (
+          <li class="logo-pill" style={`--brand:${it.brand}`}>
+            <span class={`pill-ico${it.remote ? ' is-remote' : ''}`}>
+              <img src={it.img} alt={it.name}/>
+            </span>
+            <span>{it.name}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="cat cat--chan">
+      <header class="cat-head">
+        <span class="cat-tag">{copy.chanTag}</span>
+        <h3 class="cat-name">{copy.chanTitle}</h3>
+        <p class="cat-blurb">{copy.chanBlurb}</p>
+      </header>
+      <ul class="cat-chips">
+        {channels.map((c) => (
+          <li class="logo-chip" style={`--brand:${c.brand}`}>
+            <span class={`chip-ico${c.remote ? ' is-remote' : ''}`}>
+              <img src={c.img} alt={c.name} class={c.remote ? 'si' : ''}/>
+            </span>
+            <span class="chip-name">{c.name}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="cat cat--com">
+      <header class="cat-head">
+        <span class="cat-tag">{copy.comTag}</span>
+        <h3 class="cat-name">{copy.comTitle}</h3>
+        <p class="cat-blurb">{copy.comBlurb}</p>
+      </header>
+      <ul class="cat-tiles">
+        {commerce.map((c) => (
+          <li class="brand-tile-c" style={`--brand:${c.brand}`}>
+            <img src={c.img} alt={c.name} class="si"/>
+            <span class="brand-name">{c.name}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="wrap tools-wrap">
+    <div class="tools-head">
+      <span class="cat-tag">{copy.toolsTag}</span>
+      <h3 class="cat-name">{copy.toolsTitle}</h3>
+    </div>
+    <ul class="tools-grid">
+      {tools.map((t) => (
+        <li class="tool" style={`--brand:${t.brand}`}>
+          {t.img ? (
+            <span class="tool-ico"><img src={t.img} alt={t.name} class="si"/></span>
+          ) : (
+            <span class="tool-ico tool-word" aria-hidden="true">{t.wordmark.slice(0,2)}</span>
+          )}
+          <span class="tool-name">{t.name}</span>
+        </li>
+      ))}
+      <li class="tool tool-more">
+        <span class="more-num">26+</span>
+        <span class="tool-name">{copy.more}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Certifications -->
+  <div class="wrap certs">
+    <span class="cat-tag certs-tag">{copy.certsTag}</span>
+    <ul class="certs-row">
+      <li class="cert">
+        <img src="/media/iso_27001_02-1024x704-1.png" alt="ISO 27001"/>
+        <div>
+          <div class="cert-name">ISO 27001</div>
+          <div class="cert-sub">{copy.isoSub}</div>
+        </div>
+      </li>
+      <li class="cert">
+        <img src="/media/SOC-2-Type-II-Badge-748x1024-1.webp" alt="SOC 2 Type II"/>
+        <div>
+          <div class="cert-name">SOC 2 Type II</div>
+          <div class="cert-sub">{copy.socSub}</div>
+        </div>
+      </li>
+      <li class="cert">
+        <img src="/media/meta-business-partner.png" alt="Meta Business Partner"/>
+        <div>
+          <div class="cert-name">Meta Business Partner</div>
+          <div class="cert-sub">{copy.metaSub}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .integ-head {
+    display: flex; flex-direction: column;
+    gap: 16px; align-items: flex-start;
+    max-width: 760px;
+    margin-bottom: clamp(40px, 4vw, 56px);
+  }
+  .integ-title { font-size: clamp(32px, 4vw, 56px); }
+  .ind-accent { color: var(--gc-primary); }
+  .integ-lead { max-width: 50ch; }
+
+  /* Bento layout */
+  .bento {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 0.85fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .cat {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-2xl);
+    padding: 32px;
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow var(--dur-med) var(--ease-out-expo);
+  }
+  .cat:hover { box-shadow: var(--shadow-md); }
+  .cat--ai   { background: linear-gradient(160deg, var(--gc-primary-mist), #fff 60%); }
+  .cat--chan { background: linear-gradient(160deg, var(--gc-accent-green-mist), #fff 60%); }
+
+  .cat-head { display: flex; flex-direction: column; gap: 8px; }
+  .cat-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gc-primary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cat--chan .cat-tag { color: var(--gc-accent-green-deep); }
+  .cat--com  .cat-tag { color: var(--fg-3); }
+  .cat-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    line-height: 1.15;
+  }
+  .cat-blurb { color: var(--fg-2); font-size: 14px; line-height: 1.5; max-width: 36ch; }
+
+  /* AI: pill list with consistently sized icon frames */
+  .cat-logos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .logo-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.78);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fg-1);
+    backdrop-filter: blur(4px);
+    transition: border-color var(--dur-fast) var(--ease-out-expo);
+  }
+  .logo-pill:hover { border-color: var(--brand); }
+  .pill-ico {
+    display: inline-grid;
+    place-items: center;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .pill-ico img {
+    width: 22px; height: 22px;
+    object-fit: contain;
+    display: block;
+  }
+  .pill-ico.is-remote {
+    background: color-mix(in srgb, var(--brand) 12%, transparent);
+  }
+  .pill-ico.is-remote img {
+    width: 16px; height: 16px;
+  }
+
+  /* Channels: brand-colored chip row */
+  .cat-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .logo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px 8px 8px;
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fg-1);
+    transition: border-color var(--dur-fast) var(--ease-out-expo), box-shadow var(--dur-fast) var(--ease-out-expo);
+  }
+  .logo-chip:hover { border-color: var(--brand); box-shadow: var(--shadow-xs); }
+  .chip-ico {
+    display: inline-grid; place-items: center;
+    width: 26px; height: 26px;
+    background: color-mix(in srgb, var(--brand) 12%, transparent);
+    border-radius: 999px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .chip-ico img {
+    width: 20px; height: 20px;
+    object-fit: contain;
+    display: block;
+    border-radius: 5px;
+  }
+  /* Remote SVGs (Simple Icons) — slightly smaller so the brand-colored ring shows */
+  .chip-ico:has(img.si) img,
+  .chip-ico img.si { width: 16px; height: 16px; }
+
+  /* Commerce: big brand tiles */
+  .cat-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .brand-tile-c {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    border-radius: var(--r-md);
+    background: color-mix(in srgb, var(--brand) 8%, #fff);
+    border: 1px solid color-mix(in srgb, var(--brand) 24%, transparent);
+    transition: transform var(--dur-med) var(--ease-out-expo);
+  }
+  .brand-tile-c:hover { transform: translateY(-3px); }
+  .brand-tile-c img {
+    width: auto;
+    max-width: 90px;
+    height: 28px;
+    object-fit: contain;
+  }
+  .brand-tile-c img.si { filter: brightness(0); opacity: 0.85; }
+  .brand-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+  }
+
+  /* Tools section */
+  .tools-wrap { margin-top: 32px; }
+  .tools-head { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .tools-head .cat-tag { color: var(--fg-3); }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  .tool {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    transition: border-color var(--dur-med) var(--ease-out-expo), background var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+  }
+  .tool:hover {
+    border-color: var(--brand);
+    background: color-mix(in srgb, var(--brand) 5%, #fff);
+    transform: translateY(-2px);
+  }
+  .tool-ico {
+    display: inline-grid; place-items: center;
+    width: 32px; height: 32px;
+    border-radius: var(--r-sm);
+    background: color-mix(in srgb, var(--brand) 14%, transparent);
+    color: var(--brand);
+    flex-shrink: 0;
+  }
+  .tool-ico img { width: 18px; height: 18px; object-fit: contain; }
+  .tool-ico img.si { filter: brightness(0); opacity: 0.8; }
+  .tool-word {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: -0.04em;
+    color: var(--brand);
+    background: color-mix(in srgb, var(--brand) 14%, #fff);
+  }
+  .tool-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--fg-1);
+    line-height: 1;
+  }
+  .tool-more {
+    background: linear-gradient(135deg, var(--gc-primary-mist), var(--gc-primary-haze));
+    border-style: dashed;
+    border-color: var(--gc-primary-soft);
+    color: var(--gc-primary-deep);
+  }
+  .tool-more:hover { transform: translateY(-2px); background: var(--gc-primary-soft); }
+  .more-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--gc-primary-deep);
+    letter-spacing: var(--tr-snug);
+  }
+
+  /* Certifications */
+  .certs { margin-top: 40px; }
+  .certs-tag { display: block; margin-bottom: 16px; color: var(--fg-3); }
+  .certs-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .cert {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--dur-med) var(--ease-out-expo);
+  }
+  .cert:hover { box-shadow: var(--shadow-sm); }
+  .cert img { width: 56px; height: 56px; object-fit: contain; flex-shrink: 0; }
+  .cert-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+  }
+  .cert-sub { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
+
+  @media (max-width: 1100px) {
+    .bento { grid-template-columns: 1fr 1fr; }
+    .cat--com { grid-column: 1 / -1; }
+    .tools-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .bento { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr 1fr; }
+    .certs-row { grid-template-columns: 1fr; }
+  }
+</style>

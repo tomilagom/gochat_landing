@@ -1,0 +1,530 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Precios · Prueba gratis de 14 días, cancela cuando quieras',
+      title: 'Paga por lo que crece contigo.',
+      lead: 'Sin costos ocultos.',
+      mostPopular: 'Más popular',
+      perMonth: '/mes',
+      reachUs: 'Contáctanos',
+      addonsEyebrow: 'Add-ons',
+      addonsTitle: 'Ajusta tu plan con add-ons potentes.',
+      addonsLead: 'Escala tu cuenta pieza por pieza. Cancela cualquier add-on cuando quieras.',
+      getAddon: 'Obtener add-on',
+      demoHref: '/es/#demo',
+    }
+  : {
+      eyebrow: 'Pricing · 14-day free trial, cancel anytime',
+      title: 'Pay for what scales with you.',
+      lead: 'No hidden costs.',
+      mostPopular: 'Most popular',
+      perMonth: '/mo',
+      reachUs: 'Reach us',
+      addonsEyebrow: 'Add-ons',
+      addonsTitle: 'Fine-tune your plan with powerful add-ons.',
+      addonsLead: 'Scale your account piece by piece. Cancel any add-on anytime.',
+      getAddon: 'Get add-on',
+      demoHref: '/#demo',
+    };
+
+const plans = isES
+  ? [
+      {
+        id: 'pro',
+        name: 'Professional',
+        tag: 'Todas las funcionalidades, equipos pequeños',
+        emoji: '🏠',
+        monthly: 299,
+        featured: true,
+        cta: 'Empezar prueba gratis',
+        intro: null,
+        features: [
+          ['Prueba gratis de 14 días,', ' sin tarjeta de crédito'],
+          ['10.000', ' usuarios*'],
+          ['5', ' miembros de cuenta*'],
+          ['Omnicanal', ' — todos los canales por el precio de uno, incluyendo ', '1 número de WhatsApp'],
+          ['Ilimitadas', ' conversaciones'],
+          ['Todas las', ' integraciones (incluidas las de IA)'],
+          ['Todas las funcionalidades de IA', ' (agentes, funciones, tareas)'],
+          ['Integración con Customer.io', ''],
+          ['Triggers', ''],
+          ['Webhooks', ''],
+          ['Secuencias', ''],
+          ['Envíos masivos', ''],
+          ['Analítica', ' (agente y conversaciones)'],
+          ['Flujos, workflows', ' y sub-flujos'],
+          ['API de GoChat', ''],
+          ['Soporte:', ' email, chat con IA'],
+        ],
+      },
+      {
+        id: 'ent',
+        name: 'Enterprise',
+        tag: 'Para negocios en crecimiento',
+        emoji: '📈',
+        monthly: 499,
+        featured: false,
+        cta: 'Empezar prueba gratis',
+        intro: 'Todo lo de Professional, más:',
+        features: [
+          ['40.000', ' usuarios extra* ', '(50.000 en total)'],
+          ['5', ' miembros extra* ', '(10 en total)'],
+          ['4', ' números de WhatsApp extra* ', '(5 en total)'],
+          ['Una reunión semanal', ' personalizada'],
+          ['Chat permanente', ' con acceso directo a un experto de GoChat'],
+        ],
+      },
+      {
+        id: 'cus',
+        name: 'Custom',
+        tag: 'Para operaciones grandes',
+        emoji: '🚀',
+        monthly: null,
+        featured: false,
+        cta: 'Contáctanos',
+        intro: 'Todo lo de Enterprise, más:',
+        features: [
+          ['Cuenta de customer.io', ''],
+          ['Expertos de crecimiento de hyppo.io', ''],
+          ['CDP', ' (plataforma de datos de cliente)'],
+          ['Notificaciones push', ' (móvil)'],
+          ['Notificaciones in-app', ' (móvil y web)'],
+          ['Reuniones de optimización ilimitadas', ' al año'],
+        ],
+      },
+    ]
+  : [
+      {
+        id: 'pro',
+        name: 'Professional',
+        tag: 'All features, small teams',
+        emoji: '🏠',
+        monthly: 299,
+        featured: true,
+        cta: 'Start free trial',
+        intro: null,
+        features: [
+          ['Free 14-day trial,', ' no credit card required'],
+          ['10,000', ' users*'],
+          ['5', ' account members*'],
+          ['Omnichannel', ' — all channels for the price of one, including ', '1 WhatsApp number'],
+          ['Unlimited', ' conversations'],
+          ['All', ' integrations (including AI features)'],
+          ['All AI features', ' (agents, functions, tasks)'],
+          ['Customer.io', ' integration'],
+          ['Triggers', ''],
+          ['Webhooks', ''],
+          ['Sequences', ''],
+          ['Broadcasts', ''],
+          ['Analytics', ' (agent and conversations)'],
+          ['Flows, workflows', ' & sub-flows'],
+          ['GoChat API', ''],
+          ['Support:', ' email, AI-powered chat'],
+        ],
+      },
+      {
+        id: 'ent',
+        name: 'Enterprise',
+        tag: 'For growing businesses',
+        emoji: '📈',
+        monthly: 499,
+        featured: false,
+        cta: 'Start free trial',
+        intro: 'Everything in Professional, plus:',
+        features: [
+          ['40,000', ' extra users* ', '(50,000 in total)'],
+          ['5', ' extra members* ', '(10 in total)'],
+          ['4', ' extra WhatsApp numbers* ', '(5 in total)'],
+          ['One weekly', ' personalized meeting'],
+          ['Permanent chat', ' with direct access to a GoChat expert'],
+        ],
+      },
+      {
+        id: 'cus',
+        name: 'Custom',
+        tag: 'For large operations',
+        emoji: '🚀',
+        monthly: null,
+        featured: false,
+        cta: 'Reach us',
+        intro: 'Everything in Enterprise, plus:',
+        features: [
+          ['customer.io', ' account'],
+          ['hyppo.io', ' growth experts'],
+          ['CDP', ' (customer data platform)'],
+          ['Push notifications', ' (mobile)'],
+          ['In-app notifications', ' (mobile and web)'],
+          ['Unlimited yearly', ' optimisation meetings'],
+        ],
+      },
+    ];
+
+const addons = isES
+  ? [
+      {
+        icon: 'wa',
+        name: 'Número de WhatsApp',
+        blurb: 'Añade un número de WhatsApp extra mediante QR, la API oficial de WA o tu cuenta de WhatsApp Business.',
+        prices: [{ amount: '$40', unit: '/mes' }],
+      },
+      {
+        icon: 'member',
+        name: 'Miembro de cuenta',
+        blurb: 'Añade agentes, supervisores o administradores a tu workspace — cada uno con sus propios permisos.',
+        prices: [{ amount: '$20', unit: '/mes' }],
+      },
+      {
+        icon: 'users',
+        name: 'Usuarios',
+        blurb: 'Un usuario es un identificador único por canal registrado en GoChat. Cada número de WhatsApp que conversa con tu bot cuenta como un usuario.',
+        prices: [
+          { amount: '$20',  unit: '/mes · 1.000 usuarios' },
+          { amount: '$100', unit: '/mes · 10.000 usuarios' },
+        ],
+      },
+    ]
+  : [
+      {
+        icon: 'wa',
+        name: 'WhatsApp number',
+        blurb: 'Add an extra WhatsApp number using a QR, the official WA API or your WhatsApp Business account.',
+        prices: [{ amount: '$40', unit: '/month' }],
+      },
+      {
+        icon: 'member',
+        name: 'Account member',
+        blurb: 'Add agents, supervisors or admins to your workspace — each with their own permissions.',
+        prices: [{ amount: '$20', unit: '/month' }],
+      },
+      {
+        icon: 'users',
+        name: 'Users',
+        blurb: 'A user is a unique identifier per channel registered in GoChat. Every WhatsApp number that talks to your bot counts as a user.',
+        prices: [
+          { amount: '$20',  unit: '/mo · 1,000 users' },
+          { amount: '$100', unit: '/mo · 10,000 users' },
+        ],
+      },
+    ];
+---
+
+<section class="pricing sec bg-paper has-blobs" id="pricing">
+  <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: 10%; left: 50%; transform: translateX(-50%);" aria-hidden="true"></span>
+  <span class="blob blob-green blob-sm blob-anim-b" style="bottom: -40px; right: 8%; opacity: 0.32;" aria-hidden="true"></span>
+  <div class="wrap pricing-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 pricing-title">{copy.title}</h2>
+    <p class="lead pricing-lead">{copy.lead}</p>
+  </div>
+
+  <div class="wrap pricing-grid reveal-stagger">
+    {plans.map((p) => (
+      <article class={`plan ${p.featured ? 'plan--featured' : ''}`} data-plan={p.id}>
+        {p.featured && <span class="plan-flag">{copy.mostPopular}</span>}
+        <header class="plan-head">
+          <h3 class="plan-name">{p.name}</h3>
+          <div class="plan-tag">
+            <span class="plan-emoji" aria-hidden="true">{p.emoji}</span>
+            {p.tag}
+          </div>
+        </header>
+
+        <div class="plan-price">
+          {p.monthly !== null ? (
+            <>
+              <span class="price-sym">$</span>
+              <span class="price-num">{p.monthly}</span>
+              <span class="price-unit">{copy.perMonth}</span>
+            </>
+          ) : (
+            <span class="price-custom">{copy.reachUs}</span>
+          )}
+        </div>
+
+        {p.intro && <p class="plan-intro">{p.intro}</p>}
+
+        <ul class="plan-features">
+          {p.features.map((f) => (
+            <li>
+              <span class="check" aria-hidden="true">✓</span>
+              <span><strong>{f[0]}</strong>{f[1]}{f[2] && <strong> {f[2]}</strong>}</span>
+            </li>
+          ))}
+        </ul>
+
+        <a class={`btn ${p.featured ? 'btn-primary' : 'btn-secondary'} plan-cta`} href={copy.demoHref}>
+          {p.cta}
+        </a>
+      </article>
+    ))}
+  </div>
+
+  <div class="wrap addons">
+    <header class="addons-head">
+      <span class="eyebrow">{copy.addonsEyebrow}</span>
+      <h3 class="addons-title">{copy.addonsTitle}</h3>
+      <p class="addons-lead">{copy.addonsLead}</p>
+    </header>
+
+    <ul class="addons-grid">
+      {addons.map((a) => (
+        <li class="addon">
+          <span class="addon-icon" aria-hidden="true">
+            {a.icon === 'wa' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5Z"/><path d="M8.6 9.2c.1 1.5.9 2.9 2 4 .1.1.3.2.5.2.4.1 1-.2 1.4-.6.2-.2.5-.2.7-.1l1.6.8c.3.2.4.5.3.8-.4.9-1.4 1.6-2.4 1.5-2.4-.2-4.5-2.3-4.8-4.8-.1-1 .6-2 1.5-2.4.3-.1.6 0 .8.3l.8 1.6c.1.2.1.5-.1.7-.4.4-.7 1-.6 1.4"/></svg>
+            )}
+            {a.icon === 'member' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>
+            )}
+            {a.icon === 'users' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-3-3.9M9 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 11a4 4 0 0 0 0-8"/></svg>
+            )}
+          </span>
+          <div class="addon-body">
+            <h4 class="addon-name">{a.name}</h4>
+            <p class="addon-blurb">{a.blurb}</p>
+            <ul class="addon-prices">
+              {a.prices.map((p) => (
+                <li>
+                  <span class="addon-amount">{p.amount}</span>
+                  <span class="addon-unit">{p.unit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a class="btn btn-secondary btn-sm addon-cta" href={copy.demoHref}>{copy.getAddon}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .pricing-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    margin-bottom: clamp(40px, 5vw, 56px);
+  }
+  .pricing-title { max-width: 16ch; }
+  .pricing-lead { text-align: center; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: stretch;
+  }
+  .plan {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: var(--shadow-xs);
+    position: relative;
+    transition: transform var(--dur-med) var(--ease-out-expo), box-shadow var(--dur-med) var(--ease-out-expo);
+  }
+  .plan:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .plan--featured {
+    background: linear-gradient(180deg, var(--gc-primary-soft), var(--gc-primary-mist) 55%, #fff);
+    border-color: var(--gc-primary-soft);
+    box-shadow: var(--shadow-md);
+  }
+  .plan-flag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gc-primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .plan-head { display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; }
+  .plan-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: var(--tr-snug);
+  }
+  .plan-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .plan--featured .plan-tag { color: var(--gc-primary-deep); }
+  .plan--featured .plan-name { color: var(--gc-primary-deep); }
+  .plan-emoji { font-size: 14px; }
+
+  .plan-price { text-align: center; display: flex; align-items: baseline; justify-content: center; gap: 4px; }
+  .price-sym { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--fg-1); }
+  .price-num { font-family: var(--font-display); font-weight: 700; font-size: 64px; letter-spacing: var(--tr-tight); line-height: 1; color: var(--fg-1); }
+  .price-unit { font-size: 14px; color: var(--fg-3); font-weight: 500; }
+  .price-custom {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 56px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-tight);
+    line-height: 1;
+  }
+
+  .plan-cta { width: 100%; margin-top: 8px; }
+
+  .plan-intro {
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    padding-top: 18px;
+    border-top: 1px solid var(--border-subtle);
+    margin: 0;
+  }
+
+  .plan-features {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-subtle);
+    flex: 1;
+  }
+  .plan:has(.plan-intro) .plan-features { border-top: 0; padding-top: 4px; }
+  .plan--featured .plan-features { border-top-color: rgba(89, 106, 213, 0.2); }
+  .plan-features li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--fg-2);
+    line-height: 1.45;
+  }
+  .plan-features strong { color: var(--fg-1); font-weight: 700; }
+  .check {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px;
+    background: var(--gc-accent-green-soft);
+    color: var(--gc-accent-green-deep);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Add-ons */
+  .addons { margin-top: clamp(64px, 7vw, 96px); }
+  .addons-head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+    max-width: 640px;
+  }
+  .addons-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(24px, 2.4vw, 32px);
+    letter-spacing: var(--tr-tight);
+    color: var(--fg-1);
+    line-height: 1.15;
+  }
+  .addons-lead { color: var(--fg-2); font-size: 15px; }
+
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .addon {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+  }
+  .addon:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+  .addon-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary);
+    flex-shrink: 0;
+  }
+  .addon-icon svg { width: 22px; height: 22px; }
+
+  .addon-body { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .addon-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+  }
+  .addon-blurb { color: var(--fg-2); font-size: 14px; line-height: 1.5; }
+  .addon-prices {
+    display: flex; flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-default);
+  }
+  .addon-prices li {
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .addon-amount {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-snug);
+    line-height: 1;
+  }
+  .addon-unit { font-size: 12.5px; color: var(--fg-3); font-weight: 500; }
+
+  .addon-cta { align-self: flex-start; margin-top: 4px; }
+
+  @media (max-width: 980px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+    .addons-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .pricing-title { font-size: clamp(28px, 8vw, 40px); }
+    .plan { padding: 28px 22px; }
+    .price-num { font-size: 56px; }
+    .addons-title { font-size: clamp(22px, 6vw, 28px); }
+    .addon { padding: 22px; }
+  }
+</style>

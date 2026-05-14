@@ -1,0 +1,146 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'La plataforma elegida por marcas globales líderes',
+      marqueeAria: 'Marcas que usan GoChat',
+      stat1: 'Mensajes enviados en 2024',
+      stat2: 'Canales soportados',
+      stat3: 'Uptime de la plataforma',
+      stat4: 'Llamadas a la API por semana',
+    }
+  : {
+      eyebrow: 'The platform chosen by leading global brands',
+      marqueeAria: 'Brands using GoChat',
+      stat1: 'Messages sent in 2024',
+      stat2: 'Channels supported',
+      stat3: 'Platform uptime',
+      stat4: 'API calls per week',
+    };
+
+// Heights tuned per-logo so all read at roughly the same optical weight.
+const brands = [
+  { name: 'Hyppo',           img: '/media/Logo_Hyppo-Black.png',                h: 44 },
+  { name: 'Nilus',           img: '/media/nilus-1-300x92-1.png',                h: 42 },
+  { name: 'Oliovita',        img: '/media/oliovita-1-300x113-1.webp',           h: 56 },
+  { name: 'Wibond',          img: '/media/wibond-1.png',                        h: 44 },
+  { name: 'SuperEasy',       img: '/media/supereasy-1-edited.png',              h: 52 },
+  { name: 'Lure by MS',      img: '/media/lure-by-ms.png',                      h: 46 },
+  { name: 'Zebrands',        img: '/media/zebrands.png',                        h: 38 },
+  { name: 'PayJoy',          img: '/media/payjoy.jpg',                          h: 48 },
+  { name: 'Aeromexico',      img: '/media/aeromexico.jpg',                      h: 38 },
+  { name: 'Innova',          img: '/media/innova.png',                          h: 64 },
+  { name: 'UANZ',            img: '/media/uanz.png',                            h: 36 },
+  { name: 'Growth Digital',  img: '/media/growth-digital-1-300x169-1.png',      h: 50 },
+  { name: 'Sportline',       img: '/media/sportline-300x101-1.png',             h: 38 },
+  { name: 'Carmelo Resorts', img: '/media/carmelo-resorts.png',                 h: 46 },
+  { name: 'Sieger',          img: '/media/sieger.png',                          h: 42 },
+];
+---
+
+<section class="brands sec-tight bg-paper has-blobs" id="customers">
+  <span class="blob blob-violet blob-md blob-anim-a parallax" style="top: -100px; right: -120px;" aria-hidden="true"></span>
+  <span class="blob blob-green blob-sm blob-anim-b" style="bottom: -60px; left: -40px; opacity: 0.35;" aria-hidden="true"></span>
+  <p class="wrap brands-eyebrow">{copy.eyebrow}</p>
+
+  <div class="marquee marquee--hover-fast" aria-label={copy.marqueeAria}>
+    <div class="marquee-track">
+      {[...brands, ...brands].map((b) => (
+        <div class="brand-logo" title={b.name}>
+          <img src={b.img} alt={b.name} style={`height:${b.h}px`}/>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="wrap stat-band reveal-stagger">
+    <div class="stat">
+      <span class="stat-num" data-count="100" data-format="k">+0k</span>
+      <span class="stat-lbl">{copy.stat1}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="12">0</span>
+      <span class="stat-lbl">{copy.stat2}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="99.97" data-format="%">0.00%</span>
+      <span class="stat-lbl">{copy.stat3}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="100" data-format="k">+0k</span>
+      <span class="stat-lbl">{copy.stat4}</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .brands { padding-block: clamp(48px, 5vw, 80px); }
+
+  .brands-eyebrow {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg-3);
+    margin-bottom: 28px;
+  }
+
+  /* Simple grayscale strip — no tile bg */
+  .marquee-track { gap: clamp(48px, 6vw, 88px); padding-right: clamp(48px, 6vw, 88px); }
+  .brand-logo {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    min-width: 160px;
+    height: 80px;
+    padding: 0 12px;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: opacity var(--dur-med) var(--ease-out-expo), filter var(--dur-med) var(--ease-out-expo);
+  }
+  .brand-logo img { object-fit: contain; max-width: 200px; width: auto; }
+  .brand-logo:hover { opacity: 1; filter: grayscale(0); }
+
+  /* Stat band */
+  .stat-band {
+    margin-top: clamp(48px, 5vw, 72px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .stat {
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 700;
+    letter-spacing: var(--tr-tight);
+    color: var(--fg-1);
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 13px;
+    color: var(--fg-3);
+    font-weight: 500;
+  }
+
+  @media (max-width: 760px) {
+    .stat-band { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border-subtle); }
+  }
+</style>

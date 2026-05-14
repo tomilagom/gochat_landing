@@ -1,0 +1,203 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Testimonios · Equipos reales',
+      titleLine1: 'La solución más simple y fácil',
+      titleLine2: 'que encontramos en el mercado.',
+      lead: 'Frases de equipos que migraron y nunca miraron atrás.',
+    }
+  : {
+      eyebrow: 'Testimonials · Real teams',
+      titleLine1: 'The easiest and simplest solution',
+      titleLine2: 'we found on the market.',
+      lead: 'Quotes from teams that switched and never looked back.',
+    };
+
+const quotes = isES
+  ? [
+      {
+        quote: 'Con Freshchat manejábamos 1.200 tickets al mes. Después del flujo de calificación con bot de GoChat, gestionamos 2.000 tickets mensuales con los mismos recursos. Es un 60% más de eficiencia.',
+        name: 'Alex M. E.',
+        role: 'Supervisor de Soporte al Cliente',
+        metric: '+60%',
+        metricLabel: 'tickets gestionados',
+        initials: 'AE',
+        accent: 'green',
+      },
+      {
+        quote: 'Antes de GoChat, nuestro equipo estaba saturado con consultas repetitivas. Ahora, con respuestas automatizadas y ruteo inteligente, manejamos más leads sin carga adicional.',
+        name: 'Emile Carter',
+        role: 'Gerente de CX',
+        metric: '−40%',
+        metricLabel: 'tiempo de respuesta',
+        initials: 'EC',
+        accent: 'violet',
+      },
+    ]
+  : [
+      {
+        quote: 'With Freshchat we handled 1,200 tickets a month. After GoChat’s bot-qualification flow, we manage 2,000 tickets monthly with the same resources. That’s a 60% boost in efficiency.',
+        name: 'Alex M. E.',
+        role: 'Customer Support Supervisor',
+        metric: '+60%',
+        metricLabel: 'ticket throughput',
+        initials: 'AE',
+        accent: 'green',
+      },
+      {
+        quote: 'Before GoChat, our team was overwhelmed with repetitive inquiries. Now with automated responses and smart routing, we handle more leads without extra workload.',
+        name: 'Emile Carter',
+        role: 'CX Manager',
+        metric: '−40%',
+        metricLabel: 'response time',
+        initials: 'EC',
+        accent: 'violet',
+      },
+    ];
+---
+
+<section class="testi sec bg-paper has-blobs">
+  <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: -160px; right: -120px;" aria-hidden="true"></span>
+  <span class="blob blob-green blob-md blob-anim-b" style="bottom: -80px; left: -120px; opacity: 0.32;" aria-hidden="true"></span>
+  <div class="wrap testi-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 testi-title">
+      {copy.titleLine1}<br/>
+      {copy.titleLine2}
+    </h2>
+    <p class="lead testi-lead">{copy.lead}</p>
+  </div>
+
+  <div class="wrap testi-grid reveal-stagger">
+    {quotes.map((q) => (
+      <article class={`testi-card accent-${q.accent}`}>
+        <span class="quote-mark" aria-hidden="true">"</span>
+        <blockquote class="testi-quote">{q.quote}</blockquote>
+
+        <div class="testi-foot">
+          <div class="testi-id">
+            <span class="avatar">{q.initials}</span>
+            <div>
+              <div class="testi-name">{q.name}</div>
+              <div class="testi-role">{q.role}</div>
+            </div>
+          </div>
+          <div class="testi-metric">
+            <span class="metric-num">{q.metric}</span>
+            <span class="metric-lbl">{q.metricLabel}</span>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .testi-head {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: clamp(40px, 5vw, 56px);
+  }
+  .testi-title { max-width: 22ch; }
+  .testi-lead { color: var(--fg-3); }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .testi-card {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-shadow: var(--shadow-xs);
+    position: relative;
+  }
+  .quote-mark {
+    font-family: var(--font-display);
+    font-size: 80px;
+    line-height: 0.6;
+    color: var(--gc-primary);
+    opacity: 0.18;
+    align-self: flex-start;
+  }
+  .accent-green .quote-mark { color: var(--gc-accent-green); }
+  .testi-quote {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1.35;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    margin: 0;
+    flex: 1;
+  }
+
+  .testi-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .testi-id { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    display: grid; place-items: center;
+    width: 40px; height: 40px;
+    border-radius: 999px;
+    background: var(--gc-primary);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .accent-green .avatar { background: var(--gc-accent-green); }
+  .testi-name { font-weight: 700; color: var(--fg-1); font-size: 14px; }
+  .testi-role { color: var(--fg-3); font-size: 13px; }
+
+  .testi-metric { text-align: right; }
+  .metric-num {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: var(--tr-snug);
+    color: var(--gc-primary);
+  }
+  .accent-green .metric-num { color: var(--gc-accent-green); }
+  .metric-lbl {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-3);
+    font-weight: 600;
+  }
+
+  @media (max-width: 880px) {
+    .testi-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .testi-title { font-size: clamp(26px, 7.5vw, 36px); }
+    .testi-card { padding: 26px 22px; }
+    .testi-quote { font-size: 18px; }
+    .testi-foot { flex-direction: column; align-items: flex-start; }
+    .testi-metric { text-align: left; }
+  }
+</style>

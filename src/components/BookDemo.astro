@@ -1,0 +1,260 @@
+---
+interface Props {
+  lang?: 'en' | 'es';
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Hablemos',
+      labelDemo: 'Solicitar demo',
+      labelContact: 'Formulario de contacto',
+      switchAria: 'Cambiar entre solicitar una demo y el formulario de contacto',
+      titleDemo: 'Solicitar demo',
+      titleContact: 'Formulario de contacto',
+    }
+  : {
+      eyebrow: "Let's talk",
+      labelDemo: 'Book a demo',
+      labelContact: 'Contact form',
+      switchAria: 'Switch between book a demo and contact form',
+      titleDemo: 'Book a demo',
+      titleContact: 'Contact form',
+    };
+---
+
+<section class="bd sec bg-paper has-blobs" id="demo">
+  <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: -120px; left: -180px;" aria-hidden="true"></span>
+  <span class="blob blob-green blob-md blob-anim-b" style="top: 30%; right: -160px; opacity: 0.32;" aria-hidden="true"></span>
+  <span class="blob blob-violet blob-xl blob-anim-a" style="bottom: -260px; left: 25%; opacity: 0.6;" aria-hidden="true"></span>
+
+  <div class="wrap bd-header">
+    <span class="bd-eyebrow">{copy.eyebrow}</span>
+
+    <div class="bd-toggle" role="tablist" aria-label={copy.switchAria}>
+      <span class="bd-toggle-pill" aria-hidden="true"></span>
+      <button
+        class="bd-tab is-active"
+        type="button"
+        role="tab"
+        data-tab="demo"
+        aria-selected="true"
+      >
+        {copy.labelDemo}
+      </button>
+      <button
+        class="bd-tab"
+        type="button"
+        role="tab"
+        data-tab="contact"
+        aria-selected="false"
+      >
+        {copy.labelContact}
+      </button>
+    </div>
+  </div>
+
+  <div class="wrap bd-frame-wrap">
+    <div
+      class="bd-frame is-active"
+      role="tabpanel"
+      data-panel="demo"
+      aria-label={copy.titleDemo}
+    >
+      <iframe
+        src="https://crm.hyppo.io/widget/booking/J6a5Q3ZqBKAbmMAOXYAL"
+        title={copy.titleDemo}
+        style="width: 100%; border: none; overflow: hidden;"
+        scrolling="no"
+        id="J6a5Q3ZqBKAbmMAOXYAL_1758100736399"
+      ></iframe>
+    </div>
+
+    <div
+      class="bd-frame"
+      role="tabpanel"
+      data-panel="contact"
+      aria-label={copy.titleContact}
+      hidden
+    >
+      <iframe
+        id="inline-4oES2Ep0rJWCk2FPL7tF"
+        title={copy.titleContact}
+        style="width: 100%; height: 100%; border: none; border-radius: 3px;"
+        src="https://crm.hyppo.io/widget/form/4oES2Ep0rJWCk2FPL7tF"
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-trigger-value=""
+        data-activation-type="alwaysActivated"
+        data-activation-value=""
+        data-deactivation-type="neverDeactivate"
+        data-deactivation-value=""
+        data-form-name="Main form for "
+        data-height="760"
+        data-layout-iframe-id="inline-4oES2Ep0rJWCk2FPL7tF"
+        data-form-id="4oES2Ep0rJWCk2FPL7tF"
+      ></iframe>
+    </div>
+  </div>
+
+  <script src="https://crm.hyppo.io/js/form_embed.js" type="text/javascript" is:inline></script>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>('section.bd#demo');
+  if (section) {
+    const toggle = section.querySelector<HTMLElement>('.bd-toggle');
+    const tabs = section.querySelectorAll<HTMLButtonElement>('.bd-tab');
+    const panels = section.querySelectorAll<HTMLElement>('[data-panel]');
+    const frameWrap = section.querySelector<HTMLElement>('.bd-frame-wrap');
+
+    function activate(target: 'demo' | 'contact') {
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === target;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      toggle?.setAttribute('data-active', target);
+      frameWrap?.setAttribute('data-active', target);
+      panels.forEach((p) => {
+        const on = p.dataset.panel === target;
+        p.classList.toggle('is-active', on);
+        if (on) p.removeAttribute('hidden');
+        else p.setAttribute('hidden', '');
+      });
+    }
+
+    tabs.forEach((t) => {
+      t.addEventListener('click', () => {
+        activate((t.dataset.tab as 'demo' | 'contact') || 'demo');
+      });
+    });
+
+    function syncFromHash() {
+      if (location.hash === '#contact') activate('contact');
+      else if (location.hash === '#demo') activate('demo');
+    }
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+  }
+</script>
+
+<style>
+  /* ---------- Header ---------- */
+  .bd-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: clamp(28px, 4vw, 48px);
+  }
+  .bd-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--fs-12);
+    font-weight: 600;
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    color: var(--gc-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bd-eyebrow::before,
+  .bd-eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.45;
+  }
+
+  /* ---------- Segmented toggle ---------- */
+  .bd-toggle {
+    --gap: 4px;
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    padding: var(--gap);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(89, 106, 213, 0.18);
+    border-radius: 999px;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 10px 24px -16px rgba(30, 25, 55, 0.18);
+  }
+  .bd-toggle-pill {
+    position: absolute;
+    top: var(--gap);
+    bottom: var(--gap);
+    left: var(--gap);
+    width: calc(50% - var(--gap));
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--gc-primary) 0%, var(--gc-primary-dark) 100%);
+    box-shadow: 0 6px 16px -6px rgba(89, 106, 213, 0.55);
+    transition: transform var(--dur-med) var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .bd-toggle[data-active='contact'] .bd-toggle-pill {
+    transform: translateX(100%);
+  }
+  .bd-tab {
+    position: relative;
+    z-index: 1;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 10px 22px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-2);
+    white-space: nowrap;
+    transition: color var(--dur-med) var(--ease-out-expo);
+    border-radius: 999px;
+  }
+  .bd-tab:hover { color: var(--fg-1); }
+  .bd-tab.is-active { color: #fff; }
+  .bd-tab:focus-visible {
+    outline: 2px solid var(--gc-primary);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Frame (transparent — iframe shows at native size) ---------- */
+  .bd-frame-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .bd-frame {
+    position: relative;
+    width: 100%;
+    display: flex;
+    background: transparent;
+    transition: max-width var(--dur-slow) var(--ease-out-expo);
+  }
+  /* Different widths per panel — calendar is wider, form is narrower */
+  .bd-frame[data-panel='demo']    { max-width: 760px; }
+  .bd-frame[data-panel='contact'] { max-width: 560px; }
+
+  .bd-frame iframe {
+    flex: 1 1 auto;
+    width: 100%;
+    border: 0;
+    display: block;
+    background: transparent;
+  }
+  [data-panel][hidden] { display: none; }
+
+  @media (max-width: 720px) {
+    .bd-header { gap: 14px; }
+    .bd-tab { font-size: 13px; padding: 9px 16px; }
+    .bd-frame[data-panel='demo'],
+    .bd-frame[data-panel='contact'] { max-width: 100%; }
+  }
+</style>

@@ -1,0 +1,134 @@
+---
+import AlternativePage from '../components/AlternativePage.astro';
+
+const ICONS = {
+  speed:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>',
+  price:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+  ai:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="M9 11h.01M15 11h.01M9 15c.8.7 1.8 1.2 3 1.2s2.2-.5 3-1.2"/><path d="M12 2v4M8 3l1.5 2M16 3l-1.5 2"/></svg>',
+};
+
+const highlights = [
+  {
+    icon: ICONS.speed,
+    title: 'Live in weeks, not quarters',
+    body: 'Botmaker projects often turn into multi-month implementations. GoChat ships a working AI agent in your first sprint — no professional-services tax to get started.',
+  },
+  {
+    icon: ICONS.price,
+    title: 'Transparent, published pricing',
+    body: 'No "request a quote" maze. GoChat publishes plan prices, includes unlimited conversations, and adds a growth team on Custom — Botmaker bills per session, per agent, per setup.',
+  },
+  {
+    icon: ICONS.ai,
+    title: 'Modern AI, not a black box NLU',
+    body: 'Plug ChatGPT, Gemini or DeepSeek into autonomous agents with tools and MCP servers. Botmaker\'s proprietary NLU is hard to debug and slower to adapt to new use cases.',
+  },
+];
+
+const sections = [
+  {
+    title: 'Plans & pricing',
+    rows: [
+      { label: 'Published pricing on the website',           go: true,  rival: false },
+      { label: 'Unlimited conversations',                     go: true,  rival: 'Per session' },
+      { label: 'No mandatory professional services',          go: true,  rival: false },
+      { label: 'White-glove migration included',              go: true,  rival: false },
+    ],
+  },
+  {
+    title: 'AI & agents',
+    rows: [
+      { label: 'Bring your own model (ChatGPT, Gemini, DeepSeek)', go: true,  rival: 'Proprietary NLU' },
+      { label: 'Autonomous AI agents (multi-step + tools)',         go: true,  rival: false },
+      { label: 'MCP server support',                                go: true,  rival: false },
+      { label: 'AI functions & custom tools',                       go: true,  rival: 'Limited' },
+      { label: 'Conversation summaries',                            go: true,  rival: true  },
+    ],
+  },
+  {
+    title: 'Channels',
+    rows: [
+      { label: 'WhatsApp Business API (direct BSP)',          go: true,  rival: true  },
+      { label: 'Instagram + Messenger',                       go: true,  rival: true  },
+      { label: 'TikTok',                                       go: true,  rival: false },
+      { label: 'Webchat widget',                              go: true,  rival: true  },
+      { label: 'Telegram',                                    go: true,  rival: true  },
+      { label: 'SMS',                                          go: true,  rival: true  },
+    ],
+  },
+  {
+    title: 'Builder & operations',
+    rows: [
+      { label: 'Drag-and-drop flow builder',                  go: true,  rival: 'Form-based' },
+      { label: 'Unlimited flows & sub-flows',                  go: true,  rival: true  },
+      { label: 'Self-serve account setup',                     go: true,  rival: false },
+      { label: 'Live-chat handoff with internal notes',        go: true,  rival: true  },
+      { label: 'WhatsApp template manager',                    go: true,  rival: true  },
+      { label: 'Webhooks + open API',                          go: true,  rival: true  },
+    ],
+  },
+  {
+    title: 'Growth services',
+    rows: [
+      { label: 'Weekly optimisation meetings',                go: true,  rival: false },
+      { label: 'Customer Data Platform (Customer.io)',         go: true,  rival: false },
+      { label: 'Push & in-app notifications',                  go: true,  rival: false },
+      { label: 'Hyppo growth experts on your account',         go: true,  rival: false },
+    ],
+  },
+];
+
+const switchSteps = [
+  {
+    title: 'Export your Botmaker assets',
+    body: 'We extract your bot definitions, training intents and WhatsApp templates so nothing is rebuilt from scratch — and nothing is lost.',
+  },
+  {
+    title: 'Rebuild on modern AI agents',
+    body: 'Hyppo growth experts translate every intent into a GoChat agent with the model you pick. Expect a quality jump — fewer fallbacks, fewer dead-ends.',
+  },
+  {
+    title: 'Cut over WhatsApp + run dual-track',
+    body: 'We coordinate the BSP migration with Meta and run both bots in parallel until performance metrics are equal or better — then switch.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'How does GoChat\'s pricing compare to Botmaker?',
+    a: 'Botmaker bills per session and adds professional-services fees to most projects. GoChat publishes flat plan prices with unlimited conversations included, plus a growth pod on Custom plans.',
+  },
+  {
+    q: 'Can I keep my WhatsApp number?',
+    a: 'Yes. GoChat is a direct WhatsApp BSP, so we handle the migration of your existing number with Meta — your customers see no change.',
+  },
+  {
+    q: 'How does GoChat\'s AI compare to Botmaker\'s NLU?',
+    a: 'Botmaker uses a proprietary NLU you train with intents and entities. GoChat uses your choice of frontier LLM (ChatGPT, Gemini, DeepSeek) wrapped in autonomous agents with tools. You get higher accuracy out of the box and much faster iteration.',
+  },
+  {
+    q: 'Is GoChat enterprise-ready like Botmaker?',
+    a: 'Yes. GoChat ships with SOC 2 Type II, ISO 27001, role-based permissions and SSO. Hyppo also runs the operational side — weekly reviews, dashboards and ongoing flow optimisation.',
+  },
+  {
+    q: 'How long does migration take?',
+    a: 'Standard Botmaker migrations land in 3-5 weeks depending on the number of bots and integrations. Complex enterprise migrations with CRMs and back-office systems run 6-8 weeks.',
+  },
+];
+---
+
+<AlternativePage
+  competitor="Botmaker"
+  competitorTagline="Botmaker built solid bots for the WhatsApp era. But its proprietary NLU, opaque pricing and heavy implementation cycles make scaling slow. GoChat replaces it with modern AI agents, transparent plans and a growth pod that ships value every week."
+  pageTitle="GoChat — The Botmaker alternative for AI-first teams"
+  pageDescription="Looking for a Botmaker alternative? Compare GoChat side-by-side — autonomous AI agents, transparent pricing, no professional-services tax, and a growth team included."
+  headlineBefore="The"
+  highlight="Botmaker alternative"
+  headlineAfter="AI-first teams choose"
+  lead="If you're tired of opaque quotes, proprietary NLU and quarter-long implementations, GoChat is the upgrade — modern AI agents, flat pricing and a Hyppo growth pod that ships every week."
+  highlights={highlights}
+  sections={sections}
+  switchTitle="Move off Botmaker without a rebuild"
+  switchSteps={switchSteps}
+  faqs={faqs}
+/>

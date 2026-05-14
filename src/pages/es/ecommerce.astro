@@ -1,0 +1,39 @@
+---
+import SolutionPage from '../../components/SolutionPage.astro';
+
+const valueProps = [
+  {
+    title: 'Piso de ventas 24/7',
+    blurb: 'Responde preguntas sobre productos, talles y stock al instante — y convierte visitas en pedidos mientras tu equipo duerme.',
+  },
+  {
+    title: 'Recuperación de carritos en piloto automático',
+    blurb: 'Mensajes de WhatsApp que recuperan checkouts abandonados con el mensaje correcto en el momento justo.',
+  },
+  {
+    title: 'Recomendaciones personalizadas',
+    blurb: 'Cada conversación muestra los productos que cada comprador realmente busca — como un vendedor top que se acuerda de todos.',
+  },
+  {
+    title: 'Postventa simplificada',
+    blurb: 'Tracking de pedidos, devoluciones y reórdenes gestionados dentro del mismo chat — menos tickets, más lealtad.',
+  },
+];
+---
+
+<SolutionPage
+  slug="ecommerce"
+  lang="es"
+  title="GoChat para E-commerce — Un gemelo digital que trabaja como tu mejor vendedor"
+  headlineBefore="Un gemelo digital que trabaja como tu mejor"
+  highlight="vendedor"
+  headlineAfter=""
+  lead="Atrae compradores, responde preguntas, recupera carritos y personaliza cada experiencia — todo en tiempo real, sin sumar presión a tu equipo."
+  contextEyebrow="Por qué GoChat para e-commerce"
+  contextTitle="Tu tienda se ve genial. Pero no responde."
+  contextBody="La mayoría de las tiendas online son catálogos estáticos — esperan a que el comprador decida solo. GoChat le da a cada visitante un vendedor real en el chat: uno que conoce tu catálogo, tu tono y tus objetivos."
+  valueProps={valueProps}
+  video="/media/gochat-ecommerce.webm"
+  contextImage="/media/ecommerce.png"
+  contextImageAlt="Comprador navegando productos en un teléfono — el tipo de experiencia que tu agente de IA guía de punta a punta"
+/>

@@ -1,0 +1,599 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Comparación',
+      title: 'Funcionalidad por funcionalidad.',
+      showAll: 'Mostrar todo',
+      collapseAll: 'Contraer todo',
+      jumpAria: 'Saltar a categoría',
+      featureLabel: 'Funcionalidad',
+      mostPopular: 'Más popular',
+      perMonth: '/mes',
+      letsTalk: 'Hablemos',
+      customCell: 'Custom',
+    }
+  : {
+      eyebrow: 'Comparison',
+      title: 'Feature by feature.',
+      showAll: 'Show all',
+      collapseAll: 'Collapse all',
+      jumpAria: 'Jump to category',
+      featureLabel: 'Feature',
+      mostPopular: 'Most popular',
+      perMonth: '/mo',
+      letsTalk: "Let's talk",
+      customCell: 'Custom',
+    };
+
+const plans = [
+  { id: 'pro',  name: 'Professional', price: '$299', featured: true },
+  { id: 'ent',  name: 'Enterprise',   price: '$499', featured: false },
+  { id: 'cus',  name: 'Custom',       price: copy.letsTalk, featured: false },
+];
+
+const sections = isES
+  ? [
+      {
+        id: 'core',
+        title: 'En común',
+        blurb: 'Volumen, asientos y canales incluidos por defecto.',
+        rows: [
+          ['Usuarios incluidos',     '10.000', '50.000', copy.customCell],
+          ['Miembros de cuenta',     '5',      '10',     copy.customCell],
+          ['Números de WhatsApp',    '1',      '5',      copy.customCell],
+          ['Conversaciones',         '∞',      '∞',      '∞'],
+        ],
+      },
+      {
+        id: 'channels',
+        title: 'Canales',
+        blurb: 'Todas las superficies de mensajería en una sola bandeja.',
+        rows: [
+          ['Bandeja omnicanal',      '✓', '✓', '✓'],
+          ['WhatsApp Business API',  '✓', '✓', '✓'],
+          ['Facebook + Instagram',   '✓', '✓', '✓'],
+          ['Telegram',               '✓', '✓', '✓'],
+          ['SMS',                    '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'ai',
+        title: 'Funcionalidades de IA',
+        blurb: 'Agentes, funciones, MCP — trae tu propio modelo.',
+        rows: [
+          ['Agentes autónomos',          '✓', '✓', '✓'],
+          ['Funciones de IA',            '✓', '✓', '✓'],
+          ['Servidores MCP',             '✓', '✓', '✓'],
+          ['Detección de intenciones',   '✓', '✓', '✓'],
+          ['Trae tu propio modelo',      '✓', '✓', '✓'],
+          ['Resumen de conversación',    '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'flows',
+        title: 'Flujos y sub-flujos',
+        blurb: 'Diseño de conversaciones drag-and-drop.',
+        rows: [
+          ['Derivación a chat en vivo',  '✓', '✓', '✓'],
+          ['Flujos ilimitados',          '✓', '✓', '✓'],
+          ['Plantillas de WhatsApp',     '✓', '✓', '✓'],
+          ['Plantillas de email',        '✓', '✓', '✓'],
+          ['Esperas inteligentes',       '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'autom',
+        title: 'Automatizaciones y herramientas',
+        blurb: 'Triggers, secuencias y envíos masivos.',
+        rows: [
+          ['Detección de palabras clave',  '✓', '✓', '✓'],
+          ['Secuencias',                   '✓', '✓', '✓'],
+          ['Triggers condicionales',       '✓', '✓', '✓'],
+          ['Palabras clave en comentarios','✓', '✓', '✓'],
+          ['Facebook Lead Forms',          '✓', '✓', '✓'],
+          ['Webhooks',                     '✓', '✓', '✓'],
+          ['Envíos masivos',               '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'growth',
+        title: 'Servicios de crecimiento',
+        blurb: 'Operaciones white-glove incluidas con Custom.',
+        rows: [
+          ['Reunión semanal',                  '—', '✓', '✓'],
+          ['Cuenta de Customer.io',            '—', '—', '✓'],
+          ['Expertos de crecimiento de Hyppo', '—', '—', '✓'],
+          ['CDP (plataforma de datos)',        '—', '—', '✓'],
+          ['Notificaciones push + in-app',     '—', '—', '✓'],
+          ['Reuniones de optimización ilim.',  '—', '—', '✓'],
+        ],
+      },
+    ]
+  : [
+      {
+        id: 'core',
+        title: 'Common ground',
+        blurb: 'Volume, seats and channels included by default.',
+        rows: [
+          ['Users included',          '10,000', '50,000', 'Custom'],
+          ['Account members',         '5',      '10',     'Custom'],
+          ['WhatsApp numbers',        '1',      '5',      'Custom'],
+          ['Conversations',           '∞',      '∞',      '∞'],
+        ],
+      },
+      {
+        id: 'channels',
+        title: 'Channels',
+        blurb: 'Every messaging surface, in one inbox.',
+        rows: [
+          ['Omnichannel inbox',       '✓', '✓', '✓'],
+          ['WhatsApp Business API',   '✓', '✓', '✓'],
+          ['Facebook + Instagram',    '✓', '✓', '✓'],
+          ['Telegram',                '✓', '✓', '✓'],
+          ['SMS',                     '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'ai',
+        title: 'AI features',
+        blurb: 'Agents, functions, MCP — bring your own model.',
+        rows: [
+          ['Autonomous agents',       '✓', '✓', '✓'],
+          ['AI functions',            '✓', '✓', '✓'],
+          ['MCP servers',             '✓', '✓', '✓'],
+          ['Intention detection',     '✓', '✓', '✓'],
+          ['Bring your own model',    '✓', '✓', '✓'],
+          ['Conversation summary',    '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'flows',
+        title: 'Flows & sub-flows',
+        blurb: 'Drag-and-drop conversation design.',
+        rows: [
+          ['Live-chat handoff',       '✓', '✓', '✓'],
+          ['Unlimited flows',         '✓', '✓', '✓'],
+          ['WhatsApp templates',      '✓', '✓', '✓'],
+          ['Email templates',         '✓', '✓', '✓'],
+          ['Smart delays',            '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'autom',
+        title: 'Automations & tools',
+        blurb: 'Triggers, sequences and broadcasts.',
+        rows: [
+          ['Keyword detection',       '✓', '✓', '✓'],
+          ['Sequences',               '✓', '✓', '✓'],
+          ['Conditional triggers',    '✓', '✓', '✓'],
+          ['Comment keywords',        '✓', '✓', '✓'],
+          ['Facebook Lead Forms',     '✓', '✓', '✓'],
+          ['Webhooks',                '✓', '✓', '✓'],
+          ['Broadcasts',              '✓', '✓', '✓'],
+        ],
+      },
+      {
+        id: 'growth',
+        title: 'Growth services',
+        blurb: 'White-glove ops included with Custom.',
+        rows: [
+          ['Weekly meeting',                  '—', '✓', '✓'],
+          ['Customer.io account',             '—', '—', '✓'],
+          ['Hyppo growth experts',            '—', '—', '✓'],
+          ['CDP (customer data platform)',    '—', '—', '✓'],
+          ['Push + in-app notifications',     '—', '—', '✓'],
+          ['Unlimited optimization meetings', '—', '—', '✓'],
+        ],
+      },
+    ];
+
+function isDiff(row: string[]) {
+  const vals = row.slice(1).map((v) => v.trim());
+  return new Set(vals).size > 1;
+}
+
+function symClass(v: string) {
+  const t = v.trim();
+  if (t === '✓') return 'is-check';
+  if (t === '—' || t === '–' || t === '-') return 'is-miss';
+  if (t === '∞') return 'is-inf';
+  return '';
+}
+---
+
+<section class="cmp sec bg-paper has-blobs">
+  <span class="blob blob-violet-mist blob-xl blob-anim-a parallax" style="top: -200px; left: -120px;" aria-hidden="true"></span>
+  <div class="wrap cmp-head">
+    <div class="cmp-head-l">
+      <span class="eyebrow">{copy.eyebrow}</span>
+      <h2 class="h2 cmp-title">{copy.title}</h2>
+    </div>
+
+    <div class="cmp-controls">
+      <button type="button" class="cmp-expand-all" id="expandAll" data-label-show={copy.showAll} data-label-collapse={copy.collapseAll}>{copy.showAll}</button>
+    </div>
+  </div>
+
+  <!-- Category jump pills -->
+  <div class="wrap cmp-jump-wrap">
+    <div class="cmp-jump" role="tablist" aria-label={copy.jumpAria}>
+      {sections.map((s, i) => (
+        <button type="button" class={`cmp-chip${i === 0 ? ' is-on' : ''}`} data-jump={s.id}>{s.title}</button>
+      ))}
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cmp-frame">
+      <!-- Plan header — sits inside the same frame so the column tinting reads as one piece -->
+      <div class="cmp-plans">
+        <div class="cmp-plan cmp-plan--label">{copy.featureLabel}</div>
+        {plans.map((p) => (
+          <div class={`cmp-plan${p.featured ? ' is-featured' : ''}`}>
+            <div class="plan-name">{p.name}</div>
+            <div class="plan-price">{p.price}<span class="plan-unit">{p.price.startsWith('$') ? copy.perMonth : ''}</span></div>
+            {p.featured && <span class="plan-flag">{copy.mostPopular}</span>}
+          </div>
+        ))}
+      </div>
+
+      <!-- Sections -->
+      {sections.map((s, i) => (
+        <details class="cmp-section" id={`cmp-${s.id}`} open>
+          <summary class="cmp-section-head">
+            <span class="cmp-section-num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="cmp-section-title">
+              {s.title}
+              <span class="cmp-section-blurb">{s.blurb}</span>
+            </span>
+            <span class="cmp-section-count">{s.rows.length}</span>
+            <span class="cmp-section-toggle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="cmp-rows">
+            {s.rows.map((r) => (
+              <div class={`cmp-row${isDiff(r) ? ' is-diff' : ' is-same'}`}>
+                <div class="td td-feature">{r[0]}</div>
+                <div class={`td td-featured ${symClass(r[1])}`}>{r[1]}</div>
+                <div class={`td ${symClass(r[2])}`}>{r[2]}</div>
+                <div class={`td ${symClass(r[3])}`}>{r[3]}</div>
+              </div>
+            ))}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('.cmp');
+  if (root) {
+    const expandAll = root.querySelector<HTMLButtonElement>('#expandAll');
+    const detailsEls = root.querySelectorAll<HTMLDetailsElement>('.cmp-section');
+    const jumps = root.querySelectorAll<HTMLButtonElement>('.cmp-chip');
+
+    const labelShow = expandAll?.dataset.labelShow ?? 'Show all';
+    const labelCollapse = expandAll?.dataset.labelCollapse ?? 'Collapse all';
+    let allOpen = true;
+    if (expandAll) expandAll.textContent = labelCollapse;
+    expandAll?.addEventListener('click', () => {
+      allOpen = !allOpen;
+      detailsEls.forEach((s) => { s.open = allOpen; });
+      if (expandAll) expandAll.textContent = allOpen ? labelCollapse : labelShow;
+    });
+
+    jumps.forEach((b) => {
+      b.addEventListener('click', () => {
+        jumps.forEach((x) => x.classList.remove('is-on'));
+        b.classList.add('is-on');
+        const id = b.getAttribute('data-jump');
+        if (!id) return;
+        const target = root.querySelector<HTMLDetailsElement>(`#cmp-${id}`);
+        if (target) {
+          target.open = true;
+          const top = target.getBoundingClientRect().top + window.scrollY - 120;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Scroll spy
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const id = (e.target as HTMLElement).id.replace('cmp-', '');
+            jumps.forEach((x) => x.classList.toggle('is-on', x.dataset.jump === id));
+          }
+        });
+      },
+      { rootMargin: '-30% 0px -55% 0px' }
+    );
+    detailsEls.forEach((s) => io.observe(s));
+  }
+</script>
+
+<style>
+  .cmp-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .cmp-head-l { display: flex; flex-direction: column; gap: 12px; }
+  .cmp-title { font-size: clamp(28px, 3.4vw, 44px); }
+  .cmp-controls { display: inline-flex; gap: 14px; align-items: center; }
+
+  .cmp-expand-all {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gc-primary);
+    padding: 8px 14px;
+    border: 1px solid var(--gc-primary-soft);
+    border-radius: 999px;
+    background: #fff;
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out-expo);
+  }
+  .cmp-expand-all:hover { background: var(--gc-primary-mist); }
+
+  /* Jump pills */
+  .cmp-jump-wrap {
+    position: sticky;
+    top: 72px;
+    z-index: 4;
+    padding: 12px 0;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, var(--bg-1) 75%, transparent);
+    backdrop-filter: blur(6px);
+  }
+  .cmp-jump {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .cmp-chip {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-default);
+    background: #fff;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--fg-2);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out-expo);
+  }
+  .cmp-chip:hover { border-color: var(--gc-primary-soft); color: var(--gc-primary-deep); }
+  .cmp-chip.is-on {
+    background: var(--gc-primary);
+    border-color: var(--gc-primary);
+    color: #fff;
+  }
+
+  /* Frame */
+  .cmp-frame {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-xs);
+    position: relative;
+  }
+  /* Round the inner pieces so we don't need overflow: hidden on the frame */
+  .cmp-plans { border-radius: calc(var(--r-xl) - 1px) calc(var(--r-xl) - 1px) 0 0; overflow: hidden; }
+  .cmp-section:last-of-type {
+    border-radius: 0 0 calc(var(--r-xl) - 1px) calc(var(--r-xl) - 1px);
+    overflow: hidden;
+  }
+
+  /* Plan header */
+  .cmp-plans {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border-default);
+    background: #fff;
+  }
+  .cmp-plan {
+    padding: 28px 22px 22px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-left: 1px solid var(--border-subtle);
+  }
+  .cmp-plan:first-child { border-left: 0; }
+  .cmp-plan--label {
+    text-align: left;
+    align-items: flex-start;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .plan-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    line-height: 1.1;
+  }
+  .plan-price {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--fg-1);
+    letter-spacing: var(--tr-tight);
+    line-height: 1;
+  }
+  .plan-unit { font-size: 12px; color: var(--fg-3); font-weight: 500; margin-left: 2px; }
+
+  /* Professional column tint — uses design-system violet */
+  .cmp-plan.is-featured {
+    background: linear-gradient(180deg, var(--gc-primary-soft) 0%, var(--gc-primary-mist) 100%);
+    border-left-color: var(--gc-primary-soft);
+  }
+  .cmp-plan.is-featured .plan-price,
+  .cmp-plan.is-featured .plan-name { color: var(--gc-primary-deep); }
+  .plan-flag {
+    position: absolute;
+    top: 8px;
+    background: var(--gc-primary);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-xs);
+    line-height: 1.4;
+  }
+
+  /* Section accordion */
+  .cmp-section + .cmp-section { border-top: 1px solid var(--border-subtle); }
+
+  .cmp-section-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    cursor: pointer;
+    background: #fff;
+    list-style: none;
+    transition: background var(--dur-fast) var(--ease-out-expo);
+  }
+  .cmp-section-head::-webkit-details-marker { display: none; }
+  .cmp-section-head:hover { background: var(--gc-primary-haze); }
+
+  .cmp-section-num {
+    display: inline-grid; place-items: center;
+    min-width: 28px; height: 22px;
+    padding: 0 8px;
+    background: var(--gc-primary-mist);
+    color: var(--gc-primary-deep);
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .cmp-section-title {
+    display: flex; flex-direction: column; gap: 2px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    line-height: 1.2;
+  }
+  .cmp-section-blurb {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 12.5px;
+    color: var(--fg-3);
+    letter-spacing: 0;
+  }
+  .cmp-section-count {
+    font-size: 12px;
+    color: var(--fg-3);
+    font-weight: 500;
+    padding: 4px 10px;
+    background: var(--gc-primary-mist);
+    border-radius: 999px;
+  }
+  .cmp-section-toggle {
+    display: inline-grid; place-items: center;
+    width: 26px; height: 26px;
+    background: var(--gc-primary-mist);
+    border-radius: 999px;
+    color: var(--fg-2);
+    transition: transform var(--dur-med) var(--ease-out-expo);
+  }
+  .cmp-section-toggle svg { width: 14px; height: 14px; }
+  .cmp-section[open] .cmp-section-toggle { transform: rotate(180deg); }
+
+  /* Rows */
+  .cmp-rows {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .cmp-row {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr 1fr;
+    transition: background var(--dur-fast) var(--ease-out-expo);
+  }
+  .cmp-row + .cmp-row { border-top: 1px solid var(--border-subtle); }
+  .cmp-row:hover { background: var(--gc-primary-haze); }
+
+  .td {
+    padding: 14px 22px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--fg-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid var(--border-subtle);
+  }
+  .td:first-child { border-left: 0; }
+  .td-feature {
+    justify-content: flex-start;
+    text-align: left;
+    color: var(--fg-1);
+    font-weight: 500;
+  }
+  .td-featured {
+    background: rgba(214, 222, 247, 0.35);
+    color: var(--gc-primary-deep);
+    font-weight: 700;
+  }
+
+  .is-check {
+    color: var(--gc-accent-green-deep);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .is-miss {
+    color: var(--gc-n-300);
+    font-weight: 500;
+  }
+  .is-inf {
+    color: var(--gc-primary);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1;
+  }
+  .td-featured.is-check { color: var(--gc-primary-deep); }
+  .td-featured.is-inf   { color: var(--gc-primary-deep); }
+
+  @media (max-width: 760px) {
+    .cmp-plans, .cmp-row { grid-template-columns: 1.5fr 0.85fr 0.85fr 0.85fr; }
+    .cmp-plan { padding: 14px 8px; }
+    .plan-name { font-size: 13.5px; }
+    .plan-price { font-size: 17px; }
+    .plan-flag { font-size: 9px; padding: 2px 7px; }
+    .td { padding: 12px 8px; font-size: 12.5px; }
+    .td-feature { font-size: 13px; }
+    .cmp-section-head { grid-template-columns: auto 1fr auto; padding: 14px 14px; }
+    .cmp-section-count { display: none; }
+    .cmp-section-blurb { display: none; }
+    .cmp-jump-wrap { top: 64px; }
+  }
+</style>

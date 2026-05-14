@@ -1,0 +1,112 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Escala',
+      title: 'Diseñado para escalar cuando tu negocio crece.',
+    }
+  : {
+      eyebrow: 'Scale',
+      title: 'Designed to scale when your business grows.',
+    };
+
+const items = isES
+  ? [
+      {
+        title: 'Diseñado para escalar',
+        blurb: 'De un solo usuario a una operación de 50 agentes — la plataforma crece contigo.',
+      },
+      {
+        title: 'Soporte del equipo Hyppo',
+        blurb: 'Un equipo dedicado de crecimiento detrás de cada cuenta Enterprise.',
+      },
+      {
+        title: 'Integraciones HTTP',
+        blurb: 'Webhooks y una API REST completa que conecta cualquier cosa de tu stack.',
+      },
+      {
+        title: 'Web + móvil para agentes',
+        blurb: 'Tu equipo responde desde cualquier dispositivo — teclado, teléfono o tablet.',
+      },
+    ]
+  : [
+      {
+        title: 'Designed to scale',
+        blurb: 'From a single seat to a 50-agent operation — the platform grows with you.',
+      },
+      {
+        title: 'Hyppo team support',
+        blurb: 'A dedicated growth team behind every Enterprise account.',
+      },
+      {
+        title: 'HTTP integrations',
+        blurb: 'Webhooks and a full REST API connect anything in your stack.',
+      },
+      {
+        title: 'Web + mobile for agents',
+        blurb: 'Your team replies from any device — keyboard, phone, tablet.',
+      },
+    ];
+---
+
+<section class="scale sec bg-paper has-blobs">
+  <span class="blob blob-violet-mist blob-xl blob-anim-a parallax" style="top: -240px; right: -160px;" aria-hidden="true"></span>
+  <span class="blob blob-green blob-sm blob-anim-b" style="bottom: -40px; left: 18%; opacity: 0.4;" aria-hidden="true"></span>
+  <div class="wrap scale-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 scale-title">{copy.title}</h2>
+  </div>
+
+  <div class="wrap scale-grid reveal-stagger">
+    {items.map((it, i) => (
+      <article class="scale-card">
+        <span class="scale-num">0{i+1}</span>
+        <h3 class="scale-name">{it.title}</h3>
+        <p class="scale-blurb">{it.blurb}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .scale-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: clamp(40px, 5vw, 56px); }
+  .scale-title { max-width: 22ch; }
+
+  .scale-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .scale-card {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    box-shadow: var(--shadow-xs);
+  }
+  .scale-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gc-primary);
+    letter-spacing: 0.05em;
+  }
+  .scale-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: var(--tr-snug);
+  }
+  .scale-blurb { color: var(--fg-2); font-size: 14px; line-height: 1.5; }
+
+  @media (max-width: 880px) { .scale-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .scale-grid { grid-template-columns: 1fr; } }
+</style>
