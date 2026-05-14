@@ -28,20 +28,20 @@ const copy = isES
 // Heights tuned per-logo so all read at roughly the same optical weight.
 const brands = [
   { name: 'Hyppo',           img: '/media/Logo_Hyppo-Black.png',                h: 44 },
-  { name: 'Nilus',           img: '/media/nilus-1-300x92-1.png',                h: 42 },
-  { name: 'Oliovita',        img: '/media/oliovita-1-300x113-1.webp',           h: 56 },
-  { name: 'Wibond',          img: '/media/wibond-1.png',                        h: 44 },
-  { name: 'SuperEasy',       img: '/media/supereasy-1-edited.png',              h: 52 },
-  { name: 'Lure by MS',      img: '/media/lure-by-ms.png',                      h: 46 },
+  { name: 'Nilus',           img: '/media/nilus-1-300x92-1.png',                h: 44 },
+  { name: 'Oliovita',        img: '/media/oliovita-1-300x113-1.webp',           h: 52 },
+  { name: 'Wibond',          img: '/media/wibond-1.png',                        h: 56 },
+  { name: 'SuperEasy',       img: '/media/supereasy-1-edited.png',              h: 58 },
+  { name: 'Lure by MS',      img: '/media/lure-by-ms.png',                      h: 48 },
   { name: 'Zebrands',        img: '/media/zebrands.png',                        h: 38 },
-  { name: 'PayJoy',          img: '/media/payjoy.jpg',                          h: 48 },
-  { name: 'Aeromexico',      img: '/media/aeromexico.jpg',                      h: 38 },
-  { name: 'Innova',          img: '/media/innova.png',                          h: 64 },
-  { name: 'UANZ',            img: '/media/uanz.png',                            h: 36 },
-  { name: 'Growth Digital',  img: '/media/growth-digital-1-300x169-1.png',      h: 50 },
-  { name: 'Sportline',       img: '/media/sportline-300x101-1.png',             h: 38 },
-  { name: 'Carmelo Resorts', img: '/media/carmelo-resorts.png',                 h: 46 },
-  { name: 'Sieger',          img: '/media/sieger.png',                          h: 42 },
+  { name: 'PayJoy',          img: '/media/payjoy.jpg',                          h: 56 },
+  { name: 'Aeromexico',      img: '/media/aeromexico.jpg',                      h: 50 },
+  { name: 'Innova',          img: '/media/innova.png',                          h: 60 },
+  { name: 'UANZ',            img: '/media/uanz.png',                            h: 42 },
+  { name: 'Growth Digital',  img: '/media/growth-digital-1-300x169-1.png',      h: 52 },
+  { name: 'Sportline',       img: '/media/sportline-300x101-1.png',             h: 42 },
+  { name: 'Carmelo Resorts', img: '/media/carmelo-resorts.png',                 h: 52 },
+  { name: 'Sieger',          img: '/media/sieger.png',                          h: 48 },
 ];
 ---
 
@@ -50,7 +50,7 @@ const brands = [
   <span class="blob blob-green blob-sm blob-anim-b" style="bottom: -60px; left: -40px; opacity: 0.35;" aria-hidden="true"></span>
   <p class="wrap brands-eyebrow">{copy.eyebrow}</p>
 
-  <div class="marquee marquee--hover-fast" aria-label={copy.marqueeAria}>
+  <div class="marquee" aria-label={copy.marqueeAria}>
     <div class="marquee-track">
       {[...brands, ...brands].map((b) => (
         <div class="brand-logo" title={b.name}>

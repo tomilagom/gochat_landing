@@ -528,9 +528,6 @@ section { position: relative; }
 /* Ensure section content stays above the curve pseudos */
 .wave-up > *, .wave-down > * { position: relative; z-index: 2; }
 
-/* Marquee speeds up on hover instead of pausing */
-.marquee--hover-fast:hover .marquee-track { animation-duration: 30s; }
-
 /* Animated link underline (text-decoration alternative) */
 .link-anim {
   position: relative;
