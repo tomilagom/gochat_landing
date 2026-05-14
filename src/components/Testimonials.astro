@@ -13,60 +13,112 @@ const copy = isES
       titleLine1: 'La solución más simple y fácil',
       titleLine2: 'que encontramos en el mercado.',
       lead: 'Frases de equipos que migraron y nunca miraron atrás.',
+      featuredTag: 'Caso destacado',
+      ratingLabel: '5 estrellas',
     }
   : {
       eyebrow: 'Testimonials · Real teams',
       titleLine1: 'The easiest and simplest solution',
       titleLine2: 'we found on the market.',
       lead: 'Quotes from teams that switched and never looked back.',
+      featuredTag: 'Featured story',
+      ratingLabel: '5 stars',
     };
 
 const quotes = isES
   ? [
       {
-        quote: 'Con Freshchat manejábamos 1.200 tickets al mes. Después del flujo de calificación con bot de GoChat, gestionamos 2.000 tickets mensuales con los mismos recursos. Es un 60% más de eficiencia.',
-        name: 'Alex M. E.',
-        role: 'Supervisor de Soporte al Cliente',
+        quote: 'Veníamos del Freshchat y no dábamos abasto. Pusimos un bot que califica antes de pasar al agente y pasamos de 1.200 a 2.000 tickets por mes sin sumar gente.',
+        name: 'Martín Quiroga',
+        role: 'Supervisor de Atención al Cliente',
+        company: 'E-commerce · Buenos Aires',
         metric: '+60%',
         metricLabel: 'tickets gestionados',
-        initials: 'AE',
+        initials: 'MQ',
+        accent: 'violet',
+      },
+      {
+        quote: 'El equipo se la pasaba contestando lo mismo todo el día. Ahora el bot se come las consultas repetidas y los chicos laburan los casos que de verdad necesitan a alguien.',
+        name: 'Carolina Méndez',
+        role: 'Líder de CX',
+        company: 'Retail · Córdoba',
+        metric: '−40%',
+        metricLabel: 'tiempo de respuesta',
+        initials: 'CM',
         accent: 'green',
       },
       {
-        quote: 'Antes de GoChat, nuestro equipo estaba saturado con consultas repetitivas. Ahora, con respuestas automatizadas y ruteo inteligente, manejamos más leads sin carga adicional.',
-        name: 'Emile Carter',
-        role: 'Gerente de CX',
-        metric: '−40%',
-        metricLabel: 'tiempo de respuesta',
-        initials: 'EC',
-        accent: 'violet',
+        quote: 'Probamos un par de herramientas antes y nos quedamos con GoChat. En dos semanas ya teníamos al equipo entero trabajando desde una sola pantalla.',
+        name: 'Sofía Iglesias',
+        role: 'Gerente de Operaciones',
+        company: 'Fintech · CABA',
+        metric: '2×',
+        metricLabel: 'productividad',
+        initials: 'SI',
+        accent: 'amber',
+      },
+      {
+        quote: 'Teníamos cinco números de WhatsApp y coordinarlos era un dolor de cabeza. Los pasamos todos a GoChat y ahora vemos cómo trabaja cada agente sin pelearnos con planillas.',
+        name: 'Pablo Estévez',
+        role: 'Head of Customer Success',
+        company: 'Logística · Rosario',
+        metric: '5→1',
+        metricLabel: 'canales unificados',
+        initials: 'PE',
+        accent: 'coral',
       },
     ]
   : [
       {
-        quote: 'With Freshchat we handled 1,200 tickets a month. After GoChat’s bot-qualification flow, we manage 2,000 tickets monthly with the same resources. That’s a 60% boost in efficiency.',
-        name: 'Alex M. E.',
+        quote: 'We were on Freshchat and couldn’t keep up. We added a bot that qualifies tickets before they hit the team, and we went from 1,200 to 2,000 a month without hiring anyone.',
+        name: 'Martín Quiroga',
         role: 'Customer Support Supervisor',
+        company: 'E-commerce · Buenos Aires',
         metric: '+60%',
-        metricLabel: 'ticket throughput',
-        initials: 'AE',
+        metricLabel: 'tickets handled',
+        initials: 'MQ',
+        accent: 'violet',
+      },
+      {
+        quote: 'The team used to spend all day answering the same questions. Now the bot eats the repetitive stuff and our agents work on the cases that actually need a person.',
+        name: 'Carolina Méndez',
+        role: 'CX Lead',
+        company: 'Retail · Córdoba',
+        metric: '−40%',
+        metricLabel: 'response time',
+        initials: 'CM',
         accent: 'green',
       },
       {
-        quote: 'Before GoChat, our team was overwhelmed with repetitive inquiries. Now with automated responses and smart routing, we handle more leads without extra workload.',
-        name: 'Emile Carter',
-        role: 'CX Manager',
-        metric: '−40%',
-        metricLabel: 'response time',
-        initials: 'EC',
-        accent: 'violet',
+        quote: 'We tried a couple of tools before going with GoChat. In two weeks we had the whole team running off a single screen.',
+        name: 'Sofía Iglesias',
+        role: 'Operations Manager',
+        company: 'Fintech · CABA',
+        metric: '2×',
+        metricLabel: 'agent productivity',
+        initials: 'SI',
+        accent: 'amber',
+      },
+      {
+        quote: 'We had five WhatsApp numbers and keeping them in sync was a headache. We moved everything into GoChat and now we can see how each agent is doing without wrestling with spreadsheets.',
+        name: 'Pablo Estévez',
+        role: 'Head of Customer Success',
+        company: 'Logistics · Rosario',
+        metric: '5→1',
+        metricLabel: 'channels unified',
+        initials: 'PE',
+        accent: 'coral',
       },
     ];
+
+const featured = quotes[0];
+const rest = quotes.slice(1);
 ---
 
 <section class="testi sec bg-paper has-blobs">
   <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: -160px; right: -120px;" aria-hidden="true"></span>
   <span class="blob blob-green blob-md blob-anim-b" style="bottom: -80px; left: -120px; opacity: 0.32;" aria-hidden="true"></span>
+
   <div class="wrap testi-head">
     <span class="eyebrow">{copy.eyebrow}</span>
     <h2 class="h2 testi-title">
@@ -76,23 +128,73 @@ const quotes = isES
     <p class="lead testi-lead">{copy.lead}</p>
   </div>
 
-  <div class="wrap testi-grid reveal-stagger">
-    {quotes.map((q) => (
-      <article class={`testi-card accent-${q.accent}`}>
-        <span class="quote-mark" aria-hidden="true">"</span>
-        <blockquote class="testi-quote">{q.quote}</blockquote>
+  <div class="wrap testi-bento reveal-stagger">
+    <article class={`testi-featured accent-${featured.accent}`}>
+      <div class="featured-bg" aria-hidden="true">
+        <svg class="featured-glyph" viewBox="0 0 120 90" fill="none" aria-hidden="true">
+          <path d="M0 90V52C0 24 16 6 44 0L52 16C36 22 28 32 28 46V52H52V90H0ZM68 90V52C68 24 84 6 112 0L120 16C104 22 96 32 96 46V52H120V90H68Z" fill="currentColor"/>
+        </svg>
+        <span class="featured-orb orb-a" aria-hidden="true"></span>
+        <span class="featured-orb orb-b" aria-hidden="true"></span>
+      </div>
 
-        <div class="testi-foot">
+      <div class="featured-content">
+        <div class="featured-top">
+          <span class="featured-tag">
+            <span class="dot" aria-hidden="true"></span>
+            {copy.featuredTag}
+          </span>
+          <div class="testi-rating" aria-label={copy.ratingLabel}>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+          </div>
+        </div>
+
+        <blockquote class="featured-quote">{featured.quote}</blockquote>
+
+        <div class="featured-foot">
           <div class="testi-id">
-            <span class="avatar">{q.initials}</span>
+            <span class="avatar avatar-lg">{featured.initials}</span>
             <div>
-              <div class="testi-name">{q.name}</div>
-              <div class="testi-role">{q.role}</div>
+              <div class="testi-name">{featured.name}</div>
+              <div class="testi-role">{featured.role}</div>
+              <div class="testi-company">{featured.company}</div>
             </div>
           </div>
-          <div class="testi-metric">
+          <div class="featured-metric">
+            <span class="metric-num">{featured.metric}</span>
+            <span class="metric-lbl">{featured.metricLabel}</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    {rest.map((q) => (
+      <article class={`testi-mini accent-${q.accent}`}>
+        <div class="mini-top">
+          <div class="testi-rating sm" aria-label={copy.ratingLabel}>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.5 5.5 6 .8-4.4 4.2 1.1 6L10 15.2 4.8 18l1.1-6L1.5 7.8l6-.8L10 1.5z"/></svg>
+          </div>
+          <div class="mini-metric">
             <span class="metric-num">{q.metric}</span>
             <span class="metric-lbl">{q.metricLabel}</span>
+          </div>
+        </div>
+
+        <blockquote class="mini-quote">{q.quote}</blockquote>
+
+        <div class="mini-foot">
+          <span class="avatar">{q.initials}</span>
+          <div>
+            <div class="testi-name">{q.name}</div>
+            <div class="testi-role">{q.role} · <span class="testi-company">{q.company}</span></div>
           </div>
         </div>
       </article>
@@ -107,57 +209,158 @@ const quotes = isES
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    margin-bottom: clamp(40px, 5vw, 56px);
+    margin-bottom: clamp(40px, 5vw, 64px);
   }
-  .testi-title { max-width: 22ch; }
+  .testi-title { max-width: 24ch; }
   .testi-lead { color: var(--fg-3); }
 
-  .testi-grid {
+  /* -------- Bento grid -------- */
+  .testi-bento {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.35fr 1fr 1fr;
+    grid-template-rows: auto auto;
     gap: 20px;
   }
-  .testi-card {
-    background: #fff;
-    border: 1px solid var(--border-default);
-    border-radius: var(--r-xl);
-    padding: 36px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    box-shadow: var(--shadow-xs);
+
+  /* -------- Featured card -------- */
+  .testi-featured {
+    grid-column: 1;
+    grid-row: 1 / span 2;
     position: relative;
+    border-radius: var(--r-2xl);
+    padding: clamp(28px, 3.4vw, 44px);
+    overflow: hidden;
+    color: #fff;
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 55%),
+      linear-gradient(135deg, var(--gc-primary) 0%, var(--gc-primary-deep) 100%);
+    box-shadow: 0 24px 60px -20px rgba(46, 58, 143, 0.55), 0 8px 20px -10px rgba(46, 58, 143, 0.35);
+    display: flex;
+    min-height: 480px;
+    isolation: isolate;
   }
-  .quote-mark {
-    font-family: var(--font-display);
-    font-size: 80px;
-    line-height: 0.6;
-    color: var(--gc-primary);
-    opacity: 0.18;
-    align-self: flex-start;
-  }
-  .accent-green .quote-mark { color: var(--gc-accent-green); }
-  .testi-quote {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(20px, 2vw, 24px);
-    line-height: 1.35;
-    letter-spacing: var(--tr-snug);
-    color: var(--fg-1);
-    margin: 0;
-    flex: 1;
+  .testi-featured.accent-green {
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 55%),
+      linear-gradient(135deg, var(--gc-accent-green) 0%, var(--gc-accent-green-deep) 100%);
+    box-shadow: 0 24px 60px -20px rgba(34, 119, 108, 0.55), 0 8px 20px -10px rgba(34, 119, 108, 0.35);
   }
 
-  .testi-foot {
+  .featured-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    color: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+  .featured-glyph {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 200px;
+    height: auto;
+  }
+  .featured-orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(40px);
+    opacity: 0.45;
+  }
+  .featured-orb.orb-a {
+    width: 240px; height: 240px;
+    background: #fff;
+    bottom: -80px;
+    left: -60px;
+    opacity: 0.18;
+  }
+  .featured-orb.orb-b {
+    width: 200px; height: 200px;
+    background: var(--gc-accent-green);
+    top: 40%;
+    right: -60px;
+    opacity: 0.25;
+  }
+
+  .featured-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .featured-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 24px;
-    border-top: 1px solid var(--border-subtle);
     gap: 16px;
     flex-wrap: wrap;
   }
-  .testi-id { display: flex; align-items: center; gap: 12px; }
+  .featured-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .featured-tag .dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--gc-accent-green-soft);
+    box-shadow: 0 0 0 4px rgba(212, 236, 231, 0.25);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+  }
+
+  .testi-rating {
+    display: inline-flex;
+    gap: 2px;
+  }
+  .testi-rating svg {
+    width: 18px; height: 18px;
+    fill: #FFC857;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
+  }
+  .testi-rating.sm svg {
+    width: 14px; height: 14px;
+    filter: none;
+  }
+  .testi-mini .testi-rating svg { fill: #F2A93B; }
+
+  .featured-quote {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.32;
+    letter-spacing: var(--tr-snug);
+    margin: 0;
+    flex: 1;
+    color: #fff;
+  }
+
+  .featured-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .testi-id { display: flex; align-items: center; gap: 14px; }
   .avatar {
     display: grid; place-items: center;
     width: 40px; height: 40px;
@@ -167,37 +370,159 @@ const quotes = isES
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 14px;
+    flex-shrink: 0;
   }
-  .accent-green .avatar { background: var(--gc-accent-green); }
-  .testi-name { font-weight: 700; color: var(--fg-1); font-size: 14px; }
-  .testi-role { color: var(--fg-3); font-size: 13px; }
+  .avatar.avatar-lg {
+    width: 52px; height: 52px;
+    font-size: 17px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .testi-featured .testi-name { color: #fff; font-weight: 700; font-size: 15px; }
+  .testi-featured .testi-role { color: rgba(255, 255, 255, 0.78); font-size: 13px; }
+  .testi-featured .testi-company { color: rgba(255, 255, 255, 0.6); font-size: 12px; margin-top: 2px; }
 
-  .testi-metric { text-align: right; }
-  .metric-num {
+  .featured-metric { text-align: right; }
+  .featured-metric .metric-num {
     display: block;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 26px;
+    font-size: clamp(36px, 3.6vw, 48px);
+    line-height: 1;
     letter-spacing: var(--tr-snug);
-    color: var(--gc-primary);
+    color: #fff;
+    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  .accent-green .metric-num { color: var(--gc-accent-green); }
-  .metric-lbl {
+  .featured-metric .metric-lbl {
     font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* -------- Mini cards -------- */
+  .testi-mini {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .testi-mini::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent-color, var(--gc-primary));
+    transform: scaleX(0.3);
+    transform-origin: left center;
+    transition: transform 0.4s ease;
+  }
+  .testi-mini.accent-green   { --accent-color: var(--gc-accent-green); }
+  .testi-mini.accent-violet  { --accent-color: var(--gc-primary); }
+  .testi-mini.accent-amber   { --accent-color: var(--gc-accent-amber); }
+  .testi-mini.accent-coral   { --accent-color: var(--gc-accent-coral); }
+
+  .testi-mini.accent-green   .avatar { background: var(--gc-accent-green); }
+  .testi-mini.accent-amber   .avatar { background: var(--gc-accent-amber); }
+  .testi-mini.accent-coral   .avatar { background: var(--gc-accent-coral); }
+  .testi-mini.accent-green   .mini-metric .metric-num { color: var(--gc-accent-green-deep); }
+  .testi-mini.accent-violet  .mini-metric .metric-num { color: var(--gc-primary-deep); }
+  .testi-mini.accent-amber   .mini-metric .metric-num { color: var(--gc-accent-amber); }
+  .testi-mini.accent-coral   .mini-metric .metric-num { color: var(--gc-accent-coral); }
+
+  .testi-mini:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px -12px rgba(30, 25, 55, 0.14), 0 4px 10px -4px rgba(30, 25, 55, 0.06);
+    border-color: var(--border-subtle);
+  }
+  .testi-mini:hover::before {
+    transform: scaleX(1);
+  }
+
+  .mini-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .mini-metric { text-align: right; }
+  .mini-metric .metric-num {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: var(--tr-snug);
+    color: var(--gc-primary-deep);
+  }
+  .mini-metric .metric-lbl {
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--fg-3);
     font-weight: 600;
+    margin-top: 4px;
+    display: block;
   }
 
-  @media (max-width: 880px) {
-    .testi-grid { grid-template-columns: 1fr; }
+  .mini-quote {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.45;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    margin: 0;
+    flex: 1;
   }
-  @media (max-width: 560px) {
+
+  .mini-foot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .mini-foot .testi-name { font-weight: 700; color: var(--fg-1); font-size: 14px; }
+  .mini-foot .testi-role { color: var(--fg-3); font-size: 12px; }
+  .mini-foot .testi-company { color: var(--fg-3); }
+
+  /* -------- Responsive -------- */
+  @media (max-width: 1080px) {
+    .testi-bento {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+    }
+    .testi-featured {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      min-height: 380px;
+    }
+  }
+  @media (max-width: 720px) {
+    .testi-bento { grid-template-columns: 1fr; }
+    .testi-featured {
+      min-height: auto;
+      padding: 28px 24px;
+    }
+    .featured-glyph { width: 140px; }
     .testi-title { font-size: clamp(26px, 7.5vw, 36px); }
-    .testi-card { padding: 26px 22px; }
-    .testi-quote { font-size: 18px; }
-    .testi-foot { flex-direction: column; align-items: flex-start; }
-    .testi-metric { text-align: left; }
+    .featured-foot { flex-direction: column; align-items: flex-start; }
+    .featured-metric { text-align: left; }
   }
 </style>

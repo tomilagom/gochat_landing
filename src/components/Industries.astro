@@ -10,103 +10,232 @@ const isES = lang === 'es';
 const copy = isES
   ? {
       eyebrow: 'Soluciones',
-      titleLine1: 'Pensado para tu negocio,',
-      titleAccent: 'sea cual sea la industria.',
-      vertical: 'Vertical',
-      explore: 'Ver el playbook',
+      titleLine1: 'Un agente que vende, soporta',
+      titleAccent: 'y nunca duerme.',
+      lead: 'Diseñado alrededor de los tres trabajos que tu negocio necesita resolver cada día.',
+      useCase: 'Caso de uso',
+      explore: 'Ver cómo funciona',
+      hint: 'Pasa el cursor o toca para ver detalles',
     }
   : {
       eyebrow: 'Solutions',
-      titleLine1: 'Built for your business,',
-      titleAccent: 'whatever the industry.',
-      vertical: 'Vertical',
-      explore: 'Explore the playbook',
+      titleLine1: 'One agent that sells, supports',
+      titleAccent: 'and never sleeps.',
+      lead: 'Built around the three jobs your business needs done every day.',
+      useCase: 'Use case',
+      explore: 'See it in action',
+      hint: 'Hover or tap to dig in',
     };
 
 const items = isES
   ? [
       {
         tag: '01',
-        name: 'E-commerce',
-        img: '/media/ecommerce.png',
-        blurb: 'Recupera carritos, califica la intención de compra y empuja ofertas. Un checkout conversacional que cierra ventas.',
-        bullets: ['Flujos de recuperación de carrito', 'Shopify + Tienda Nube', 'Carruseles de productos en el chat'],
-        href: localizedHref('/ecommerce', lang),
+        name: 'Generación de leads',
+        tagline: 'Captura intención en todos lados.',
+        blurb: 'Convierte cada comentario, click y DM en un contacto calificado. El bot pregunta, scorea y manda el lead a tu CRM mientras está caliente.',
+        bullets: [
+          'Respuesta automática a comentarios y ads',
+          'Formularios conversacionales sin fricción',
+          'Sync con HubSpot, Salesforce y Sheets',
+          'Alertas de leads calientes en tiempo real',
+        ],
+        metric: '3× más leads calificados',
+        accent: 'green',
+        visual: 'lead',
+        href: localizedHref('/#demo', lang),
       },
       {
         tag: '02',
-        name: 'Automotive',
-        img: '/media/automotive-car.png',
-        blurb: 'Reservas de service, test-drives y consultas de repuestos resueltas fuera de horario. Cada noche.',
-        bullets: ['Ruteo lead-a-concesionaria', 'Sincronización con HubSpot + Salesforce', 'Recordatorios de postventa'],
-        href: localizedHref('/automotive', lang),
+        name: 'Atención al cliente',
+        tagline: 'Resuelve solo, escala con contexto.',
+        blurb: 'El 80% de las conversaciones en piloto automático; el resto a un humano con todo el hilo cargado. Tu equipo deja de repetirse.',
+        bullets: [
+          'Agente de IA que responde 24/7 con tu tono',
+          'Escalada inteligente con todo el contexto',
+          'Multilingüe de fábrica',
+          'Inbox unificado, tags e historial',
+        ],
+        metric: '< 2 min de primera respuesta',
+        accent: 'violet',
+        visual: 'support',
+        href: localizedHref('/#demo', lang),
       },
       {
         tag: '03',
-        name: 'Real estate',
-        img: '/media/real-estate-e1763391592382.png',
-        blurb: 'Captura compradores e inquilinos calificados, agenda visitas y no pierdas más leads calientes.',
-        bullets: ['Matchmaking de propiedades', 'Formularios de WhatsApp', 'Derivación a agentes'],
-        href: localizedHref('/real-estate', lang),
+        name: 'Ventas y comercio',
+        tagline: 'Del scroll al checkout en el chat.',
+        blurb: 'Recupera carritos, recomienda productos y cierra órdenes sin que el cliente salga de la conversación.',
+        bullets: [
+          'Catálogos y carruseles en el chat',
+          'Flujos de carrito abandonado y postventa',
+          'Shopify, Tienda Nube, WooCommerce',
+          'Pagos en chat y updates de envío',
+        ],
+        metric: '+30% conversión a venta',
+        accent: 'coral',
+        visual: 'sales',
+        href: localizedHref('/ecommerce', lang),
       },
     ]
   : [
       {
         tag: '01',
-        name: 'E-commerce',
-        img: '/media/ecommerce.png',
-        blurb: 'Recover carts, qualify intent and push offers. A conversational checkout that actually closes.',
-        bullets: ['Cart-recovery flows', 'Shopify + Tienda Nube', 'Product carousels in chat'],
-        href: '/ecommerce',
+        name: 'Lead generation',
+        tagline: 'Capture intent everywhere.',
+        blurb: 'Turn every comment, click and DM into a qualified contact. The bot asks, scores and lands leads in your CRM while they are still warm.',
+        bullets: [
+          'Auto-reply to comments and ads',
+          'Conversational forms with zero friction',
+          'Sync to HubSpot, Salesforce, Sheets',
+          'Real-time hot-lead alerts',
+        ],
+        metric: '3× more qualified leads',
+        accent: 'green',
+        visual: 'lead',
+        href: '/#demo',
       },
       {
         tag: '02',
-        name: 'Automotive',
-        img: '/media/automotive-car.png',
-        blurb: 'Service bookings, test-drive scheduling and parts inquiries, all answered after hours. Every night.',
-        bullets: ['Lead-to-dealer routing', 'HubSpot + Salesforce sync', 'After-sales reminders'],
-        href: '/automotive',
+        name: 'Customer support',
+        tagline: 'Resolve solo, escalate with context.',
+        blurb: 'The first 80% of conversations on autopilot; the rest to a human with the full thread loaded. Your team stops repeating itself.',
+        bullets: [
+          'AI agent answers 24/7 in your tone',
+          'Smart escalation with full context',
+          'Multilingual out of the box',
+          'Unified inbox, tags and history',
+        ],
+        metric: '< 2 min first response',
+        accent: 'violet',
+        visual: 'support',
+        href: '/#demo',
       },
       {
         tag: '03',
-        name: 'Real estate',
-        img: '/media/real-estate-e1763391592382.png',
-        blurb: 'Capture qualified buyers and renters, schedule visits, never miss a hot lead again.',
-        bullets: ['Listing matchmaking', 'WhatsApp form-fills', 'Agent handoff'],
-        href: '/real-estate',
+        name: 'Sales & commerce',
+        tagline: 'From scroll to checkout in chat.',
+        blurb: 'Recover carts, recommend products and close orders without the customer ever leaving the conversation.',
+        bullets: [
+          'Product catalogs and carousels in chat',
+          'Cart-recovery and post-purchase flows',
+          'Shopify, Tienda Nube, WooCommerce',
+          'In-chat payments and shipping updates',
+        ],
+        metric: '+30% conversion to sale',
+        accent: 'coral',
+        visual: 'sales',
+        href: '/ecommerce',
       },
     ];
+
+const VISUALS: Record<string, string> = {
+  lead: `<svg viewBox="0 0 200 140" fill="none" aria-hidden="true">
+    <defs>
+      <pattern id="dots-g" width="14" height="14" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.2" fill="currentColor" opacity="0.18"/>
+      </pattern>
+    </defs>
+    <rect width="200" height="140" fill="url(#dots-g)"/>
+    <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none">
+      <path d="M30 40 L100 80" opacity="0.55"/>
+      <path d="M100 30 L100 80" opacity="0.75"/>
+      <path d="M170 40 L100 80" opacity="0.55"/>
+    </g>
+    <g fill="#fff" stroke="currentColor" stroke-width="1.6">
+      <circle cx="30" cy="40" r="9"/>
+      <circle cx="100" cy="30" r="9"/>
+      <circle cx="170" cy="40" r="9"/>
+    </g>
+    <rect x="78" y="80" width="44" height="34" rx="8" fill="currentColor"/>
+    <path d="M86 96 L96 102 L114 90" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>`,
+  support: `<svg viewBox="0 0 200 140" fill="none" aria-hidden="true">
+    <defs>
+      <pattern id="dots-v" width="14" height="14" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.2" fill="currentColor" opacity="0.18"/>
+      </pattern>
+    </defs>
+    <rect width="200" height="140" fill="url(#dots-v)"/>
+    <g stroke="currentColor" stroke-width="1.6">
+      <rect x="20" y="28" width="86" height="34" rx="14" fill="#fff"/>
+      <line x1="32" y1="40" x2="78" y2="40" stroke-linecap="round" opacity="0.55"/>
+      <line x1="32" y1="50" x2="92" y2="50" stroke-linecap="round" opacity="0.55"/>
+    </g>
+    <g>
+      <rect x="74" y="74" width="106" height="42" rx="16" fill="currentColor"/>
+      <line x1="86" y1="88" x2="156" y2="88" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+      <line x1="86" y1="100" x2="140" y2="100" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+    </g>
+    <g fill="currentColor">
+      <circle cx="166" cy="34" r="4"/>
+      <circle cx="178" cy="34" r="4" opacity="0.6"/>
+      <circle cx="154" cy="34" r="4" opacity="0.3"/>
+    </g>
+  </svg>`,
+  sales: `<svg viewBox="0 0 200 140" fill="none" aria-hidden="true">
+    <defs>
+      <pattern id="dots-c" width="14" height="14" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.2" fill="currentColor" opacity="0.18"/>
+      </pattern>
+    </defs>
+    <rect width="200" height="140" fill="url(#dots-c)"/>
+    <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none">
+      <line x1="24" y1="116" x2="176" y2="116" opacity="0.4"/>
+    </g>
+    <g fill="currentColor">
+      <rect x="36" y="86" width="20" height="30" rx="3" opacity="0.32"/>
+      <rect x="68" y="72" width="20" height="44" rx="3" opacity="0.5"/>
+      <rect x="100" y="56" width="20" height="60" rx="3" opacity="0.72"/>
+      <rect x="132" y="38" width="20" height="78" rx="3"/>
+    </g>
+    <g stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M36 84 L68 70 L100 54 L132 36"/>
+      <path d="M126 34 L142 36 L140 22" stroke-width="2"/>
+    </g>
+  </svg>`,
+};
 ---
 
 <section class="industries sec bg-paper has-blobs" id="solutions">
   <span class="blob blob-violet blob-lg blob-anim-a parallax" style="top: 8%; left: -180px;" aria-hidden="true"></span>
   <span class="blob blob-green-deep blob-md blob-anim-b" style="bottom: 5%; right: -120px;" aria-hidden="true"></span>
   <div class="wrap industries-head">
-    <span class="eyebrow">{copy.eyebrow}</span>
-    <h2 class="h2 industries-title">
-      {copy.titleLine1}<br/>
-      <span class="ind-accent">{copy.titleAccent}</span>
-    </h2>
+    <div>
+      <span class="eyebrow">{copy.eyebrow}</span>
+      <h2 class="h2 industries-title">
+        {copy.titleLine1}<br/>
+        <span class="ind-accent">{copy.titleAccent}</span>
+      </h2>
+    </div>
+    <p class="lead industries-lead">{copy.lead}</p>
   </div>
 
-  <div class="wrap industries-grid reveal-stagger">
-    {items.map((it, i) => (
-      <article class="indi">
-        <div class="indi-img">
-          <img src={it.img} alt={it.name} loading={i === 0 ? 'eager' : 'lazy'} decoding="async"/>
-          <span class="indi-tag">{it.tag} · {copy.vertical}</span>
-        </div>
-        <div class="indi-body">
+  <div class="wrap industries-grid reveal-stagger" data-expandable-group>
+    {items.map((it) => (
+      <article class={`indi accent-${it.accent}`} data-expand tabindex="0" aria-expanded="false">
+        <div class="indi-visual" set:html={VISUALS[it.visual]} />
+        <span class="indi-tag">{it.tag} · {copy.useCase}</span>
+
+        <div class="indi-summary">
           <header class="indi-h">
             <h3 class="indi-name">{it.name}</h3>
-            <span class="indi-arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            <span class="indi-toggle" aria-hidden="true">
+              <svg class="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              <svg class="ic-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
             </span>
           </header>
+          <p class="indi-tagline">{it.tagline}</p>
+          <span class="indi-metric">{it.metric}</span>
+        </div>
+
+        <div class="indi-expand">
           <p class="indi-blurb">{it.blurb}</p>
           <ul class="indi-bullets">
             {it.bullets.map((b) => (
-              <li><span class="tick" aria-hidden="true">✓</span>{b}</li>
+              <li><span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 4"/></svg>
+              </span>{b}</li>
             ))}
           </ul>
           <a class="indi-link" href={it.href}>
@@ -121,16 +250,21 @@ const items = isES
 
 <style>
   .industries-head {
-    display: flex; flex-direction: column; gap: 16px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 48px;
+    align-items: end;
     margin-bottom: clamp(40px, 5vw, 64px);
   }
   .industries-title { max-width: 22ch; font-size: clamp(32px, 4vw, 56px); }
+  .industries-lead { justify-self: end; max-width: 38ch; }
   .ind-accent { color: var(--gc-primary); }
 
   .industries-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    align-items: start;
   }
 
   .indi {
@@ -141,37 +275,38 @@ const items = isES
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-xs);
+    position: relative;
+    cursor: pointer;
     transition:
       box-shadow var(--dur-med) var(--ease-out-expo),
-      transform var(--dur-med) var(--ease-out-expo),
       border-color var(--dur-med) var(--ease-out-expo);
-    transform-style: preserve-3d;
   }
-  .indi:hover {
+  .indi:hover, .indi:focus-within, .indi.is-open {
     box-shadow: var(--shadow-md);
-    transform: perspective(900px) rotateX(1.5deg) rotateY(-2deg) translateY(-4px);
     border-color: var(--gc-primary-soft);
   }
+  .indi:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
 
-  .indi-img {
+  /* Accent palette mapping */
+  .accent-green  { --ind-accent: var(--gc-accent-green-deep); --ind-bg: var(--gc-accent-green-mist); }
+  .accent-violet { --ind-accent: var(--gc-primary-deep); --ind-bg: var(--gc-primary-mist); }
+  .accent-coral  { --ind-accent: #8B2A45; --ind-bg: var(--gc-accent-coral-soft); }
+
+  /* Visual area replaces the old image */
+  .indi-visual {
     position: relative;
+    height: 160px;
+    background: var(--ind-bg);
+    color: var(--ind-accent);
+    display: grid;
+    place-items: center;
     overflow: hidden;
-    background: var(--gc-primary-mist);
-    display: block;
-    /* Padding trick — guarantees a 5:3 box even when aspect-ratio fails */
-    height: 0;
-    padding-bottom: 60%;
   }
-  .indi-img img {
-    position: absolute;
-    inset: 0;
+  .indi-visual :global(svg) {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
-    transition: transform 0.7s var(--ease-out-expo);
   }
-  .indi:hover .indi-img img { transform: scale(1.04); }
 
   .indi-tag {
     position: absolute; top: 14px; left: 14px;
@@ -186,14 +321,14 @@ const items = isES
     text-transform: uppercase;
     line-height: 1;
     box-shadow: var(--shadow-xs);
+    z-index: 2;
   }
 
-  .indi-body {
-    padding: 28px;
+  .indi-summary {
+    padding: 24px 24px 18px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    flex: 1;
+    gap: 10px;
   }
   .indi-h {
     display: flex;
@@ -204,83 +339,147 @@ const items = isES
   .indi-name {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 28px;
+    font-size: 24px;
     letter-spacing: var(--tr-tight);
     color: var(--fg-1);
     line-height: 1.05;
   }
-  .indi-arrow {
+  .indi-toggle {
     display: inline-grid;
     place-items: center;
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
     border-radius: var(--r-full);
-    background: var(--gc-primary-mist);
-    color: var(--gc-primary);
+    background: var(--gc-n-100);
+    color: var(--fg-2);
     flex-shrink: 0;
-    transition: background var(--dur-med) var(--ease-out-expo), color var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
+    transition: background var(--dur-med) var(--ease-out-expo), color var(--dur-med) var(--ease-out-expo);
   }
-  .indi-arrow svg { width: 16px; height: 16px; }
-  .indi:hover .indi-arrow {
-    background: var(--gc-primary);
+  .indi-toggle svg { width: 14px; height: 14px; }
+  .indi-toggle .ic-minus { display: none; }
+  .indi:hover .indi-toggle,
+  .indi.is-open .indi-toggle {
+    background: var(--ind-accent);
     color: #fff;
-    transform: translate(2px, -2px);
+  }
+  .indi.is-open .indi-toggle .ic-plus { display: none; }
+  .indi.is-open .indi-toggle .ic-minus { display: block; }
+
+  .indi-tagline {
+    color: var(--fg-2);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .indi-metric {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    background: var(--ind-accent);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: var(--r-full);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    margin-top: 4px;
+  }
+
+  /* Collapsed -> expanded */
+  .indi-expand {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    transition:
+      max-height 0.45s var(--ease-out-expo),
+      opacity 0.3s var(--ease-out-expo),
+      padding 0.3s var(--ease-out-expo);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .indi:hover .indi-expand { max-height: 520px; opacity: 1; padding: 0 24px 24px; }
+  }
+  .indi:focus-within .indi-expand,
+  .indi.is-open .indi-expand {
+    max-height: 520px;
+    opacity: 1;
+    padding: 0 24px 24px;
   }
 
   .indi-blurb {
     color: var(--fg-2);
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.5;
-    max-width: 36ch;
+    border-top: 1px dashed var(--border-default);
+    padding-top: 16px;
   }
-
   .indi-bullets {
     display: flex; flex-direction: column;
-    gap: 10px;
-    padding-block: 4px 6px;
-    border-top: 1px dashed var(--border-default);
-    padding-top: 18px;
-    margin-top: 4px;
+    gap: 8px;
+    margin-top: 14px;
   }
   .indi-bullets li {
     display: flex;
     gap: 10px;
     align-items: center;
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--fg-2);
     font-weight: 500;
   }
   .indi-bullets .tick {
     display: inline-grid; place-items: center;
     width: 18px; height: 18px;
-    background: var(--gc-accent-green-soft);
-    color: var(--gc-accent-green-deep);
+    background: #fff;
+    border: 1px solid var(--ind-accent);
+    color: var(--ind-accent);
     border-radius: var(--r-full);
-    font-size: 10px;
-    font-weight: 800;
     flex-shrink: 0;
   }
 
   .indi-link {
-    margin-top: auto;
+    margin-top: 16px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     font-weight: 700;
     font-size: 13px;
     color: var(--gc-primary);
-    padding-top: 8px;
     letter-spacing: 0.01em;
   }
   .indi-link svg { transition: transform var(--dur-med) var(--ease-out-expo); }
   .indi-link:hover svg { transform: translateX(4px); }
 
   @media (max-width: 980px) {
+    .industries-head { grid-template-columns: 1fr; }
+    .industries-lead { justify-self: start; }
     .industries-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
-    .indi-body { padding: 22px; }
-    .indi-name { font-size: 24px; }
-    .indi-blurb { font-size: 14px; }
+    .indi-name { font-size: 22px; }
     .industries-title { font-size: clamp(28px, 7.5vw, 40px); }
+    .indi-visual { height: 130px; }
   }
 </style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('.industries-grid [data-expand]');
+  cards.forEach((card) => {
+    const toggle = (open?: boolean) => {
+      const next = open ?? !card.classList.contains('is-open');
+      card.classList.toggle('is-open', next);
+      card.setAttribute('aria-expanded', String(next));
+    };
+    card.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.closest('a')) return;
+      toggle();
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const t = e.target as HTMLElement;
+        if (t.closest('a')) return;
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+</script>

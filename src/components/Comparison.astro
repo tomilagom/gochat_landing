@@ -13,7 +13,6 @@ const copy = isES
       title: 'Funcionalidad por funcionalidad.',
       showAll: 'Mostrar todo',
       collapseAll: 'Contraer todo',
-      jumpAria: 'Saltar a categoría',
       featureLabel: 'Funcionalidad',
       mostPopular: 'Más popular',
       perMonth: '/mes',
@@ -25,7 +24,6 @@ const copy = isES
       title: 'Feature by feature.',
       showAll: 'Show all',
       collapseAll: 'Collapse all',
-      jumpAria: 'Jump to category',
       featureLabel: 'Feature',
       mostPopular: 'Most popular',
       perMonth: '/mo',
@@ -222,15 +220,6 @@ function symClass(v: string) {
     </div>
   </div>
 
-  <!-- Category jump pills -->
-  <div class="wrap cmp-jump-wrap">
-    <div class="cmp-jump" role="tablist" aria-label={copy.jumpAria}>
-      {sections.map((s, i) => (
-        <button type="button" class={`cmp-chip${i === 0 ? ' is-on' : ''}`} data-jump={s.id}>{s.title}</button>
-      ))}
-    </div>
-  </div>
-
   <div class="wrap">
     <div class="cmp-frame">
       <!-- Plan header — sits inside the same frame so the column tinting reads as one piece -->
@@ -247,14 +236,13 @@ function symClass(v: string) {
 
       <!-- Sections -->
       {sections.map((s, i) => (
-        <details class="cmp-section" id={`cmp-${s.id}`} open>
+        <details class="cmp-section" id={`cmp-${s.id}`} open={i === 0}>
           <summary class="cmp-section-head">
             <span class="cmp-section-num">{String(i + 1).padStart(2, '0')}</span>
             <span class="cmp-section-title">
               {s.title}
               <span class="cmp-section-blurb">{s.blurb}</span>
             </span>
-            <span class="cmp-section-count">{s.rows.length}</span>
             <span class="cmp-section-toggle" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
             </span>
@@ -280,46 +268,16 @@ function symClass(v: string) {
   if (root) {
     const expandAll = root.querySelector<HTMLButtonElement>('#expandAll');
     const detailsEls = root.querySelectorAll<HTMLDetailsElement>('.cmp-section');
-    const jumps = root.querySelectorAll<HTMLButtonElement>('.cmp-chip');
 
     const labelShow = expandAll?.dataset.labelShow ?? 'Show all';
     const labelCollapse = expandAll?.dataset.labelCollapse ?? 'Collapse all';
-    let allOpen = true;
-    if (expandAll) expandAll.textContent = labelCollapse;
+    let allOpen = false;
+    if (expandAll) expandAll.textContent = labelShow;
     expandAll?.addEventListener('click', () => {
       allOpen = !allOpen;
       detailsEls.forEach((s) => { s.open = allOpen; });
       if (expandAll) expandAll.textContent = allOpen ? labelCollapse : labelShow;
     });
-
-    jumps.forEach((b) => {
-      b.addEventListener('click', () => {
-        jumps.forEach((x) => x.classList.remove('is-on'));
-        b.classList.add('is-on');
-        const id = b.getAttribute('data-jump');
-        if (!id) return;
-        const target = root.querySelector<HTMLDetailsElement>(`#cmp-${id}`);
-        if (target) {
-          target.open = true;
-          const top = target.getBoundingClientRect().top + window.scrollY - 120;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      });
-    });
-
-    // Scroll spy
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const id = (e.target as HTMLElement).id.replace('cmp-', '');
-            jumps.forEach((x) => x.classList.toggle('is-on', x.dataset.jump === id));
-          }
-        });
-      },
-      { rootMargin: '-30% 0px -55% 0px' }
-    );
-    detailsEls.forEach((s) => io.observe(s));
   }
 </script>
 
@@ -348,37 +306,6 @@ function symClass(v: string) {
     transition: background var(--dur-fast) var(--ease-out-expo);
   }
   .cmp-expand-all:hover { background: var(--gc-primary-mist); }
-
-  /* Jump pills */
-  .cmp-jump-wrap {
-    position: sticky;
-    top: 72px;
-    z-index: 4;
-    padding: 12px 0;
-    margin-bottom: 16px;
-    background: linear-gradient(180deg, var(--bg-1) 75%, transparent);
-    backdrop-filter: blur(6px);
-  }
-  .cmp-jump {
-    display: flex; gap: 8px; flex-wrap: wrap;
-  }
-  .cmp-chip {
-    padding: 7px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--border-default);
-    background: #fff;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--fg-2);
-    cursor: pointer;
-    transition: all var(--dur-fast) var(--ease-out-expo);
-  }
-  .cmp-chip:hover { border-color: var(--gc-primary-soft); color: var(--gc-primary-deep); }
-  .cmp-chip.is-on {
-    background: var(--gc-primary);
-    border-color: var(--gc-primary);
-    color: #fff;
-  }
 
   /* Frame */
   .cmp-frame {
@@ -469,7 +396,7 @@ function symClass(v: string) {
 
   .cmp-section-head {
     display: grid;
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 16px;
     padding: 16px 24px;
@@ -508,14 +435,6 @@ function symClass(v: string) {
     font-size: 12.5px;
     color: var(--fg-3);
     letter-spacing: 0;
-  }
-  .cmp-section-count {
-    font-size: 12px;
-    color: var(--fg-3);
-    font-weight: 500;
-    padding: 4px 10px;
-    background: var(--gc-primary-mist);
-    border-radius: 999px;
   }
   .cmp-section-toggle {
     display: inline-grid; place-items: center;
@@ -592,8 +511,6 @@ function symClass(v: string) {
     .td { padding: 12px 8px; font-size: 12.5px; }
     .td-feature { font-size: 13px; }
     .cmp-section-head { grid-template-columns: auto 1fr auto; padding: 14px 14px; }
-    .cmp-section-count { display: none; }
     .cmp-section-blurb { display: none; }
-    .cmp-jump-wrap { top: 64px; }
   }
 </style>

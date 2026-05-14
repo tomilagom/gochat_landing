@@ -1,0 +1,488 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Capacidades por canal',
+      title: 'Cada canal, al máximo de lo que puede.',
+      lead: 'GoChat exprime lo mejor de cada API oficial — plantillas, botones, multimedia, comentarios — para que envíes el mensaje correcto, en el formato correcto, en el canal correcto.',
+      bestFor: 'Ideal para',
+      capabilities: 'Capacidades',
+    }
+  : {
+      eyebrow: 'Capabilities by channel',
+      title: 'Each channel, at the top of its game.',
+      lead: 'GoChat squeezes the most out of every official API — templates, buttons, media, comments — so you ship the right message, in the right format, on the right channel.',
+      bestFor: 'Best for',
+      capabilities: 'Capabilities',
+    };
+
+const channels = isES
+  ? [
+      {
+        name: 'WhatsApp Business',
+        tagline: 'Cloud API oficial',
+        color: 'var(--ch-whatsapp)',
+        icon: { type: 'img', src: '/media/whatsapp-channel.png' },
+        bestFor: 'Generación de leads + ventas',
+        bullets: [
+          'Plantillas aprobadas para iniciar conversaciones',
+          'Broadcasts segmentados y secuencias programadas',
+          'Botones, listas, multimedia y notas de voz',
+          'Ruteo multi-número y multi-agente',
+          'Catálogo de productos y pagos en el chat',
+        ],
+      },
+      {
+        name: 'Instagram',
+        tagline: 'DMs + Comentarios + Stories',
+        color: '#DD2A7B',
+        icon: { type: 'img', src: '/media/instagram-channel.png' },
+        bestFor: 'Embudos comentario-a-DM',
+        bullets: [
+          'Respuesta automática a comentarios por palabra clave',
+          'Captura intent desde menciones en stories',
+          'Botones rápidos y multimedia en DM',
+          'Captura de leads desde anuncios click-to-DM',
+          'Reacciones y stickers nativos',
+        ],
+      },
+      {
+        name: 'Messenger',
+        tagline: 'Facebook · Click-to-Messenger',
+        color: '#0084FF',
+        icon: { type: 'svg', key: 'messenger' },
+        bestFor: 'Re-engagement de audiencias',
+        bullets: [
+          'Message tags para fuera de la ventana 24h',
+          'Botones, carruseles y respuestas rápidas',
+          'Widgets Ref URL y QR para iniciar desde web',
+          'Auto-respuesta a comentarios en publicaciones',
+        ],
+      },
+      {
+        name: 'Telegram',
+        tagline: 'Bot API · Sin ventana de 24h',
+        color: '#229ED9',
+        icon: { type: 'svg', key: 'telegram' },
+        bestFor: 'Comunidades y soporte largo',
+        bullets: [
+          'Mensajes a cualquier usuario, en cualquier momento',
+          'Botones inline, teclados y multimedia rica',
+          'Notas de voz, ubicación y contactos',
+          'Grupos y canales con broadcast nativo',
+        ],
+      },
+      {
+        name: 'Webchat',
+        tagline: 'Widget embebible',
+        color: '#596AD5',
+        icon: { type: 'img', src: '/media/webchat-channel.png' },
+        bestFor: 'Conversión en tu sitio',
+        bullets: [
+          'Personalizable al píxel con tu identidad',
+          'Botones, listas, multimedia y formularios',
+          'Carga liviana — primer reply en <50ms',
+          'Continúa en WhatsApp con un click',
+        ],
+      },
+      {
+        name: 'SMS & Voice',
+        tagline: 'Sin app, sin internet',
+        color: '#6B7280',
+        icon: { type: 'svg', key: 'sms' },
+        bestFor: 'Alertas urgentes y outbound',
+        bullets: [
+          'Broadcasts a listas sin ventana de 24h',
+          'Confirmaciones, OTP y recordatorios',
+          'Llamadas salientes con texto-a-voz',
+          'Cobertura global con números locales',
+        ],
+      },
+    ]
+  : [
+      {
+        name: 'WhatsApp Business',
+        tagline: 'Official Cloud API',
+        color: 'var(--ch-whatsapp)',
+        icon: { type: 'img', src: '/media/whatsapp-channel.png' },
+        bestFor: 'Lead generation + sales',
+        bullets: [
+          'Approved templates to open conversations',
+          'Segmented broadcasts and scheduled sequences',
+          'Buttons, lists, media and voice notes',
+          'Multi-number and multi-agent routing',
+          'Product catalog and in-chat payments',
+        ],
+      },
+      {
+        name: 'Instagram',
+        tagline: 'DMs + Comments + Stories',
+        color: '#DD2A7B',
+        icon: { type: 'img', src: '/media/instagram-channel.png' },
+        bestFor: 'Comment-to-DM funnels',
+        bullets: [
+          'Auto-reply to comments by keyword',
+          'Capture intent from story mentions',
+          'Quick-reply buttons and rich media in DM',
+          'Lead capture from click-to-DM ads',
+          'Native reactions and stickers',
+        ],
+      },
+      {
+        name: 'Messenger',
+        tagline: 'Facebook · Click-to-Messenger',
+        color: '#0084FF',
+        icon: { type: 'svg', key: 'messenger' },
+        bestFor: 'Audience re-engagement',
+        bullets: [
+          'Message tags beyond the 24h window',
+          'Buttons, carousels and quick replies',
+          'Ref URL and QR widgets to start from the web',
+          'Auto-reply to comments on posts',
+        ],
+      },
+      {
+        name: 'Telegram',
+        tagline: 'Bot API · No 24h window',
+        color: '#229ED9',
+        icon: { type: 'svg', key: 'telegram' },
+        bestFor: 'Communities and long support',
+        bullets: [
+          'Message any user, anytime',
+          'Inline buttons, keyboards and rich media',
+          'Voice notes, locations and contacts',
+          'Native group and channel broadcasts',
+        ],
+      },
+      {
+        name: 'Webchat',
+        tagline: 'Embeddable widget',
+        color: '#596AD5',
+        icon: { type: 'img', src: '/media/webchat-channel.png' },
+        bestFor: 'On-site conversion',
+        bullets: [
+          'Pixel-customisable to match your brand',
+          'Buttons, lists, media and forms',
+          'Lightweight — first reply under 50ms',
+          'One-click handoff into WhatsApp',
+        ],
+      },
+      {
+        name: 'SMS & Voice',
+        tagline: 'No app, no internet',
+        color: '#6B7280',
+        icon: { type: 'svg', key: 'sms' },
+        bestFor: 'Urgent alerts and outbound',
+        bullets: [
+          'Broadcasts with no 24-hour window',
+          'Confirmations, OTPs and reminders',
+          'Outbound calls with text-to-speech',
+          'Global coverage with local numbers',
+        ],
+      },
+    ];
+
+const SVG_ICONS: Record<string, string> = {
+  messenger:
+    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.14 2 11.27c0 2.85 1.4 5.39 3.6 7.1V22l3.3-1.81c.9.25 1.85.38 2.85.38 5.5 0 10-4.14 10-9.27S17.5 2 12 2Zm.98 12.46-2.55-2.7-5.05 2.7 5.55-5.85 2.6 2.7 4.95-2.7-5.5 5.85Z"/></svg>',
+  telegram:
+    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 4.5 18.6 20.3c-.3 1.1-.9 1.4-1.9.9l-5.2-3.8-2.5 2.4c-.3.3-.5.5-1 .5l.4-5.3 9.7-8.7c.4-.4-.1-.6-.6-.2L5.5 13l-5.1-1.6C-.7 11-.7 10.2.7 9.7L20.4 2.2c1-.4 1.9.2 1.6 2.3Z" transform="translate(1 0)"/></svg>',
+  sms:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>',
+};
+---
+
+<section class="chcaps sec bg-paper has-blobs" id="channel-capabilities">
+  <span class="blob blob-violet-mist blob-xl blob-anim-a parallax" style="top: -180px; right: -160px;" aria-hidden="true"></span>
+  <span class="blob blob-green blob-md blob-anim-b" style="bottom: -120px; left: -120px; opacity: 0.28;" aria-hidden="true"></span>
+
+  <div class="wrap chcaps-head">
+    <div>
+      <span class="eyebrow">{copy.eyebrow}</span>
+      <h2 class="h2 chcaps-title">{copy.title}</h2>
+    </div>
+    <p class="lead chcaps-lead">{copy.lead}</p>
+  </div>
+
+  <div class="wrap chcaps-grid reveal-stagger">
+    {channels.map((c) => (
+      <article class="chc" style={`--accent:${c.color}`} data-expand tabindex="0" aria-expanded="false">
+        <div class="chc-summary">
+          <div class="chc-icon">
+            {c.icon.type === 'img' ? (
+              <img src={c.icon.src} alt={c.name} loading="lazy" decoding="async"/>
+            ) : (
+              <span class="chc-icon-svg" set:html={SVG_ICONS[c.icon.key as string]} />
+            )}
+          </div>
+          <div class="chc-meta">
+            <h3 class="chc-name">{c.name}</h3>
+            <span class="chc-tag">{c.tagline}</span>
+          </div>
+          <span class="chc-toggle" aria-hidden="true">
+            <svg class="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            <svg class="ic-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </span>
+        </div>
+
+        <div class="chc-bestfor">
+          <span class="chc-bestfor-label">{copy.bestFor}</span>
+          <span class="chc-bestfor-value">{c.bestFor}</span>
+        </div>
+
+        <div class="chc-expand">
+          <span class="chc-section-label">{copy.capabilities}</span>
+          <ul class="chc-bullets">
+            {c.bullets.map((b) => (
+              <li><span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 4"/></svg>
+              </span>{b}</li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .chcaps-head, .chcaps-grid { position: relative; z-index: 2; }
+  .chcaps-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 48px;
+    align-items: end;
+    margin-bottom: clamp(40px, 5vw, 56px);
+  }
+  .chcaps-title { max-width: 22ch; }
+  .chcaps-lead { justify-self: end; max-width: 42ch; }
+
+  .chcaps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  .chc {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-xl);
+    padding: 22px 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: var(--shadow-xs);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+      box-shadow var(--dur-med) var(--ease-out-expo),
+      border-color var(--dur-med) var(--ease-out-expo);
+  }
+  .chc::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-slow) var(--ease-out-expo);
+  }
+  .chc:hover, .chc:focus-within, .chc.is-open {
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+  }
+  .chc:hover::after, .chc:focus-within::after, .chc.is-open::after { transform: scaleX(1); }
+  .chc:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+  .chc-summary {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .chc-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--gc-primary-mist);
+    background: color-mix(in srgb, var(--accent) 12%, #fff);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .chc-icon img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  .chc-icon-svg { display: grid; place-items: center; width: 100%; height: 100%; }
+  .chc-icon-svg :global(svg) { width: 20px; height: 20px; }
+
+  .chc-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: var(--tr-snug);
+    color: var(--fg-1);
+    line-height: 1.1;
+  }
+  .chc-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-3);
+    font-weight: 600;
+    margin-top: 3px;
+    display: inline-block;
+  }
+
+  .chc-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 28px; height: 28px;
+    border-radius: var(--r-full);
+    background: var(--gc-n-100);
+    color: var(--fg-2);
+    flex-shrink: 0;
+    transition: background var(--dur-med) var(--ease-out-expo), color var(--dur-med) var(--ease-out-expo);
+  }
+  .chc-toggle svg { width: 12px; height: 12px; }
+  .chc-toggle .ic-minus { display: none; }
+  .chc:hover .chc-toggle,
+  .chc.is-open .chc-toggle {
+    background: var(--accent);
+    color: #fff;
+  }
+  .chc.is-open .chc-toggle .ic-plus { display: none; }
+  .chc.is-open .chc-toggle .ic-minus { display: block; }
+
+  .chc-bestfor {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px;
+    background: var(--gc-primary-haze);
+    background: color-mix(in srgb, var(--accent) 8%, #fff);
+    border: 1px solid var(--border-default);
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    border-radius: var(--r-full);
+    align-self: flex-start;
+    max-width: 100%;
+  }
+  .chc-bestfor-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--fg-3);
+  }
+  .chc-bestfor-value {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--accent);
+    filter: brightness(0.85);
+  }
+
+  /* Collapsed -> expanded */
+  .chc-expand {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.45s var(--ease-out-expo),
+      opacity 0.3s var(--ease-out-expo),
+      margin 0.3s var(--ease-out-expo);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .chc:hover .chc-expand { max-height: 420px; opacity: 1; margin-top: 2px; }
+  }
+  .chc:focus-within .chc-expand,
+  .chc.is-open .chc-expand {
+    max-height: 420px;
+    opacity: 1;
+    margin-top: 2px;
+  }
+
+  .chc-section-label {
+    display: block;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--fg-3);
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-default);
+    margin-bottom: 12px;
+  }
+
+  .chc-bullets {
+    display: flex; flex-direction: column;
+    gap: 9px;
+  }
+  .chc-bullets li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--fg-2);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .chc-bullets .tick {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px;
+    background: var(--gc-primary-mist);
+    background: color-mix(in srgb, var(--accent) 14%, #fff);
+    color: var(--accent);
+    border-radius: var(--r-full);
+    flex-shrink: 0;
+    margin-top: 1px;
+    filter: brightness(0.92);
+  }
+
+  @media (max-width: 980px) {
+    .chcaps-head { grid-template-columns: 1fr; }
+    .chcaps-lead { justify-self: start; }
+    .chcaps-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .chcaps-grid { grid-template-columns: 1fr; }
+    .chcaps-title { font-size: clamp(28px, 8vw, 40px); }
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('.chcaps-grid [data-expand]');
+  cards.forEach((card) => {
+    const toggle = (open?: boolean) => {
+      const next = open ?? !card.classList.contains('is-open');
+      card.classList.toggle('is-open', next);
+      card.setAttribute('aria-expanded', String(next));
+    };
+    card.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.closest('a')) return;
+      toggle();
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const t = e.target as HTMLElement;
+        if (t.closest('a')) return;
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+</script>
