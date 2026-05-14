@@ -25,6 +25,13 @@ Landing bilingüe (ES/EN) para GoChat (chatbot de IA). Astro 4 + CSS plano, depl
 ### Frontend: menos texto, más interacción
 Regla pedida explícitamente por el usuario: **no dumpear texto en pantalla**. Si una tarjeta tiene más contenido, esconderlo detrás de hover o click. Mejor un blurb corto y reveal-on-interaction que un párrafo visible.
 
+### Imágenes nuevas: placeholder + prompt, no asset random
+Cuando una sección necesite una imagen nueva, **nunca** poner una imagen cualquiera (ni stock, ni reutilizar un asset existente que no encaje, ni un SVG genérico). En su lugar, dejar un placeholder visible en el sitio que contenga el **prompt exacto** que el usuario tiene que pegar en una plataforma de generación de imágenes con LLM (nano banana) para producir la imagen correcta.
+
+- El placeholder se renderiza en el lugar real donde irá la imagen (mismo tamaño, mismo aspect ratio, mismo encuadre) para que el usuario vea el hueco.
+- El prompt va dentro del placeholder, legible, en inglés, autocontenido (estilo, sujeto, composición, paleta acorde a GoChat, fondo, iluminación, formato). No "una imagen de X"; describir como si el modelo no tuviera contexto del sitio.
+- Una vez generada y guardada en `public/media/`, se reemplaza el placeholder por el `<img>` real.
+
 ---
 
 ## Reglas de copy (sin tells de LLM)

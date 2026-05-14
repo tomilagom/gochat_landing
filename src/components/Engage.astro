@@ -93,12 +93,8 @@ const platforms = isES
 <section class="engage sec bg-paper has-blobs dot-grid">
   <span class="blob blob-violet-mist blob-xl blob-anim-a parallax" style="top: -200px; left: 30%;" aria-hidden="true"></span>
   <div class="wrap engage-head">
-    <div>
-      <span class="eyebrow">{copy.eyebrow}</span>
-      <h2 class="h2 engage-title">
-        {copy.title}
-      </h2>
-    </div>
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 engage-title">{copy.title}</h2>
     <p class="lead engage-lead">{copy.lead}</p>
   </div>
 
@@ -127,15 +123,15 @@ const platforms = isES
   .engage-head {
     position: relative;
     z-index: 2;
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: 48px;
-    align-items: end;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
     margin-bottom: clamp(40px, 5vw, 56px);
   }
   .engage .engage-grid { position: relative; z-index: 2; }
-  .engage-title { max-width: 20ch; }
-  .engage-lead { justify-self: end; max-width: 38ch; }
+  .engage-title { max-width: 28ch; }
+  .engage-lead { max-width: 50ch; }
 
   .engage-grid {
     display: grid;
@@ -216,8 +212,6 @@ const platforms = isES
   }
 
   @media (max-width: 980px) {
-    .engage-head { grid-template-columns: 1fr; }
-    .engage-lead { justify-self: start; }
     .engage-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 560px) {

@@ -221,14 +221,15 @@ const tools = [
 
 <style>
   .integ-head {
-    display: flex; flex-direction: column;
-    gap: 16px; align-items: flex-start;
-    max-width: 760px;
-    margin-bottom: clamp(40px, 4vw, 56px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: clamp(40px, 5vw, 56px);
   }
-  .integ-title { font-size: clamp(32px, 4vw, 56px); }
-  .ind-accent { color: var(--gc-primary); }
+  .integ-title { max-width: 28ch; }
   .integ-lead { max-width: 50ch; }
+  .ind-accent { color: var(--gc-primary); }
 
   /* Bento layout */
   .bento {

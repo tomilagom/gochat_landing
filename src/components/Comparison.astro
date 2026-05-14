@@ -288,10 +288,10 @@ function symClass(v: string) {
     align-items: flex-end;
     gap: 24px;
     flex-wrap: wrap;
-    margin-bottom: 24px;
+    margin-bottom: clamp(40px, 5vw, 56px);
   }
-  .cmp-head-l { display: flex; flex-direction: column; gap: 12px; }
-  .cmp-title { font-size: clamp(28px, 3.4vw, 44px); }
+  .cmp-head-l { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+  .cmp-title { font-size: clamp(28px, 3.4vw, 44px); max-width: 28ch; }
   .cmp-controls { display: inline-flex; gap: 14px; align-items: center; }
 
   .cmp-expand-all {

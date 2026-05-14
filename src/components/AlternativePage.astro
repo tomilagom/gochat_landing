@@ -34,7 +34,7 @@ interface Props {
   highlights: Highlight[];
   sections: Section[];
   switchTitle: string;
-  switchSteps: { title: string; body: string }[];
+  switchSteps: { title: string; body: string; image?: string; imageAlt?: string }[];
   faqs: { q: string; a: string }[];
 }
 
@@ -254,7 +254,12 @@ const jsonLd = [
 
       <div class="wrap alt-switch-grid">
         {switchSteps.map((s, i) => (
-          <article class="alt-step">
+          <article class={`alt-step${s.image ? ' has-image' : ''}`}>
+            {s.image && (
+              <div class="alt-step-art">
+                <img src={s.image} alt={s.imageAlt ?? ''} loading="lazy"/>
+              </div>
+            )}
             <span class="alt-step-num">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="alt-step-title">{s.title}</h3>
             <p class="alt-step-body">{s.body}</p>
@@ -672,6 +677,21 @@ const jsonLd = [
     border-radius: 999px;
     background: radial-gradient(circle, rgba(89, 106, 213, 0.16), transparent 60%);
     pointer-events: none;
+  }
+  .alt-step-art {
+    position: relative;
+    z-index: 1;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--gc-primary-soft);
+  }
+  .alt-step-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .alt-step-num {
     font-family: var(--font-display);

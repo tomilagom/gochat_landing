@@ -140,8 +140,14 @@ const ICONS = {
 
 <style>
   .caps-head, .caps-grid { position: relative; z-index: 2; }
-  .caps-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: clamp(40px, 5vw, 56px); }
-  .caps-title { max-width: 22ch; }
+  .caps-head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: clamp(40px, 5vw, 56px);
+  }
+  .caps-title { max-width: 28ch; }
 
   .caps-grid {
     display: grid;
