@@ -1,18 +1,33 @@
 ---
 import '../styles/global.css';
 import WhatsAppWidget from '../components/WhatsAppWidget.astro';
+import { SITE_URL, absoluteUrl, type Lang } from '../lib/i18n';
 
 interface Props {
   title?: string;
   description?: string;
-  lang?: 'en' | 'es';
+  lang?: Lang;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
-  title = 'GoChat — The AI Chatbot for any business',
+  title = 'GoChat · The AI Chatbot for any business',
   description = 'Build automation flows in minutes over 12+ social channels. Increase your revenue, reduce operation costs and delight your customers.',
   lang = 'en',
+  ogImage = '/media/gochat_AI_capabilities-scaled.png',
+  jsonLd,
 } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const canonicalUrl = absoluteUrl(pathname, lang);
+const enAlternate = absoluteUrl(pathname, 'en');
+const esAlternate = absoluteUrl(pathname, 'es');
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`;
+const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
+
+const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!doctype html>
@@ -27,10 +42,34 @@ const {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={enAlternate} />
+    <link rel="alternate" hreflang="es" href={esAlternate} />
+    <link rel="alternate" hreflang="x-default" href={enAlternate} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GoChat" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/media/gochat_AI_capabilities-scaled.png" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
     <meta name="theme-color" content="#FFFFFF" />
+    <meta name="robots" content="index,follow" />
+
+    {jsonLdItems.map((data) => (
+      <script type="application/ld+json" set:html={JSON.stringify(data)} />
+    ))}
   </head>
   <body>
     <div class="scroll-progress" aria-hidden="true"></div>

@@ -4,6 +4,7 @@ import Nav from './Nav.astro';
 import Footer from './Footer.astro';
 import BookDemo from './BookDemo.astro';
 import type { Lang } from '../lib/i18n';
+import { breadcrumbListSchema, faqPageSchema, organizationSchema } from '../lib/seo';
 
 interface Feature {
   label: string;
@@ -70,7 +71,7 @@ const t = isES
       altTitleAccent: 'GoChat te lleva más lejos.',
       featureByFeature: 'Comparación detallada',
       vs: 'GoChat vs',
-      altLead: 'Cada casilla marcada aquí está incluida en tu plan de GoChat — sin add-ons ni sorpresas.',
+      altLead: 'Cada casilla marcada aquí ya viene incluida en tu plan de GoChat. Sin add-ons, sin sorpresas en la factura.',
       featureLabel: 'Funcionalidad',
       migration: 'Migración',
       faqsEyebrow: 'FAQs',
@@ -91,7 +92,7 @@ const t = isES
       altTitleAccent: 'GoChat takes you further.',
       featureByFeature: 'Feature-by-feature',
       vs: 'GoChat vs',
-      altLead: 'Every box ticked here is included in your GoChat plan — no add-ons, no surprise upgrades.',
+      altLead: 'Every box ticked here is part of your GoChat plan already. No add-ons, no surprise upgrades on the invoice.',
       featureLabel: 'Feature',
       migration: 'Migration',
       faqsEyebrow: 'FAQs',
@@ -105,9 +106,22 @@ function cell(v: boolean | string) {
   if (v === false) return { cls: 'is-no',   text: '—' };
   return { cls: 'is-text', text: v };
 }
+
+const slug = Astro.url.pathname.replace(/^\/(es\/)?/, '').replace(/\/$/, '');
+const breadcrumb = [
+  { name: isES ? 'Inicio' : 'Home', path: '/' },
+  { name: isES ? 'Comparar' : 'Compare', path: '/#pricing' },
+  { name: `${isES ? 'Alternativa a' : 'Alternative to'} ${competitor}`, path: `/${slug}` },
+];
+
+const jsonLd = [
+  organizationSchema(),
+  breadcrumbListSchema(breadcrumb, lang),
+  faqPageSchema(faqs),
+];
 ---
 
-<Layout title={pageTitle} description={pageDescription} lang={lang}>
+<Layout title={pageTitle} description={pageDescription} lang={lang} jsonLd={jsonLd}>
   <Nav lang={lang} />
   <main>
     <!-- HERO -->

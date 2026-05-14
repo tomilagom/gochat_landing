@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from './Nav.astro';
 import Footer from './Footer.astro';
 import type { Lang } from '../lib/i18n';
+import { breadcrumbListSchema, organizationSchema } from '../lib/seo';
 
 interface ValueProp {
   title: string;
@@ -110,12 +111,12 @@ const features = isES
       {
         icon: ICONS.omni,
         title: 'Engagement omnicanal',
-        blurb: 'Conecta con tus clientes en las plataformas que prefieran — Messenger, Instagram, WhatsApp y más.',
+        blurb: 'Conecta con tus clientes en sus plataformas favoritas: Messenger, Instagram, WhatsApp y más.',
       },
       {
         icon: ICONS.flow,
         title: 'Constructor de flujos drag-and-drop',
-        blurb: 'Diseña flujos conversacionales visualmente — sin necesidad de código.',
+        blurb: 'Diseña flujos conversacionales en un lienzo visual, sin escribir código.',
       },
       {
         icon: ICONS.lead,
@@ -125,7 +126,7 @@ const features = isES
       {
         icon: ICONS.human,
         title: 'Derivación a humano',
-        blurb: 'Derivación fluida a agentes humanos cuando importa, asegurando una experiencia impecable.',
+        blurb: 'Pasa la conversación a un agente humano cuando hace falta, sin que el cliente note la transición.',
       },
       {
         icon: ICONS.effect,
@@ -142,12 +143,12 @@ const features = isES
       {
         icon: ICONS.omni,
         title: 'Omnichannel Engagement',
-        blurb: 'Connect with customers on their preferred platforms — Messenger, Instagram, WhatsApp and more.',
+        blurb: 'Connect with customers on their preferred platforms: Messenger, Instagram, WhatsApp and more.',
       },
       {
         icon: ICONS.flow,
         title: 'Drag-and-Drop Flow Builder',
-        blurb: 'Design conversational flows visually — no coding needed.',
+        blurb: 'Design conversational flows on a visual canvas, no coding required.',
       },
       {
         icon: ICONS.lead,
@@ -157,7 +158,7 @@ const features = isES
       {
         icon: ICONS.human,
         title: 'Human Takeover',
-        blurb: 'Seamless handoff to human agents when it matters, ensuring a smooth customer experience.',
+        blurb: 'Hand off to a human agent the moment it matters, with no friction for the customer.',
       },
       {
         icon: ICONS.effect,
@@ -167,9 +168,25 @@ const features = isES
     ];
 
 const description = lead;
+
+const slugNames = {
+  'automotive':   { en: 'Automotive',  es: 'Automotive' },
+  'real-estate':  { en: 'Real estate', es: 'Real estate' },
+  'ecommerce':    { en: 'E-commerce',  es: 'E-commerce' },
+};
+const breadcrumb = [
+  { name: isES ? 'Inicio' : 'Home', path: '/' },
+  { name: isES ? 'Soluciones' : 'Solutions', path: '/#solutions' },
+  { name: slugNames[slug][lang], path: `/${slug}` },
+];
+
+const jsonLd = [
+  organizationSchema(),
+  breadcrumbListSchema(breadcrumb, lang),
+];
 ---
 
-<Layout title={title} description={description} lang={lang}>
+<Layout title={title} description={description} lang={lang} jsonLd={jsonLd}>
   <Nav lang={lang} />
   <main>
     <!-- Hero -->

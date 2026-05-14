@@ -13,7 +13,7 @@ const copy = isES
       titlePart1: 'Impulsa ventas',
       titleAnd: 'y',
       titlePart2: 'conversiones.',
-      lead: 'Convierte más interacciones en ventas con conversaciones automatizadas y personalizadas. Supera los límites de la comunicación tradicional.',
+      lead: 'Convierte más interacciones en ventas con conversaciones automatizadas y personalizadas. La comunicación tradicional ya no escala como tu negocio.',
       metaEyebrow: 'En vivo · este año',
       metaLabel: 'Mensajes enviados en 2024',
       tile1: 'Canales',
@@ -25,7 +25,7 @@ const copy = isES
       titlePart1: 'Boost sales',
       titleAnd: 'and',
       titlePart2: 'conversions.',
-      lead: 'Turn more interactions into sales with automated, personalized conversations. Go beyond the limits of traditional communication.',
+      lead: 'Turn more interactions into sales with automated, personalised conversations. Traditional comms can\'t scale the way your business does.',
       metaEyebrow: 'Live · this year',
       metaLabel: 'Messages sent in 2024',
       tile1: 'Channels',
@@ -35,20 +35,22 @@ const copy = isES
 
 const benefits = isES
   ? [
-      { title: 'Aumenta el engagement', blurb: 'Alcanza a tus clientes en segundos — no en días.' },
+      { title: 'Aumenta el engagement', blurb: 'Responde a tus clientes en segundos. No en días.' },
       { title: 'Reduce el churn', blurb: 'Mantente presente con recordatorios oportunos y contextuales.' },
       { title: 'Ahorra tiempo y recursos', blurb: 'Automatiza el 80% repetitivo y deja que los humanos manejen lo importante.' },
       { title: 'Conexiones en tiempo real', blurb: 'Una conversación que nunca duerme, en cada canal.' },
     ]
   : [
-      { title: 'Increase engagement', blurb: 'Reach customers in seconds — not days.' },
+      { title: 'Increase engagement', blurb: 'Reply to customers in seconds. Not days.' },
       { title: 'Reduce churn', blurb: 'Stay top-of-mind with timely, contextual nudges.' },
       { title: 'Save time and resources', blurb: 'Automate the repetitive 80% so humans handle what matters.' },
       { title: 'Real-time connections', blurb: 'A conversation that never sleeps, on every channel.' },
     ];
 ---
 
-<section class="boost sec">
+<section class="boost sec has-blobs">
+  <span class="blob blob-violet-mist blob-xl blob-anim-a parallax" style="top: -120px; left: -200px;" aria-hidden="true"></span>
+  <span class="blob blob-green-deep blob-md blob-anim-b" style="bottom: -120px; right: -160px;" aria-hidden="true"></span>
   <div class="wrap boost-grid">
     <div class="boost-copy">
       <span class="eyebrow">{copy.eyebrow}</span>
@@ -112,30 +114,28 @@ const benefits = isES
 <style>
   .boost {
     position: relative;
+    /* No overflow:hidden — let blobs and the wash bleed into the neighbours. */
+  }
+  /* The violet wash is a separately-masked layer so it fades softly into the
+     white of the sections above and below, instead of being clipped by a hard
+     section edge. Combined with .has-blobs, the section feels continuous with
+     its neighbours rather than capped by a line. */
+  .boost::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    /* Extend the wash beyond the section edges so the fade has room. */
+    top: -10%;
+    bottom: -10%;
     background:
       radial-gradient(ellipse 900px 600px at 80% 40%, var(--gc-primary-soft), transparent 65%),
       radial-gradient(ellipse 1200px 700px at 20% 60%, var(--gc-primary-mist), transparent 70%),
       var(--gc-primary-haze);
-    overflow: hidden;
-  }
-  /* Curved transitions in/out of the violet wash */
-  .boost::before,
-  .boost::after {
-    content: '';
-    position: absolute;
-    left: -10%; right: -10%;
-    height: clamp(36px, 5vw, 64px);
-    background-color: #fff;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
     pointer-events: none;
-    z-index: 1;
-  }
-  .boost::before {
-    top: -1px;
-    border-radius: 0 0 50% 50% / 0 0 100% 100%;
-  }
-  .boost::after {
-    bottom: -1px;
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
   .boost-grid {
     position: relative;

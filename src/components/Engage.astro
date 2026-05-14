@@ -11,12 +11,12 @@ const copy = isES
   ? {
       eyebrow: 'Canales · Salientes y Entrantes',
       title: 'Conecta con tu audiencia donde se encuentre.',
-      lead: 'Salientes para alcanzar a cualquier cliente. Entrantes para responder 24/7 con IA. Una bandeja, una sola fuente de verdad.',
+      lead: 'Llega a cualquier cliente con campañas salientes. Cuando te escriben, una IA responde 24/7. Todo en la misma bandeja.',
     }
   : {
       eyebrow: 'Channels · Outbound & Inbound',
       title: 'Engage with your audience where they are.',
-      lead: 'Outbound to reach any customer. Inbound to respond 24/7 with AI. One inbox, one source of truth.',
+      lead: 'Reach any customer with outbound campaigns. When they message back, AI answers around the clock. All of it in one inbox.',
     };
 
 const platforms = isES
@@ -26,7 +26,7 @@ const platforms = isES
         icon: '/media/whatsapp-channel.png',
         color: '#25D366',
         tagline: 'Business API',
-        pitch: 'Plantillas, envíos masivos, secuencias y ruteo multi-número — todo nativamente oficial.',
+        pitch: 'Plantillas, envíos masivos, secuencias y ruteo multi-número, todo con la API oficial.',
         metric: '95% de apertura',
       },
       {
@@ -42,7 +42,7 @@ const platforms = isES
         icon: '/media/webchat-channel.png',
         color: '#596AD5',
         tagline: 'Tu sitio web',
-        pitch: 'Un widget con la identidad de tu marca — personalizable al píxel, rápido como un rayo.',
+        pitch: 'Un widget con la identidad de tu marca. Personalizable al píxel y rápido como un rayo.',
         metric: 'Primera respuesta en <50ms',
       },
       {
@@ -52,7 +52,6 @@ const platforms = isES
         tagline: 'Respuesta automática DM',
         pitch: 'Captura la intención desde los comentarios y deriva a humanos solo cuando importa.',
         metric: 'Alcance 24/7',
-        fill: true,
       },
     ]
   : [
@@ -61,7 +60,7 @@ const platforms = isES
         icon: '/media/whatsapp-channel.png',
         color: '#25D366',
         tagline: 'Business API',
-        pitch: 'Templates, broadcasts, sequences and multi-number routing — natively official.',
+        pitch: 'Templates, broadcasts, sequences and multi-number routing, all on the official API.',
         metric: '95% open rate',
       },
       {
@@ -77,7 +76,7 @@ const platforms = isES
         icon: '/media/webchat-channel.png',
         color: '#596AD5',
         tagline: 'Your site',
-        pitch: 'A widget that feels like your brand — pixel-customisable, lightning quick.',
+        pitch: 'A widget that looks like your brand. Pixel-customisable, lightning quick.',
         metric: '<50ms first reply',
       },
       {
@@ -87,7 +86,6 @@ const platforms = isES
         tagline: 'DM auto-reply',
         pitch: 'Capture intent from comments, route to humans only when it matters.',
         metric: '24/7 outreach',
-        fill: true,
       },
     ];
 ---
@@ -108,7 +106,7 @@ const platforms = isES
     {platforms.map((p, i) => (
       <article class="plat" style={`--accent:${p.color}`}>
         <header class="plat-head">
-          <div class={`plat-icon${p.fill ? ' is-fill' : ''}`}><img src={p.icon} alt={p.name}/></div>
+          <div class="plat-icon"><img src={p.icon} alt={p.name}/></div>
           <div class="plat-text">
             <h3 class="plat-name">{p.name}</h3>
             <span class="plat-tag">{p.tagline}</span>
@@ -118,7 +116,6 @@ const platforms = isES
         <p class="plat-pitch">{p.pitch}</p>
         <footer class="plat-foot">
           <span class="plat-metric">{p.metric}</span>
-          <span class="plat-arrow" aria-hidden="true">→</span>
         </footer>
       </article>
     ))}
@@ -177,16 +174,18 @@ const platforms = isES
 
   .plat-head { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; }
   .plat-icon {
-    width: 44px; height: 44px;
-    display: grid; place-items: center;
-    background: var(--gc-primary-mist);
-    border: 1px solid var(--border-default);
-    border-radius: var(--r-md);
+    width: 36px; height: 36px;
+    border-radius: 50%;
     overflow: hidden;
+    flex-shrink: 0;
   }
-  .plat-icon img { width: 26px; height: 26px; object-fit: contain; display: block; }
-  .plat-icon.is-fill { padding: 0; background: transparent; border-color: transparent; }
-  .plat-icon.is-fill img { width: 100%; height: 100%; object-fit: cover; }
+  .plat-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+  }
   .plat-name {
     font-family: var(--font-display);
     font-size: 20px;
@@ -215,16 +214,6 @@ const platforms = isES
     color: var(--accent);
     font-weight: 600;
   }
-  .plat-arrow {
-    width: 28px; height: 28px;
-    border-radius: 999px;
-    background: var(--gc-primary-mist);
-    color: var(--fg-2);
-    display: grid; place-items: center;
-    font-size: 13px;
-    transition: background var(--dur-med) var(--ease-out-expo), color var(--dur-med) var(--ease-out-expo), transform var(--dur-med) var(--ease-out-expo);
-  }
-  .plat:hover .plat-arrow { background: var(--accent); color: #fff; transform: translateX(3px); }
 
   @media (max-width: 980px) {
     .engage-head { grid-template-columns: 1fr; }

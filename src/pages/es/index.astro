@@ -16,12 +16,21 @@ import Testimonials from '../../components/Testimonials.astro';
 import FAQs from '../../components/FAQs.astro';
 import BookDemo from '../../components/BookDemo.astro';
 import Footer from '../../components/Footer.astro';
+import { organizationSchema, websiteSchema, softwareApplicationSchema, homepageFaqsSchema } from '../../lib/seo';
+
+const jsonLd = [
+  organizationSchema(),
+  websiteSchema('es'),
+  softwareApplicationSchema('es'),
+  homepageFaqsSchema('es'),
+];
 ---
 
 <Layout
   lang="es"
-  title="GoChat — El chatbot de IA para cualquier negocio"
+  title="GoChat · El chatbot de IA para cualquier negocio"
   description="Construye flujos de automatización en minutos sobre 12+ canales sociales. Aumenta tus ingresos, reduce los costos operativos y enamora a tus clientes."
+  jsonLd={jsonLd}
 >
   <Nav lang="es" />
   <main>
