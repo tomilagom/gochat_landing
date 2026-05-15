@@ -1,0 +1,213 @@
+---
+import { localizedHref, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const isES = lang === 'es';
+
+const copy = isES
+  ? {
+      eyebrow: 'Industrias',
+      titleLine1: 'Hecho para',
+      titleAccent: 'tu industria.',
+      lead: 'Cada vertical tiene sus propias preguntas. GoChat ya las habla.',
+      explore: 'Explorar',
+    }
+  : {
+      eyebrow: 'Industries',
+      titleLine1: 'Built for',
+      titleAccent: 'your industry.',
+      lead: 'Every vertical has its own questions. GoChat already speaks them.',
+      explore: 'Explore',
+    };
+
+const items = isES
+  ? [
+      {
+        name: 'E-commerce',
+        tagline: 'Del vistazo a la compra, en el chat.',
+        blurb: 'Recupera carritos, recomienda productos y atiende la postventa sin que el cliente salga de la conversación.',
+        image: '/media/ecommerce.png',
+        alt: 'Un comprador navegando productos en su teléfono',
+        href: localizedHref('/ecommerce', lang),
+      },
+      {
+        name: 'Automotriz',
+        tagline: 'Tu mejor vendedor, online 24/7.',
+        blurb: 'Responde sobre financiación, agenda test drives y matchea cada interesado con stock real.',
+        image: '/media/automotive.png',
+        alt: 'Asistente de IA guiando a un comprador por el inventario',
+        href: localizedHref('/automotive', lang),
+      },
+      {
+        name: 'Inmobiliaria',
+        tagline: 'Las publicaciones muestran. Las charlas venden.',
+        blurb: 'Califica leads, agenda visitas y atiende compradores internacionales en su idioma, incluso a las 2 AM.',
+        image: '/media/real-estate-e1763391592382.png',
+        alt: 'Una propiedad moderna lista para una visita agendada',
+        href: localizedHref('/real-estate', lang),
+      },
+    ]
+  : [
+      {
+        name: 'E-commerce',
+        tagline: 'From browse to buy, in chat.',
+        blurb: 'Recover carts, recommend products and handle post-purchase without the customer ever leaving the conversation.',
+        image: '/media/ecommerce.png',
+        alt: 'A shopper browsing products on a phone',
+        href: '/ecommerce',
+      },
+      {
+        name: 'Automotive',
+        tagline: 'Your best salesperson, online 24/7.',
+        blurb: 'Answers financing questions, books test drives and matches each buyer to your live inventory.',
+        image: '/media/automotive.png',
+        alt: 'AI agent guiding a buyer through dealership inventory',
+        href: '/automotive',
+      },
+      {
+        name: 'Real estate',
+        tagline: 'Listings show. Conversations sell.',
+        blurb: 'Qualifies leads, schedules viewings and speaks to international buyers in their own language, even at 2am.',
+        image: '/media/real-estate-e1763391592382.png',
+        alt: 'A modern home ready for a scheduled viewing',
+        href: '/real-estate',
+      },
+    ];
+---
+
+<section class="verticals sec bg-paper has-blobs" id="verticals">
+  <span class="blob blob-violet-mist blob-xl blob-anim-a parallax" style="top: 10%; right: -200px;" aria-hidden="true"></span>
+  <span class="blob blob-green blob-md blob-anim-b" style="bottom: -140px; left: -140px; opacity: 0.28;" aria-hidden="true"></span>
+
+  <div class="wrap vt-head">
+    <span class="eyebrow">{copy.eyebrow}</span>
+    <h2 class="h2 vt-title">
+      {copy.titleLine1} <span class="vt-accent">{copy.titleAccent}</span>
+    </h2>
+    <p class="lead vt-lead">{copy.lead}</p>
+  </div>
+
+  <div class="wrap vt-grid reveal-stagger">
+    {items.map((it) => (
+      <a class="vtc" href={it.href}>
+        <div class="vtc-img">
+          <img src={it.image} alt={it.alt} loading="lazy" decoding="async"/>
+        </div>
+        <div class="vtc-body">
+          <h3 class="vtc-name">{it.name}</h3>
+          <p class="vtc-tagline">{it.tagline}</p>
+          <p class="vtc-blurb">{it.blurb}</p>
+          <span class="vtc-link">
+            <span>{copy.explore}</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .verticals { position: relative; }
+  .vt-head, .vt-grid { position: relative; z-index: 2; }
+  .vt-head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: clamp(40px, 5vw, 56px);
+  }
+  .vt-title { max-width: 22ch; }
+  .vt-lead { max-width: 50ch; }
+  .vt-accent { color: var(--gc-primary); }
+
+  .vt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .vtc {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-2xl);
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: var(--shadow-xs);
+    transition:
+      box-shadow var(--dur-med) var(--ease-out-expo),
+      border-color var(--dur-med) var(--ease-out-expo),
+      transform var(--dur-med) var(--ease-out-expo);
+  }
+  .vtc:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--gc-primary-soft);
+    transform: translateY(-2px);
+  }
+  .vtc:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+  .vtc-img {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--gc-n-100);
+  }
+  .vtc-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-slow) var(--ease-out-expo);
+  }
+  .vtc:hover .vtc-img img { transform: scale(1.04); }
+
+  .vtc-body {
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .vtc-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: var(--tr-tight);
+    color: var(--fg-1);
+    line-height: 1.1;
+  }
+  .vtc-tagline {
+    color: var(--gc-primary);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .vtc-blurb {
+    color: var(--fg-2);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+  .vtc-link {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gc-primary);
+    letter-spacing: 0.01em;
+  }
+  .vtc-link svg { transition: transform var(--dur-med) var(--ease-out-expo); }
+  .vtc:hover .vtc-link svg { transform: translateX(4px); }
+
+  @media (max-width: 980px) {
+    .vt-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .vt-title { font-size: clamp(28px, 7.5vw, 40px); }
+    .vtc-body { padding: 18px 18px 18px; }
+  }
+</style>
