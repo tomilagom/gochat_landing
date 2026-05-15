@@ -9,16 +9,16 @@ const isES = lang === 'es';
 
 const copy = isES
   ? {
-      eyebrow: 'Capacidades por canal',
-      title: 'Cada canal, al máximo de lo que puede.',
-      lead: 'GoChat exprime lo mejor de cada API oficial — plantillas, botones, multimedia, comentarios — para que envíes el mensaje correcto, en el formato correcto, en el canal correcto.',
+      eyebrow: 'Canales · Salientes y Entrantes',
+      title: 'Conecta con tu audiencia donde se encuentre.',
+      lead: 'Llega a cualquier cliente con campañas salientes. Cuando te escriben, una IA responde 24/7. Todo en la misma bandeja.',
       bestFor: 'Ideal para',
       capabilities: 'Capacidades',
     }
   : {
-      eyebrow: 'Capabilities by channel',
-      title: 'Each channel, at the top of its game.',
-      lead: 'GoChat squeezes the most out of every official API — templates, buttons, media, comments — so you ship the right message, in the right format, on the right channel.',
+      eyebrow: 'Channels · Outbound & Inbound',
+      title: 'Engage with your audience where they are.',
+      lead: 'Reach any customer with outbound campaigns. When they message back, AI answers around the clock. All of it in one inbox.',
       bestFor: 'Best for',
       capabilities: 'Capabilities',
     };
@@ -51,6 +51,19 @@ const channels = isES
           'Botones rápidos y multimedia en DM',
           'Captura de leads desde anuncios click-to-DM',
           'Reacciones y stickers nativos',
+        ],
+      },
+      {
+        name: 'TikTok',
+        tagline: 'DMs + Comentarios',
+        color: '#0C0D14',
+        icon: { type: 'img', src: '/media/tiktok-scaled-e1763115488777-294x300.png' },
+        bestFor: 'Convertir contenido viral en conversaciones',
+        bullets: [
+          'Respuesta automática a comentarios por palabra clave',
+          'Seguimiento por DM para capturar intent',
+          'Deriva leads calientes a un agente humano',
+          'Calificación 24/7 sin perder oportunidades',
         ],
       },
       {
@@ -93,16 +106,42 @@ const channels = isES
         ],
       },
       {
-        name: 'SMS & Voice',
+        name: 'Email',
+        tagline: 'Frío + transaccional',
+        color: '#DC2626',
+        icon: { type: 'svg', key: 'email' },
+        bestFor: 'Seguimiento de formato largo',
+        bullets: [
+          'Plantillas con merge tags y archivos adjuntos',
+          'Secuencias drip disparadas por eventos del CRM',
+          'Respuestas entrantes ruteadas a la misma bandeja',
+          'Envíos transaccionales desde tus workflows',
+        ],
+      },
+      {
+        name: 'SMS',
         tagline: 'Sin app, sin internet',
         color: '#6B7280',
         icon: { type: 'svg', key: 'sms' },
-        bestFor: 'Alertas urgentes y outbound',
+        bestFor: 'Alertas urgentes y alcance masivo',
         bullets: [
           'Broadcasts a listas sin ventana de 24h',
-          'Confirmaciones, OTP y recordatorios',
-          'Llamadas salientes con texto-a-voz',
+          'OTPs, confirmaciones y recordatorios',
+          'Respuestas entrantes en la misma bandeja',
           'Cobertura global con números locales',
+        ],
+      },
+      {
+        name: 'Voz',
+        tagline: 'Llamadas salientes + IVR',
+        color: '#14B8A6',
+        icon: { type: 'svg', key: 'voice' },
+        bestFor: 'Outbound de alto interés',
+        bullets: [
+          'Llamadas salientes con texto-a-voz',
+          'Menús IVR que rutean al agente correcto',
+          'Grabaciones y transcripciones por contacto',
+          'Mensajes a buzón para números sin respuesta',
         ],
       },
     ]
@@ -133,6 +172,19 @@ const channels = isES
           'Quick-reply buttons and rich media in DM',
           'Lead capture from click-to-DM ads',
           'Native reactions and stickers',
+        ],
+      },
+      {
+        name: 'TikTok',
+        tagline: 'DMs + Comments',
+        color: '#0C0D14',
+        icon: { type: 'img', src: '/media/tiktok-scaled-e1763115488777-294x300.png' },
+        bestFor: 'Comment-to-DM funnels',
+        bullets: [
+          'Auto-reply to comments by keyword',
+          'DM follow-up to capture intent',
+          'Hand off hot leads to a human agent',
+          '24/7 qualification so nothing slips',
         ],
       },
       {
@@ -175,16 +227,42 @@ const channels = isES
         ],
       },
       {
-        name: 'SMS & Voice',
+        name: 'Email',
+        tagline: 'Cold + transactional',
+        color: '#DC2626',
+        icon: { type: 'svg', key: 'email' },
+        bestFor: 'Long-form follow-up',
+        bullets: [
+          'Templates with merge tags and attachments',
+          'Drip sequences triggered by CRM events',
+          'Inbound replies routed into the same inbox',
+          'Transactional sends fired from your workflows',
+        ],
+      },
+      {
+        name: 'SMS',
         tagline: 'No app, no internet',
         color: '#6B7280',
         icon: { type: 'svg', key: 'sms' },
-        bestFor: 'Urgent alerts and outbound',
+        bestFor: 'Urgent alerts and mass reach',
         bullets: [
           'Broadcasts with no 24-hour window',
-          'Confirmations, OTPs and reminders',
-          'Outbound calls with text-to-speech',
+          'OTPs, confirmations and reminders',
+          'Two-way replies threaded into the inbox',
           'Global coverage with local numbers',
+        ],
+      },
+      {
+        name: 'Voice',
+        tagline: 'Outbound calls + IVR',
+        color: '#14B8A6',
+        icon: { type: 'svg', key: 'voice' },
+        bestFor: 'High-intent outreach',
+        bullets: [
+          'Outbound calls with text-to-speech',
+          'IVR menus that route to the right agent',
+          'Recordings and transcripts saved per contact',
+          'Voicemail drops for unanswered numbers',
         ],
       },
     ];
@@ -196,6 +274,10 @@ const SVG_ICONS: Record<string, string> = {
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 4.5 18.6 20.3c-.3 1.1-.9 1.4-1.9.9l-5.2-3.8-2.5 2.4c-.3.3-.5.5-1 .5l.4-5.3 9.7-8.7c.4-.4-.1-.6-.6-.2L5.5 13l-5.1-1.6C-.7 11-.7 10.2.7 9.7L20.4 2.2c1-.4 1.9.2 1.6 2.3Z" transform="translate(1 0)"/></svg>',
   sms:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>',
+  email:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="m3 7 9 6 9-6"/></svg>',
+  voice:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>',
 };
 ---
 
